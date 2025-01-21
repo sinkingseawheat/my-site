@@ -1,0 +1,159 @@
+/* 他サイトのプロフィール */
+.card {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  row-gap: 1rem;
+  column-gap: 2rem;
+}
+.card__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.note {
+  font-size: var(--fz-smaller);
+  display: flex;
+}
+.note__bullet {
+  flex: 0 0 auto;
+}
+.note__text {
+  flex: 1 1 auto;
+}
+
+.link {
+  padding: 1rem;
+  border: 2px solid currentColor;
+  border-radius: 16px;
+  display: grid;
+  align-items: center;
+  column-gap: 0.8rem;
+  grid-template-columns: 2.4rem 1fr 1.5rem;
+  height: 100%;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(var(--color-primary));
+  color: rgb(var(--color-bg));
+}
+.link::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: transparent;
+  z-index: 100;
+  pointer-events: none;
+  backdrop-filter: invert(1);
+  transition: width var(--animation-changing);
+}
+.link:focus::after {
+  width: 100%;
+}
+@media (hover: hover) {
+  .link:hover::after {
+    width: 100%;
+  }
+}
+.link_i:nth-of-type(1) {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: block;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1000;
+}
+.icon {
+  display: block;
+  height: auto;
+}
+.link_i.-x {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.link_i.-x::before {
+  content: '';
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 9999px;
+  position: absolute;
+  z-index: 1;
+  background-color: black;
+  pointer-events: none;
+}
+.link_i.-empty {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.link_i.-empty::before {
+  content: '';
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 9999px;
+  position: absolute;
+  z-index: 1;
+  background-color: black;
+  pointer-events: none;
+}
+.link_i.-x .icon {
+  position: relative;
+  z-index: 10;
+  width: 1.5rem;
+}
+.link_i.-github {
+  background-color: rgb(var(--color-fixed-white));
+}
+.link_i.-qiita {
+  background-color: rgb(var(--color-fixed-black));
+}
+.link_i.-bluesky {
+  background-color: rgb(var(--color-fixed-white));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .icon {
+    width: 70%;
+  }
+}
+.link_i:nth-of-type(2) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.link_i:nth-of-type(3) {
+  transition: transform var(--animation-changing);
+}
+.link:focus .link_i:nth-of-type(3) {
+  transform: translateX(0.5rem);
+}
+@media (hover: hover) {
+  .link[href]:hover
+    .link_i:nth-of-type(3) {
+    transform: translateX(0.5rem);
+  }
+}
+
+.text {
+  word-break: break-word;
+}
+
+.strokeCurrentColor{
+  stroke: currentColor;
+}

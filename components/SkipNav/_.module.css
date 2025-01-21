@@ -1,0 +1,25 @@
+.wrap {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+  max-width: 90vw;
+  width: 20rem;
+  background-color: rgb(var(--color-bg));
+  padding:0;
+  &:focus {
+    z-index: 100;
+  }
+  &:not(:focus){
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}

@@ -1,0 +1,17 @@
+.link {
+  color: rgb(var(--color-primary));
+}
+.linkIcon{
+  padding: 0 .5em;
+  display: inline;
+}
+.linkIcon > :is(svg,img){
+  display: inline;
+  width: 1rem;
+  height: auto;
+  vertical-align: middle;
+}
+.text{}
+.strokeCurrentColor{
+  stroke: currentColor;
+}

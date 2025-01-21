@@ -1,0 +1,67 @@
+.button{
+  background-color: rgb(var(--color-primary));
+  padding: .5em 1em;
+  color: rgb(var(--color-bg));
+  font-weight: bold;
+  position: relative;
+}
+.button::after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgba(0,0,0,0);
+  z-index: 100;
+  pointer-events: none;
+  backdrop-filter: invert(1);
+  transition: width var(--animation-changing);
+  border-radius: 8px;
+}
+.button_i{}
+
+.button:focus::after {
+  width: 100%
+}
+@media(hover: hover) {
+  .button:hover::after {
+      width:100%
+  }
+}
+
+.buttonLink{
+  background-color: rgb(var(--color-primary));
+  padding: .5em 1em;
+  color: rgb(var(--color-bg));
+  font-weight: bold;
+  position: relative;
+}
+.buttonLink::after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgba(0,0,0,0);
+  z-index: 100;
+  pointer-events: none;
+  backdrop-filter: invert(1);
+  transition: width var(--animation-changing);
+  border-radius: 8px
+}
+.buttonLink_i{}
+.buttonLinkIcon{}
+
+
+.buttonLink:focus::after {
+  width: 100%
+}
+@media(hover: hover) {
+  .buttonLink:hover::after {
+      width:100%
+  }
+}

@@ -1,0 +1,345 @@
+/* グローバル変数 */
+:root {
+  --fz-headingLv1: max(15px, 2.25rem);
+  --fz-headingLv2: max(12px, 1.75rem);
+  --fz-headingLv3: max(12px, 1.25rem);
+  --fz-normal: max(12px, 1rem);
+  --fz-small: max(12px, 0.9rem);
+  --fz-smaller: max(11px, 0.75rem);
+  --color-bg: 255 255 255;
+  --color-fg: 0 0 0;
+  --color-primary: 79 119 60;
+  --color-secondary: 174 144 53;
+  --value-line-height-default: 1.7;
+  --pd-outermost-top: 1rem;
+  --pd-outermost-both-sides: 1rem;
+  --pd-outermost-bottom: 1rem;
+  --animation-changing: ease-out 0.3s;
+  --animation-duration: 0.3s;
+  --max-width-inner: min(100%, calc(100% - 4rem));
+  --color-fixed-white: 255 255 255;
+  --color-fixed-black: 0 0 0;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: 0 0 0;
+    --color-fg: 255 255 255;
+    --color-primary: 179 234 154;
+    --color-secondary: 240 229 71;
+  }
+}
+
+@layer normalize{
+  html {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-fg));
+    line-height: var(--value-line-height-default);
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+    font-family: sans-serif; /* font-familyはゴシック体の指定のみで、エンドユーザーの指定を優先。 */
+  }
+  body{
+    color-scheme: light dark;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body, h1, h2, h3, h4, h5, h6, p, ul, li, dl, dt, dd, div, span, a, hr {
+    margin: 0;
+    padding: 0;
+  }
+  h1, h2, h3, h4, h5, h6, p {
+    font-size: inherit;
+    font-weight: normal;
+  }
+  button {
+    appearance: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    display: flex; /* for mystery padding-bottom */
+    border-radius: 8px;
+    border: 2px solid transparent;
+    color: currentColor;
+    & > * {
+      flex:1 1 auto; /* for safari */
+    }
+  }
+  button:focus {
+    outline: none;
+    border-color: rgb(var(--color-fg));
+  }
+  @media (hover: hover) {
+    button:hover {
+      border-color: rgb(var(--color-fg));
+    }
+  }
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+  img, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+  ul {
+    list-style: none;
+  }
+  div:has(> table) {
+    overflow: auto;
+    max-height: var(--content-height, auto);
+  }
+  table {
+    position: relative;
+    border-collapse: collapse;
+    border: 2px solid currentColor;
+    min-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  caption {
+    text-align: left;
+    font-weight: bold;
+  }
+  thead th,
+  tbody tr:first-child :is(td, th) {
+    min-width: var(--min-cell-width, auto);
+  }
+  td, th {
+    border: 2px solid currentColor;
+    padding: 0.3em 1em;
+    background-color: rgb(var(--color-bg));
+  }
+  th {
+    font-weight: bold;
+  }
+  th[scope='col'] {
+    --padding-for-double: 4px;
+    position: sticky;
+    top: -1px;
+    z-index: 10;
+    padding-bottom: calc(0.3em + var(--padding-for-double));
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 3px;
+      left: 0;
+      width: 100%;
+      height: 0;
+      border-bottom: 2px solid currentColor;
+      pointer-events: none;
+    }
+  }
+  th[scope='row'] {
+    --padding-for-double: 4px;
+    /* position: sticky;
+    left: -2px; */
+    position: relative;
+    z-index: 8; /* 列のセルを優先 */
+    padding-right: calc(1em + var(--padding-for-double));
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      right: 3px;
+      top: 0;
+      width: calc(100% - 3px);
+      height: 100%;
+      border-right: 2px solid currentColor;
+      pointer-events: none;
+    }
+  }
+  picture {
+    font-size: 0;
+    > img {
+      font-size: 1rem;
+    }
+  }
+
+  @media (hover: hover) {
+    button {
+      cursor: pointer;
+    }
+  }
+  span {
+    color: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+  }
+  strong {
+    color: inherit;
+    font-style: inherit;
+  }
+  a[href], a[href]:is(:link, :visited, :active) {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .u_invert_whean_dark_scheme {
+    filter: invert(1)!important;
+  }
+}
+.u_sr_only, .u_sr_only__focusable:not(:focus) {
+  position: absolute!important;
+  width: 1px!important;
+  height: 1px!important;
+  padding: 0!important;
+  margin: -1px!important;
+  overflow: hidden!important;
+  clip: rect(0, 0, 0, 0)!important;
+  white-space: nowrap!important;
+  border: 0!important;
+}
+.u_align_left {
+  display: flex!important;
+  justify-content: center!important;
+}
+.u_align_center {
+  display: flex!important;
+  justify-content: flex-end!important;
+}
+.u_align_right {
+  display: flex!important;
+  justify-content: flex-end!important;
+}
+.u_mt_4 {
+  margin-top: 4px!important;
+}
+.u_ml_4 {
+  margin-left: 4px!important;
+}
+
+/* svgアイコンとアニメーション - ハンバーガーメニュー */
+.c_svgHumberger {
+  width: 44px;
+  height: 44px;
+}
+.c_svgHumberger__fg {
+  fill: rgb(var(--color-bg));
+  stroke: rgb(var(--color-bg));
+}
+.c_svgHumberger__bg {
+  fill: rgb(var(--color-primary));
+  stroke: rgb(var(--color-primary));
+}
+.c_svgHumberger
+  use:is(
+    [href='#c_svgHumberger__line1'],
+    [href='#c_svgHumberger__line2'],
+    [href='#c_svgHumberger__line3']
+  ) {
+  transition:
+    transform var(--animation-changing),
+    opacity var(--animation-changing);
+  opacity: 1;
+}
+
+.c_headerMenu .c_svgHumberger {
+  use[href='#c_svgHumberger__line1'] {
+    transform: translateY(0) rotate(0);
+    transform-origin: 22px 15px;
+  }
+  use[href='#c_svgHumberger__line3'] {
+    transform: translateY(0) rotate(0);
+    transform-origin: 22px 29px;
+  }
+}
+.c_headerMenu[aria-expanded='true'] .c_svgHumberger {
+  use[href='#c_svgHumberger__line1'] {
+    transform: translateY(7px) rotate(45deg);
+  }
+  use[href='#c_svgHumberger__line2'] {
+    opacity: 0;
+  }
+  use[href='#c_svgHumberger__line3'] {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+/* svgアイコンとアニメーション - モーダルの閉じるボタン */
+.c_svgIconShrinkModal__bg {
+  fill: rgb(var(--color-primary));
+  stroke: rgb(var(--color-primary));
+}
+.c_svgIconShrinkModal__fg {
+  fill: rgb(var(--color-bg));
+  stroke: rgb(var(--color-bg));
+}
+.c_svgHumberger line {
+  transition:
+    transform var(--animation-changing),
+    opacity var(--animation-changing);
+  opacity: 1;
+}
+/* svgアイコンとアニメーション - ヘッダーとフッターのトグルボタン */
+
+.c_svgToggleHFVisible {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.c_svgToggleHFVisible__bg {
+  fill: rgb(var(--color-primary));
+  stroke: rgb(var(--color-bg));
+}
+.c_svgToggleHFVisible__fg {
+  fill: rgb(var(--color-bg));
+  stroke: rgb(var(--color-bg));
+}
+.c_toggleHeaderFooterVisible[aria-expanded='false'] {
+  .c_svgToggleHFVisible.-to_expand {
+    animation: shrink__fadeIn var(--animation-changing) 1 forwards;
+  }
+  .c_svgToggleHFVisible.-to_shrink {
+    animation: shrink__fadeOut var(--animation-changing) 1 forwards;
+  }
+}
+.c_toggleHeaderFooterVisible[aria-expanded='true'] {
+  .c_svgToggleHFVisible.-to_expand {
+    animation: shrink__fadeOut var(--animation-changing) 1 forwards;
+  }
+  .c_svgToggleHFVisible.-to_shrink {
+    animation: shrink__fadeIn var(--animation-changing) 1 forwards;
+  }
+}
+@keyframes shrink__fadeIn {
+  from {
+    transform: scale(1);
+    opacity: 0;
+    z-index: 1;
+  }
+  50% {
+    transform: scale(0);
+    opacity: 1;
+    z-index: 10;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    z-index: 10;
+  }
+}
+@keyframes shrink__fadeOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+    z-index: 10;
+  }
+  50% {
+    transform: scale(0);
+    opacity: 0;
+    z-index: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+    z-index: 1;
+  }
+}

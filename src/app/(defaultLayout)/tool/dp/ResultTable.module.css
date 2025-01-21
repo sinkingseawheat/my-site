@@ -1,0 +1,27 @@
+.wrap{
+  overflow: auto;
+}
+.table {
+  width: 100%;
+}
+.caption {
+  padding: 0 0.5rem 0.5rem;
+}
+.caption_i {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  .button {
+    flex: 0 1 auto;
+    max-width: 50%;
+  }
+}
+.p_table + .c_cautionNote {
+  max-width: var(--max-width-inner);
+  width: 100%;
+}
+.tr[data-match-media='true'] td {
+  --color: var(--color-secondary);
+  background-color: rgb(var(--color) / 0.4);
+}

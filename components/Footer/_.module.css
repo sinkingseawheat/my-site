@@ -1,0 +1,46 @@
+
+/* footer */
+.l_f {
+  /* Todo:文字サイズが大きいときに高さの最大値を設けたいけど、色々おかしくなる */
+  max-height: 20vh;
+  display: grid;
+  grid-template-rows: 1fr;
+  padding: var(--pd-outermost-bottom) var(--pd-outermost-both-sides);
+}
+@media (prefers-reduced-motion: no-preference){
+  .l_f{
+    transition:
+      grid-tempalte-rows var(--animation-duration),
+      padding-top var(--animation-duration),
+      padding-bottom var(--animation-duration);
+  }
+}
+.l_f > .l_f__inner {
+  display: grid;
+  grid-template-columns: 100%;
+  justify-content: right;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  overflow: hidden; /* for grid-template-rows transition */
+}
+.l_f_i {
+  overflow: auto;
+}
+.l_f[aria-hidden='false'].l_f_i {
+  padding: 2px; /* for outline */
+}
+.c_copyright {
+  font-size: var(--fz-small);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.l_f[aria-hidden='true'] {
+  /* on shrink animation ends*/
+  grid-template-rows: 0fr;
+  padding-top: 0;
+  padding-bottom: 0;
+  & :is(a[href],button,[tabindex]:not([tabindex="-1"]),[role="button"],input,textarea){
+    visibility: hidden;
+  }
+}

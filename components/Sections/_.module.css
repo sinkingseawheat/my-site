@@ -1,0 +1,88 @@
+
+/* h1 */
+.wrap_h1{
+  & p + p{
+    margin-top: 1.2rem;
+  }
+  &.-mb{
+    margin-bottom: 6rem;
+  }
+}
+.c_headLv1 {
+  font-size: var(--fz-headingLv1);
+  line-height: 1.2;
+  &.-mb{
+    margin-bottom: 2rem;
+  }
+}
+.c_headLv1_i {}
+.c_headLv1__lead {
+margin-top: 1.2rem;
+}
+
+/* h2 */
+.l_secLv2 + .l_secLv2 {
+/* h2セクションは1カラム固定 */
+margin-top: 4rem;
+}
+.c_headLv2 {
+--rectangle-height: 0.18rem;
+--colored-rectangle-width: 10em;
+padding-bottom: var(--rectangle-height);
+font-size: var(--fz-headingLv2);
+position: relative;
+&::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--rectangle-height);
+  background: linear-gradient(
+    to right,
+    rgb(var(--color-secondary)) 0 var(--colored-rectangle-width),
+    rgb(var(--color-fg) / 20%) var(--colored-rectangle-width) 100%
+  );
+}
+}
+.c_headLv2__cnt {
+margin-top: 2rem;
+display: grid;
+grid-template-columns: 100%;
+row-gap: 1rem;
+&.-center {
+  justify-content: center;
+}
+}
+
+/* h3 */
+.l_wrapSecLv3 {
+  display: grid;
+  row-gap: 2rem;
+  grid-template-columns: 100%;
+}
+.c_headLv3 {
+  --line-width: 0.25rem;
+  padding-left: calc(var(--line-width) * 2);
+  background: linear-gradient(
+    to right,
+    rgb(var(--color-secondary)) 0 var(--line-width),
+    transparent var(--line-width) 100%
+  );
+  font-size: var(--fz-headingLv3);
+}
+
+.c_headLv3__cnt {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 100%;
+  row-gap: 1rem;
+  &.-center {
+    justify-content: center;
+  }
+}
+.l_secLv3 {
+  margin-top: 3rem;
+}
+
