@@ -21,11 +21,31 @@ export default function GlobalMenu({
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   const handleShowDialog = ()=>{
-    dialogRef?.current?.showModal()
+    if(dialogRef.current){
+      dialogRef.current?.showModal()
+      if(window.matchMedia(`(prefers-reduced-motion: no-preference)`).matches){
+        dialogRef.current.animate([
+        {transform:`scale(0)`},
+        {transform:`scale(1)`},
+      ],300)
+      }
+    }
   }
 
   const handleCloseDialog = ()=>{
-    dialogRef?.current?.close();
+    if(dialogRef.current){
+      if(window.matchMedia(`(prefers-reduced-motion: no-preference)`).matches){
+        const animation =dialogRef.current.animate([
+          {transform:`scale(1)`},
+          {transform:`scale(0)`},
+        ],300)
+        animation.onfinish = (()=>{
+          dialogRef?.current?.close();
+        })
+      }else{
+        dialogRef.current.close();
+      }
+    }
   }
 
   const onHandleKeyDown = (e:KeyboardEvent<HTMLDialogElement>)=>{
