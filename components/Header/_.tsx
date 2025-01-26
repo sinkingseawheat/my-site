@@ -31,6 +31,7 @@ export default function Header({
                   <S.lv3 title='開発した・しているツール'>
                     <List>
                       <LinkText href='/tool/dp/' isOpenAnotherTab={false} elm='メディアの種別と特性を確認' />
+                      <LinkText href='/tool/genRandomString/' isOpenAnotherTab={false} elm='ランダム文字列生成ツール' />
                     </List>
                   </S.lv3>
                   </>
