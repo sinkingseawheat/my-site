@@ -27,7 +27,10 @@ export default function GlobalMenu({
         dialogRef.current.animate([
         {transform:`scale(0)`},
         {transform:`scale(1)`},
-      ],300)
+      ],{
+        duration:300,
+        easing:'ease-out'
+      })
       }
     }
   }
@@ -38,7 +41,10 @@ export default function GlobalMenu({
         const animation =dialogRef.current.animate([
           {transform:`scale(1)`},
           {transform:`scale(0)`},
-        ],300)
+        ],{
+          duration:300,
+          easing:'ease-out'
+        })
         animation.onfinish = (()=>{
           dialogRef?.current?.close();
         })
