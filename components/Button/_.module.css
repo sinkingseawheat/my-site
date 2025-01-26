@@ -1,9 +1,14 @@
 .button{
   background-color: rgb(var(--color-primary));
-  padding: .5em 1em;
+  padding: .2em 1em;
   color: rgb(var(--color-bg));
   font-weight: bold;
   position: relative;
+  font-size: 1em;
+}
+.button:disabled{
+  color: rgb(var(--color-disabled-text));
+  background-color: rgb(var(--color-disabled-background));
 }
 .button::after{
   content: "";
@@ -20,13 +25,13 @@
   transition: width var(--animation-changing);
   border-radius: 8px;
 }
-.button_i{}
+/* .button_i{} */
 
 .button:focus::after {
   width: 100%
 }
 @media(hover: hover) {
-  .button:hover::after {
+  .button:not([disabled]):hover::after {
       width:100%
   }
 }
@@ -53,8 +58,8 @@
   transition: width var(--animation-changing);
   border-radius: 8px
 }
-.buttonLink_i{}
-.buttonLinkIcon{}
+/* .buttonLink_i{}
+.buttonLinkIcon{} */
 
 
 .buttonLink:focus::after {

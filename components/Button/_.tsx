@@ -5,7 +5,9 @@ import type { JSX } from 'react';
 type ButtonElm = {
   type:'button',
   children: React.ReactElement | string,
-  onClick: React.MouseEventHandler<HTMLButtonElement>,
+  onClick?: React.MouseEventHandler<HTMLButtonElement>,
+  isSubmit?:boolean,
+  isDisabled?:boolean
 };
 
 type LinkElm = {
@@ -21,9 +23,9 @@ export function Button(args:LinkElm):JSX.Element;
 
 export default function Button(args:ButtonElm|LinkElm){
   if(args.type === 'button'){
-    const { children, onClick, } = args;
+    const { children, onClick, isSubmit, isDisabled } = args;
     return (
-    <button className={style.button} type='button' onClick={onClick}>
+    <button className={style.button} type={isSubmit ? 'submit' : 'button'} onClick={onClick} disabled={isDisabled}>
       {
         typeof children === 'string' ?
         <span className={style.button_i}>{children}</span>
