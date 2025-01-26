@@ -10,6 +10,11 @@
   --color-fg: 0 0 0;
   --color-primary: 79 119 60;
   --color-secondary: 174 144 53;
+  --color-error: 154 27 27;
+  --color-disabled-background: 24 24 24;
+  --color-disabled-text: 226 226 226;
+  --color-fixed-white: 255 255 255;
+  --color-fixed-black: 0 0 0;
   --value-line-height-default: 1.7;
   --pd-outermost-top: 1rem;
   --pd-outermost-both-sides: 1rem;
@@ -17,8 +22,6 @@
   --animation-changing: ease-out 0.3s;
   --animation-duration: 0.3s;
   --max-width-inner: min(100%, calc(100% - 4rem));
-  --color-fixed-white: 255 255 255;
-  --color-fixed-black: 0 0 0;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -26,6 +29,9 @@
     --color-fg: 255 255 255;
     --color-primary: 179 234 154;
     --color-secondary: 240 229 71;
+    --color-error: 244 108 108;
+    --color-disabled-text: 24 24 24;
+    --color-disabled-background: 226 226 226;
   }
 }
 
@@ -177,6 +183,11 @@
   a[href], a[href]:is(:link, :visited, :active) {
     color: inherit;
     text-decoration: underline;
+  }
+  fieldset{
+    padding: 0;
+    margin: 0;
+    border: none;
   }
 }
 
