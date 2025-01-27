@@ -31,8 +31,8 @@ export default function LayoutDefault({
         <L.vb classNameOption='footer'>
           <Footer isHFExpanded={isHFExpanded} setIsHFExpanded={setIsHFExpanded}/>
         </L.vb>
-        {/* google analitics */}
-        <Script strategy="beforeInteractive" async src="https://www.googletagmanager.com/gtag/js?id=G-KMHNXEECYX" />
-        <Script strategy="beforeInteractive" id="gtagInitialize">{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-KMHNXEECYX');`}</Script>
+        {/* google ANALYTICS */}
+        <Script strategy="beforeInteractive" async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
+        <Script strategy="beforeInteractive" id="gtagInitialize">{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');`}</Script>
       </L.innerBody>);
 }

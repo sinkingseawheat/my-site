@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sinkingseawheat.com'),
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_PROTOCOL_AND_FQDN}`),
   title:{
     default:'sinkingseawheatのページです',
     template: '%s | ssw\'s site',
