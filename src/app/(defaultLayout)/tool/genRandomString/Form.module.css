@@ -15,7 +15,7 @@
 }
 .labelTextfield{
   display: block;
-  span{
+  & span{
     padding-right: 0.4em;
   }
 }
