@@ -31,3 +31,8 @@
   }
 }
 /* .output{} */
+.outputItem{
+  border: 1px solid rgb(var(--color-fg));
+  border-radius: 0.25rem;
+  padding: 0.25em;
+}
