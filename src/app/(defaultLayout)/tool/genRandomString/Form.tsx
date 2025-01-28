@@ -39,7 +39,7 @@ export function Form(){
     const source = (data.src_A ? UPPERCASE_ALPHABET : '')
     + (data.src_a ? LOWERCASE_ALPHABET : '')
     + (data.src_0 ? NUMBER : '')
-    let _all = [];
+    const _all = [];
     for(let _count=0;_count<parseInt(data.count);_count++){
       let _output = ``;
       const sourceLength = source.length;
