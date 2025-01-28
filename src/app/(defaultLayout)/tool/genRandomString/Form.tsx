@@ -40,10 +40,10 @@ export function Form(){
     + (data.src_a ? LOWERCASE_ALPHABET : '')
     + (data.src_0 ? NUMBER : '')
     const _all = [];
-    for(let _count=0;_count<parseInt(data.count);_count++){
+    for(let _count=0; _count < parseInt(data.count); _count++){
       let _output = ``;
       const sourceLength = source.length;
-      for(let _length=0;_length<parseInt(data.length);_length++){
+      for(let _length=0; _length < parseInt(data.length); _length++){
         _output += source[Math.floor(Math.random() * sourceLength)];
       }
       _all.push(_output)
