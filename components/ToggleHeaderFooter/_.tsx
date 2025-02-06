@@ -15,7 +15,7 @@ export default function ToggleHeaderFooter({
       className={style.c_toggleHeaderFooterVisible}
       aria-expanded={isHFExpanded}
       aria-controls='aria-header aria-footer'
-      data-text={isHFExpanded ? `ヘッダーとフッターを隠す` : 'ヘッダーとフッターを表示する'}
+      aria-label={isHFExpanded ? `ヘッダーとフッターを隠す` : 'ヘッダーとフッターを表示する'}
       onClick={(e)=>{
         e.preventDefault()
         e.stopPropagation()
