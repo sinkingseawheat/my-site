@@ -10,7 +10,7 @@ export default function Header({
 }:Pick<Parameters<typeof ToggleHeaderFooter>[0],"isHFExpanded"> & {ref:React.RefObject<HTMLElement | null>}
 ){
   return (
-  <header className={style.l_h} id='aria-header' aria-hidden={!isHFExpanded} ref={ref}>
+  <header className={style.l_h} id='aria-header' aria-hidden={!isHFExpanded} inert={!isHFExpanded} ref={ref}>
     <div className={style.l_h__inner}>
       <div className={style.l_h_i}>
         <Link href='/' className={style.c_headerLogo}>

@@ -10,7 +10,7 @@ export default function Footer({
 }:Parameters<typeof ToggleHeaderFooter>[0]){
   return (<>
     <ToggleHeaderFooter isHFExpanded={isHFExpanded} setIsHFExpanded={setIsHFExpanded}/>
-    <footer className={style.l_f} id='aria-footer' aria-hidden={!isHFExpanded}>
+    <footer className={style.l_f} id='aria-footer' aria-hidden={!isHFExpanded} inert={!isHFExpanded}>
       <div className={style.l_f__inner}>
         <div className={`${style.l_f_i} ${style['-share']}`}>
           <Suspense>
