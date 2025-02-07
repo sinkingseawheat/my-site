@@ -68,7 +68,11 @@ export function Form(){
                   },
                   validate:(v)=>(!( v!==v || parseInt(v)>128) || `128以下の数値を半角で入力してください` )
                 })}/></label>
-                {errors.length && <p className={style.errorMessage}>{errors.length.message}</p> }
+                <div>
+                  <div aria-live='polite' role='alert'>
+                    {errors.length && <p className={style.errorMessage}>{errors.length.message}</p> }
+                  </div>
+                </div>
               </div>
               <div className={style.column1Item}>
                 <label className={style.labelTextfield}><span>個数</span><input type='text' {...register(`count`,{
@@ -79,7 +83,9 @@ export function Form(){
                   },
                   validate:(v)=>(!( v!==v || parseInt(v)>20) || `20以下の数値を半角で入力してください` )
                 })}/></label>
-                {errors.count && <p className={style.errorMessage}>{errors.count.message}</p> }
+                <div aria-live='polite' role='alert'>
+                  {errors.count && <p className={style.errorMessage}>{errors.count.message}</p> }
+                </div>
               </div>
             </div>
           </fieldset>
@@ -112,7 +118,9 @@ export function Form(){
                   })}/>
               <span>数字</span>
             </label>
-            {errors.src_A && <p className={style.errorMessage}>{errors.src_A.message}</p> }
+            <div aria-live='polite' role='alert'>
+              {errors.src_A && <p className={style.errorMessage}>{errors.src_A.message}</p> }
+            </div>
           </fieldset>
           <div>
             <Button type='button' isSubmit={true} isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>
