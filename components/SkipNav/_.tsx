@@ -17,23 +17,28 @@ export default function SkipNav({
     href={`#${idToMove}`}
     onClick={(e)=>{
       const offsetElm = ref.current
-      if(offsetElm){
+      const targetElm = document.getElementById(`${idToMove}`)
+      if(targetElm){
         e.preventDefault()
         e.stopPropagation()
-        const isTabIndexEmpty = offsetElm.getAttribute(`tabindex`) === null
+        const isTabIndexEmpty = targetElm.getAttribute(`tabindex`) === null
         if(isTabIndexEmpty){
-          offsetElm.setAttribute(`tabindex`,`-1`)
+          targetElm.setAttribute(`tabindex`,`-1`)
         }
-        const offsetY = offsetElm.clientHeight
-        window.scrollTo({
-          top: -1 * offsetY,
-          behavior: 'smooth',
-        })
+        if(offsetElm){
+          const offsetY = offsetElm.clientHeight
+          console.log(offsetY)
+          window.scrollTo({
+            top: -1 * offsetY,
+            behavior: 'smooth',
+          })
+        }
         setTimeout(()=>{
-          offsetElm.focus();
-          if(isTabIndexEmpty){
-            offsetElm.removeAttribute(`tabindex`)
-          }
+          targetElm.focus();
+          console.log(document.activeElement)
+          /* if(isTabIndexEmpty){
+            targetElm.removeAttribute(`tabindex`)
+          } */
         },1)
         return false
       }
