@@ -27,7 +27,6 @@ export default function SkipNav({
         }
         if(offsetElm){
           const offsetY = offsetElm.clientHeight
-          console.log(offsetY)
           window.scrollTo({
             top: -1 * offsetY,
             behavior: 'smooth',
@@ -35,7 +34,7 @@ export default function SkipNav({
         }
         setTimeout(()=>{
           targetElm.focus();
-          console.log(document.activeElement)
+          // フォーカス位置が飛ぶのでtabindexは残す
           /* if(isTabIndexEmpty){
             targetElm.removeAttribute(`tabindex`)
           } */
