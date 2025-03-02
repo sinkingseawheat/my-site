@@ -1,8 +1,7 @@
 import style from './_.module.css'
-import { Picture, GlobalMenu, S, List, LinkText, ToggleHeaderFooter } from '@components/all';
+import { Picture, GlobalMenu, ToggleHeaderFooter } from '@components/all';
 import Link from 'next/link';
 import { Suspense } from 'react';
-
 
 export default function Header({
   isHFExpanded,
@@ -20,24 +19,7 @@ export default function Header({
       </div>
       <div className={style.l_h_i}>
         <Suspense>
-          <GlobalMenu>
-              <nav>
-                <S.lv2 title='リンク一覧'>
-                  <>
-                  <List>
-                    <LinkText href='/' isOpenAnotherTab={false} elm='TOPページ' />
-                    <LinkText href='/profile/' isOpenAnotherTab={false} elm='作者の紹介ページ' />
-                  </List>
-                  <S.lv3 title='開発した・しているツール'>
-                    <List>
-                      <LinkText href='/tool/dp/' isOpenAnotherTab={false} elm='メディアの種別と特性を確認' />
-                      <LinkText href='/tool/genRandomString/' isOpenAnotherTab={false} elm='ランダム文字列生成ツール' />
-                    </List>
-                  </S.lv3>
-                  </>
-                </S.lv2>
-              </nav>
-          </GlobalMenu>
+          <GlobalMenu />
         </Suspense>
       </div>
     </div>
