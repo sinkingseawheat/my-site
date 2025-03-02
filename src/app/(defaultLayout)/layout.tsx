@@ -1,8 +1,6 @@
 'use client'
 // import type { Metadata } from "next";
-import { L, SkipNav } from '@components/all';
-import { Header, Footer } from '@components/all';
-import Script from 'next/script';
+import { L, SkipNav, Header, Footer, GoogleAnalytics } from '@components/all';
 import { useState, useRef } from 'react';
 
 export default function LayoutDefault({
@@ -31,8 +29,6 @@ export default function LayoutDefault({
         <L.vb classNameOption='footer'>
           <Footer isHFExpanded={isHFExpanded} setIsHFExpanded={setIsHFExpanded}/>
         </L.vb>
-        {/* google ANALYTICS */}
-        <Script strategy="beforeInteractive" async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
-        <Script strategy="beforeInteractive" id="gtagInitialize">{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');`}</Script>
+        <GoogleAnalytics />
       </L.innerBody>);
 }
