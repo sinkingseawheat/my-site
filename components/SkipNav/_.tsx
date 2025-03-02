@@ -18,7 +18,7 @@ export default function SkipNav({
     onClick={(e)=>{
       const offsetElm = ref.current
       const targetElm = document.getElementById(`${idToMove}`)
-      if(targetElm){
+      if(targetElm && targetElm.tagName==='MAIN'){
         e.preventDefault()
         e.stopPropagation()
         const isTabIndexEmpty = targetElm.getAttribute(`tabindex`) === null
