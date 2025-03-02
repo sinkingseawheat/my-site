@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { object, z } from 'zod'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,34 +11,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const defaultMetaScheme = z.object({
-  _metadataBaseURL: z.string(),
-  title:z.object({
-    default: z.string(),
-    template: z.string(),
-  }),
-  robots: z.object({
-    index: z.boolean(),
-    follow: z.boolean(),
-    nocache: z.boolean(),
-  }),
-  description: z.string(),
-  generator: z.string(),
-  applicationName: z.string(),
-  creator: z.string(),
-  publisher: z.string(),
-  authors: z.object({ name: z.string(), url: z.string() }),
-  referrer: z.string(),
-  formatDetection: z.object({
-    email: z.boolean(),
-    address: z.boolean(),
-    telephone: z.boolean(),
-  }),
-  alternates: object({
-    canonical: z.string()
-  })
-})
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const metaData:Metadata = {
