@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "prebuild": "npx tsx .\\preprocess\\getPageList.ts"
   },
   "dependencies": {
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "tsx": "^4.19.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {

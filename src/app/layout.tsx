@@ -12,9 +12,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const PROTOCOL_AND_FQDN = process.env.NEXT_PUBLIC_PROTOCOL_AND_FQDN;
+
 export const generateMetadata = async (): Promise<Metadata> => {
   const metaData:Metadata = {
-    "metadataBase": new URL("https://sinkingseawheat.com"),
+    "metadataBase": PROTOCOL_AND_FQDN===undefined ? null : new URL(PROTOCOL_AND_FQDN),
     "title":{
       "default": "sinkingseawheatのページです",
       "template": "%s | ssw's site"
@@ -48,7 +50,7 @@ export const viewport: Viewport = {
   viewportFit:'cover',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

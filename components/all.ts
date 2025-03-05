@@ -19,6 +19,7 @@ import Button from "./Button/_";
 import ColumsLayout from "./ColumsLayout/_";
 import ToggleHeaderFooter from "./ToggleHeaderFooter/_";
 import GoogleAnalytics from "./GoogleAnalytics/_";
+import PageList from "./PageList/_";
 
 export {
   List,
@@ -31,6 +32,7 @@ export {
   ColumsLayout,
   ToggleHeaderFooter,
   GoogleAnalytics,
+  PageList,
 }
 
 /* Header Footer */

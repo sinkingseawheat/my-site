@@ -2,9 +2,9 @@ import { type Dirent } from 'fs'
 import fs from 'fs/promises'
 import path from 'path'
 
-export type Results = {url:string,title:string,label:'tool'|'other'}[]
+export type PageListJSON = {url:string,title:string,label:'tool'|'other'|'outside'}[]
 
-const searchPage = async (dirents:Dirent[], results:Results):Promise<void>=>{
+const searchPage = async (dirents:Dirent[], results:PageListJSON):Promise<void>=>{
   for(const dirent of dirents){
     if(dirent.isDirectory()){
       const childDirent = await fs.readdir(path.join(dirent.parentPath, dirent.name),{withFileTypes:true})
@@ -27,10 +27,17 @@ const searchPage = async (dirents:Dirent[], results:Results):Promise<void>=>{
   }
 }
 
-export async function GET() {
+export async function getPageList() {
   const rootPath = path.join(process.cwd(), 'src/app')
   const dirents = await fs.readdir(rootPath, {withFileTypes:true});
-  const results:Results = [];
+  const results:PageListJSON = [];
   await searchPage(dirents, results);
-  return Response.json(results)
+
+  // 外部サイトはこちらに追記
+  results.push({url:`https://github.com/sinkingseawheat/webpage_snapshot`,title:`Webページのスナップショット保存（GitHubのページへ移動します）`,label:'outside'})
+
+  await fs.writeFile(path.join(process.cwd(), 'public/pagelist.json'),JSON.stringify(results));
+  console.log(`pagelist.json created`)
 }
+
+getPageList(); // 値を取り出す必要はないので、awaitは不要。tsxでtop-level awaitを使用する方法が分からなかった。

@@ -1,24 +1,10 @@
 'use client'
 import style from './_.module.css';
-import { type KeyboardEvent, useEffect, useState, useRef } from 'react';
+import { type KeyboardEvent, useEffect, useRef } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-import {S, List, LinkText} from '@components/all'
-import { type Results } from '@/app/api/getPageList.ts/route';
-
-export const dynamic = 'force-static'
+import { PageList } from '@components/all';
 
 export default function GlobalMenu(){
-
-  const [list, setList] = useState<Results>([])
-  useEffect(()=>{
-    (async ()=>{
-      const response = await fetch(`/api/getPageList.ts`)
-      if(response.ok){
-        const json = await response.json()
-        setList(json)
-      }
-    })();
-  },[]);
 
   const _pathname = usePathname()
   const _searchParams = useSearchParams()
@@ -127,20 +113,7 @@ export default function GlobalMenu(){
         <div className={style.wrapContent}>
 
         <nav>
-          <S.lv2 title='リンク一覧'>
-            <List>
-              {list.filter((linkElm)=>linkElm.label==='other').map((linkElm)=>{
-                return (<LinkText href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false} elm={linkElm.title}/>)
-              })}
-            </List>
-            <S.lv3 title='開発した・しているツール'>
-              <List>
-                {list.filter((linkElm)=>linkElm.label==='tool').map((linkElm)=>{
-                  return (<LinkText href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false} elm={linkElm.title}/>)
-                })}
-              </List>
-            </S.lv3>
-          </S.lv2>
+          <PageList />
         </nav>
         </div>
       </div>
