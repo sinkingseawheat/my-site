@@ -132,7 +132,7 @@ export function Form(){
       </S.lv2>
       <S.lv2 title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
-        {output.length === 0 ? <>まだ1回も実行されていません</> : (<ColumsLayout minColumnWidth={length} columnGap='1em'>
+        {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><ColumsLayout minColumnWidth={length} columnGap='1em'>
           {output.map((randomString)=><p className={style.outputItem} key={randomString} onClick={()=>{
             navigator.clipboard.writeText(randomString).then(()=>{
               if(popupMessage!==undefined && setPopupMessage!==undefined){
@@ -140,7 +140,7 @@ export function Form(){
               }
             })
           }}><strong>{randomString}</strong></p>)}
-        </ColumsLayout>)}
+        </ColumsLayout></>)}
       </S.lv2>
     </>
   )
