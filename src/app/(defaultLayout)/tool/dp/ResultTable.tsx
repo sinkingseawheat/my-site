@@ -29,7 +29,7 @@ export function ResultTable<T extends string[]>({
   fillType: string,
 }) {
 
-  const [popupMessage, setPopupMessage] = useContext(PopupContext)
+  const [, setPopupMessage] = useContext(PopupContext)
 
   const fillInBrowserType01:(row:T)=>T = (row)=>{
     const v = structuredClone(row)
