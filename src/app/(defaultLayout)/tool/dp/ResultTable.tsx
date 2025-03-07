@@ -60,7 +60,7 @@ export function ResultTable<T extends string[]>({
         }
       }})
     );
-  },[]);
+  },[data, fillType]);
 
   const [theadData, ...tbodyData] = filledData;
   if(!Array.isArray(tbodyData) || tbodyData.length===0){

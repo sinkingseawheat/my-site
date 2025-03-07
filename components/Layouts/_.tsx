@@ -26,4 +26,6 @@ function vb({
   );
 }
 
-export default {innerBody, vb}
+const aggregation = {innerBody, vb}
+
+export default aggregation

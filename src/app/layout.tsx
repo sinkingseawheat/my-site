@@ -16,7 +16,7 @@ const PROTOCOL_AND_FQDN = process.env.NEXT_PUBLIC_PROTOCOL_AND_FQDN;
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const metaData:Metadata = {
-    "metadataBase": PROTOCOL_AND_FQDN===undefined ? null : new URL(PROTOCOL_AND_FQDN),
+    "metadataBase": PROTOCOL_AND_FQDN===undefined ? undefined : new URL(PROTOCOL_AND_FQDN),
     "title":{
       "default": "sinkingseawheatのページです",
       "template": "%s | ssw's site"

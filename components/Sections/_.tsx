@@ -60,4 +60,6 @@ function lv3({
   ) : null
 }
 
-export default {lv1, lv2, lv3}
+const aggregation = {lv1, lv2, lv3}
+
+export default aggregation
