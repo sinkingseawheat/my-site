@@ -1,0 +1,49 @@
+.wrap{
+  height: 0;
+  width: 100%;
+  position: relative;
+  bottom: 2rem;
+  left: 0;
+  overflow: visible;
+  z-index: 1000;
+  transition: opacity var(--animation-changing);
+  opacity: 1;
+  &:empty{
+    opacity: 0;
+  }
+}
+.list{
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  width: 70%;
+  border: 2px solid rgb(var(--color-fg));
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: rgb(var(--color-bg));
+  display: block;
+}
+.listitem{
+  display: grid;
+  &:not(:last-child){
+    grid-template-rows: 1fr;
+  }
+  &:last-child{
+    animation: var(--animation-changing);
+    animation-name: addMessage;
+  }
+  transition: grid-template-rows var(--animation-changing), display var(--animation-changing);
+  transition-behavior: allow-discrete;
+  &[role="presentation"]{
+    grid-template-rows: 0fr;
+    display: none;
+  }
+}
+.listitem_i{
+  overflow: hidden;
+}
+
+@keyframes addMessage {
+  from {grid-template-rows: 0fr;}
+  to {grid-template-rows: 1fr;}
+}

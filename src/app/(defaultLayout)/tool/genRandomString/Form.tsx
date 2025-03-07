@@ -1,8 +1,9 @@
 'use client'
 import style from './Form.module.css'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Button, S, ColumsLayout } from '@components/all'
+import { PopupContext } from '@components/context';
 
 type Inputs = {
   length: string,
@@ -31,6 +32,8 @@ export function Form(){
 
   const [output, setOutput] = useState<string[]>([])
   const [length, setLength] = useState<string>(`100%`)
+
+  const [popupMessage, setPopupMessage] = useContext(PopupContext);
 
   const onSubmit:SubmitHandler<Inputs> = (data)=>{
     const UPPERCASE_ALPHABET = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
@@ -130,7 +133,11 @@ export function Form(){
       <S.lv2 title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
         {output.length === 0 ? <>まだ1回も実行されていません</> : (<ColumsLayout minColumnWidth={length} columnGap='1em'>
-          {output.map((randomString)=><p className={style.outputItem} key={randomString}>{randomString}</p>)}
+          {output.map((randomString)=><p className={style.outputItem} key={randomString} onClick={()=>{
+            if(popupMessage!==undefined && setPopupMessage!==undefined){
+              setPopupMessage(`${randomString}がコピーされました`)
+            }
+          }}><strong>{randomString}</strong></p>)}
         </ColumsLayout>)}
       </S.lv2>
     </>

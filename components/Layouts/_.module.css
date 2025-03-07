@@ -33,7 +33,7 @@
     box-shadow: 0 -5px 6px rgb(var(--color-fg) / 0.7);
     position: sticky;
     bottom: 0;
-    margin-top: 60px; /* 追従ボタンの分 */
+    margin-top: 7rem; /* 追従ボタンとBottomPopupの分 */
     z-index: 100;
   }
   &.asideContent{
