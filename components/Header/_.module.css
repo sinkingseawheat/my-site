@@ -11,12 +11,12 @@
 @media (prefers-reduced-motion: no-preference){
   .l_h {
     transition:
-      grid-tempalte-rows var(--animation-duration),
+      grid-template-rows var(--animation-duration),
       padding-top var(--animation-duration),
       padding-bottom var(--animation-duration);
   }
 }
-.l_h > .l_h__inner {
+.l_h__inner {
   display: grid;
   grid-template-columns: auto auto;
   justify-content: space-between;

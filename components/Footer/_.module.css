@@ -10,7 +10,7 @@
 @media (prefers-reduced-motion: no-preference){
   .l_f{
     transition:
-      grid-tempalte-rows var(--animation-duration),
+      grid-template-rows var(--animation-duration),
       padding-top var(--animation-duration),
       padding-bottom var(--animation-duration);
   }
