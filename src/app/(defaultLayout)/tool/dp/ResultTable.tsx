@@ -1,7 +1,8 @@
 'use client'
 import style from './ResultTable.module.css'
 import { Button } from '@components/all'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { PopupContext } from '@components/context'
 
 type VariableCSSProperties = React.CSSProperties & {
   [key:`--${string}`]:string,
@@ -27,6 +28,8 @@ export function ResultTable<T extends string[]>({
   data: T[],
   fillType: string,
 }) {
+
+  const [popupMessage, setPopupMessage] = useContext(PopupContext)
 
   const fillInBrowserType01:(row:T)=>T = (row)=>{
     const v = structuredClone(row)
@@ -63,7 +66,9 @@ export function ResultTable<T extends string[]>({
   if(!Array.isArray(tbodyData) || tbodyData.length===0){
     return (<></>)
   }
+
   const textCopying = tbodyData.map((row)=>row.join('\t')).join('\n');
+
   return (
     <div className={style.wrap} style={setVariableWrap({contentHeight, cellMinWidth})}>
       <table className={style.table}>
@@ -72,7 +77,9 @@ export function ResultTable<T extends string[]>({
             {caption}
             <Button type="button" onClick={()=>{
               navigator.clipboard.writeText(textCopying).then(()=>{
-                alert(`クリップボードにコピーしました\n${textCopying}`)
+                if(setPopupMessage !== undefined){
+                  setPopupMessage(`クリップボードにコピーしました\n${textCopying}`)
+                }
               })
             }}>
               データをタブ区切りかつ結合無しでコピーする

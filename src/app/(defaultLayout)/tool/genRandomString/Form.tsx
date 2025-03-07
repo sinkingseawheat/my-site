@@ -134,9 +134,11 @@ export function Form(){
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
         {output.length === 0 ? <>まだ1回も実行されていません</> : (<ColumsLayout minColumnWidth={length} columnGap='1em'>
           {output.map((randomString)=><p className={style.outputItem} key={randomString} onClick={()=>{
-            if(popupMessage!==undefined && setPopupMessage!==undefined){
-              setPopupMessage(`${randomString}がコピーされました`)
-            }
+            navigator.clipboard.writeText(randomString).then(()=>{
+              if(popupMessage!==undefined && setPopupMessage!==undefined){
+                setPopupMessage(`${randomString}がコピーされました`)
+              }
+            })
           }}><strong>{randomString}</strong></p>)}
         </ColumsLayout>)}
       </S.lv2>
