@@ -6,7 +6,7 @@ import { PopupContext } from '@components/context'
 export default function BottomPopup(
   {duration,maxVisivleNumber}:{duration?:number, maxVisivleNumber?:number}
 ){
-  const _duration = duration ?? 20000
+  const _duration = duration ?? 2000
   const _maxVisivleNumber = maxVisivleNumber ?? 1
   const [popupMessage, setPopupMessage] = useContext(PopupContext)
   const [messages, setMessages] = useState<{elm:ReactNode,timestamp:string}[]>([])
