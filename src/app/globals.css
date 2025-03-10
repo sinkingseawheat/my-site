@@ -67,6 +67,7 @@
     padding: 0;
     background-color: transparent;
     display: flex; /* for mystery padding-bottom */
+    flex-wrap: wrap;
     border-radius: 8px;
     border: 2px solid transparent;
     color: currentColor;

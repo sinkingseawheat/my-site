@@ -1,21 +1,17 @@
 import style from './_.module.css';
 import Link from 'next/link';
-import type { JSX } from 'react';
+import type { JSX, ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
 
 type ButtonElm = {
   type:'button',
-  children: React.ReactElement | string,
-  onClick?: React.MouseEventHandler<HTMLButtonElement>,
   isSubmit?:boolean,
-  isDisabled?:boolean
-};
+  isDisabled?:boolean,
+} & ButtonHTMLAttributes<Element>;
 
 type LinkElm = {
   type:'link',
-  children: React.ReactElement | string,
-  href:string,
-  isOpenAnotherTab:boolean
-};
+  isOpenAnotherTab:boolean,
+} & AnchorHTMLAttributes<Element>;;
 
 export function Button(args:ButtonElm):JSX.Element;
 
@@ -23,9 +19,9 @@ export function Button(args:LinkElm):JSX.Element;
 
 export default function Button(args:ButtonElm|LinkElm){
   if(args.type === 'button'){
-    const { children, onClick, isSubmit, isDisabled } = args;
+    const { children, onClick, isSubmit, isDisabled, className } = args;
     return (
-    <button className={style.button} type={isSubmit ? 'submit' : 'button'} onClick={onClick} disabled={isDisabled}>
+    <button className={`${style.button}${className ? ` ${className}` : ''}`} type={isSubmit ? 'submit' : 'button'} onClick={onClick} disabled={isDisabled}>
       {
         typeof children === 'string' ?
         <span className={style.button_i}>{children}</span>
@@ -34,10 +30,22 @@ export default function Button(args:ButtonElm|LinkElm){
       </button>
     );
   }else{
-    const { children, href, isOpenAnotherTab } = args;
+    const { children, href, isOpenAnotherTab, className } = args;
+    // hrefが未定義ならばリンクではなく<span>にする
+    if(href === undefined){
+      return (
+        <span className={`${style.buttonLink}${className ? ` ${className}` : ''}`}>
+        {
+          typeof children === 'string' ?
+          <span className={style.buttonLink_i}>{children}</span>
+          : children
+        }
+        </span>
+      )
+    }
     return (
       <Link
-        className={style.buttonLink}
+        className={`${style.buttonLink}${className ? ` ${className}` : ''}`}
         href={href}
         target={isOpenAnotherTab ? '_blank' : undefined}
       >
