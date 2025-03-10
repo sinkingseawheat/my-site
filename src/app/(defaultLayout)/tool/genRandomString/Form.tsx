@@ -133,13 +133,13 @@ export function Form(){
       <S.lv2 title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
         {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><ColumsLayout minColumnWidth={length} columnGap='1em'>
-          {output.map((randomString)=><p className={style.outputItem} key={randomString} onClick={()=>{
+          {output.map((randomString)=><Button type='button' className={style.outputItem} key={randomString} onClick={()=>{
             navigator.clipboard.writeText(randomString).then(()=>{
               if(popupMessage!==undefined && setPopupMessage!==undefined){
                 setPopupMessage(`${randomString}がコピーされました`)
               }
             })
-          }}><strong>{randomString}</strong></p>)}
+          }}>{randomString}</Button>)}
         </ColumsLayout></>)}
       </S.lv2>
     </>
