@@ -11,13 +11,16 @@ export default function BottomPopup(
   const [popupMessage, setPopupMessage] = useContext(PopupContext)
   const [messages, setMessages] = useState<{elm:ReactNode,timestamp:string}[]>([])
 
+  // Todo: Lintでstateのmessagesも依存配列に入れるべきと言われるので、要修正
   useEffect(()=>{
     if(popupMessage === ''){
       return
     }
     const newMessages = [...messages]
-    newMessages.push({elm:popupMessage,timestamp:Date.now().toString()})
-    setMessages(newMessages)
+    if(popupMessage !== newMessages.at(-1)){
+      newMessages.push({elm:popupMessage,timestamp:Date.now().toString()})
+      setMessages(newMessages)
+    }
 
     const timer = setTimeout(()=>{
       setMessages([])
@@ -25,7 +28,7 @@ export default function BottomPopup(
 
     return ()=>{clearTimeout(timer)}
 
-  },[popupMessage])
+  },[popupMessage, _duration])
 
   if(popupMessage === undefined || setPopupMessage === undefined){
     return (<></>)
