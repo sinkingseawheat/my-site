@@ -1,7 +1,7 @@
 'use client'
 import { type ReactNode } from 'react'
 import style from './_.module.css'
-import { type UseFormRegisterReturn, type FieldErrors } from "react-hook-form"
+import { type UseFormRegisterReturn } from "react-hook-form"
 
 
 type VariableCSSProperties = React.CSSProperties & {
