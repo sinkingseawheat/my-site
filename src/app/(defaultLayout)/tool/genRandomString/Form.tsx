@@ -2,7 +2,7 @@
 import style from './Form.module.css'
 import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Button, S, ColumsLayout } from '@components/all'
+import { Button, S, ColumsLayout, F } from '@components/all'
 import { PopupContext } from '@components/context';
 
 type Inputs = {
@@ -61,36 +61,34 @@ export function Form(){
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
-            <div className={style.column1}>
-              <div className={style.column1Item}>
-                <label className={style.labelTextfield}><span>文字数</span><input type='text' {...register(`length`,{
-                  valueAsNumber:true,
-                  required:{
-                    value:true,
-                    message:`128以下の数値を半角で入力してください`,
-                  },
-                  validate:(v)=>(!( v!==v || parseInt(v)>128) || `128以下の数値を半角で入力してください` )
-                })}/></label>
-                <div>
-                  <div aria-live='polite' role='alert'>
-                    {errors.length && <p className={style.errorMessage}>{errors.length.message}</p> }
-                  </div>
-                </div>
-              </div>
-              <div className={style.column1Item}>
-                <label className={style.labelTextfield}><span>個数</span><input type='text' {...register(`count`,{
-                  valueAsNumber:true,
-                  required:{
-                    value:true,
-                    message:`20以下の数値を半角で入力してください`,
-                  },
-                  validate:(v)=>(!( v!==v || parseInt(v)>20) || `20以下の数値を半角で入力してください` )
-                })}/></label>
-                <div aria-live='polite' role='alert'>
-                  {errors.count && <p className={style.errorMessage}>{errors.count.message}</p> }
-                </div>
-              </div>
-            </div>
+            <ColumsLayout minColumnWidth='100%' rowGap='.5rem' marginTop='0.7rem'>
+                <F.InputText
+                  label={`文字数`}
+                  message={errors?.['length']?.message}
+                  labelMinWidth='3em'
+                  registerReturn={register(`length`,{
+                    valueAsNumber:true,
+                    required:{
+                      value:true,
+                      message:`128以下の数値を半角で入力してください`,
+                    },
+                    validate:(v)=>(!( v!==v || parseInt(v)>128) || `128以下の数値を半角で入力してください` )
+                  })}
+                />
+                <F.InputText
+                  label={`個数`}
+                  message={errors?.['count']?.message}
+                  labelMinWidth='3em'
+                  registerReturn={register(`count`,{
+                    valueAsNumber:true,
+                    required:{
+                      value:true,
+                      message:`20以下の数値を半角で入力してください`,
+                    },
+                    validate:(v)=>(!( v!==v || parseInt(v)>20) || `20以下の数値を半角で入力してください` )
+                  })}
+                />
+            </ColumsLayout>
           </fieldset>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>英数字の使用</legend>
