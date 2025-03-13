@@ -40,3 +40,12 @@ import Header from "./Header/_";
 import Footer from "./Footer/_";
 
 export {Header, Footer}
+
+/* Form Component */
+import InputText from "./Form/InputText/_";
+
+const F = {
+  InputText,
+}
+
+export { F }

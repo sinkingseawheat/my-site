@@ -1,0 +1,29 @@
+.wrap{
+  --fz:1rem;
+  font-size: var(--fz);
+}
+.label{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 0.5em;
+  max-width: 100%;
+}
+.innerLabel{
+  flex:0 1 var(--label-min-width, 4em);
+}
+.input{
+  font-size: var(--fz);
+  font-weight: bold;
+  padding: 0.1em 0.3em;
+  flex:0 1 auto;
+  appearance: none;
+  border: 1px solid rgb(var(--color-fg));
+  border-radius: 4px;
+  &:focus{
+    outline-width: 2px;
+  }
+}
+.errorMessage{
+  color: rgb(var(--color-error));
+}
