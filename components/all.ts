@@ -4,7 +4,13 @@ import S from "./Sections/_";
 export {S}
 
 /* Layout */
-import L from './Layouts/_';
+import _L from './Layouts/_';
+import column from "./Layouts/column/_";
+
+const L = {
+  ..._L,
+  column
+}
 
 export {L}
 
@@ -16,7 +22,6 @@ import SkipNav from "./SkipNav/_";
 import Picture from "./Picture/_";
 import LinkText from "./LinkText/_";
 import Button from "./Button/_";
-import ColumsLayout from "./ColumsLayout/_";
 import ToggleHeaderFooter from "./ToggleHeaderFooter/_";
 import PageList from "./PageList/_";
 import BottomPopup from "./BottomPopup/_";
@@ -29,7 +34,6 @@ export {
   Picture,
   LinkText,
   Button,
-  ColumsLayout,
   ToggleHeaderFooter,
   PageList,
   BottomPopup,

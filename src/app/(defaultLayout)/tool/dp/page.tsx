@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { S, ColumsLayout } from "@components/all";
+import { S, L } from "@components/all";
 import { ResultTable } from "./ResultTable";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function Page() {
   </S.lv1>
   <article>
     <S.lv2 title={`結果`}>
-      <ColumsLayout minColumnWidth="35em" columnGap="2em">
+      <L.column minColumnWidth="35em" columnGap="2em">
         <ResultTable<[string, string]>
           cellMinWidth="6em"
           contentHeight="60vh"
@@ -89,7 +89,7 @@ export default function Page() {
           ]}
           fillType='2'
         />
-      </ColumsLayout>
+      </L.column>
     </S.lv2>
   </article>
 </>

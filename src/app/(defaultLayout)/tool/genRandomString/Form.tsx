@@ -2,7 +2,7 @@
 import style from './Form.module.css'
 import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Button, S, ColumsLayout, F } from '@components/all'
+import { Button, S, L, F } from '@components/all'
 import { PopupContext } from '@components/context';
 
 type Inputs = {
@@ -61,7 +61,7 @@ export function Form(){
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
-            <ColumsLayout minColumnWidth='100%' rowGap='.5rem' marginTop='0.7rem'>
+            <L.column minColumnWidth='100%' rowGap='.5rem' marginTop='0.7rem'>
                 <F.InputText
                   label={`文字数`}
                   message={errors?.['length']?.message}
@@ -88,7 +88,7 @@ export function Form(){
                     validate:(v)=>(!( v!==v || parseInt(v)>20) || `20以下の数値を半角で入力してください` )
                   })}
                 />
-            </ColumsLayout>
+            </L.column>
           </fieldset>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>英数字の使用</legend>
@@ -130,7 +130,7 @@ export function Form(){
       </S.lv2>
       <S.lv2 title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
-        {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><ColumsLayout minColumnWidth={length} columnGap='1em'>
+        {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><L.column minColumnWidth={length} columnGap='1em'>
           {output.map((randomString)=><Button type='button' className={style.outputItem} key={randomString} onClick={()=>{
             navigator.clipboard.writeText(randomString).then(()=>{
               if(popupMessage!==undefined && setPopupMessage!==undefined){
@@ -138,7 +138,7 @@ export function Form(){
               }
             })
           }}>{randomString}</Button>)}
-        </ColumsLayout></>)}
+        </L.column></>)}
       </S.lv2>
     </>
   )
