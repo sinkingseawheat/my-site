@@ -1,16 +1,13 @@
 import style from './_.module.css'
 
-type VariableCSSProperties = React.CSSProperties & {
-  [key:`--${string}`]:string,
-}
+import { type SetCSSVariable } from '@components/utility'
 
-const setVariable = ({minColumnWidth,columnGap,rowGap,marginTop}
-  :{
-    minColumnWidth?:string,
-    columnGap?:string,
-    rowGap?:string,
-    marginTop?:string,
-  }):VariableCSSProperties => {
+const setCSSVariable:SetCSSVariable<[
+  "--min-width",
+  "--column-gap",
+  "--row-gap",
+  "--margin-top"
+]> = ({minColumnWidth,columnGap,rowGap,marginTop}) => {
   return   {
     "--min-width": minColumnWidth ?? '',
     "--column-gap": columnGap ?? '',
@@ -33,11 +30,11 @@ export default function ColumnLayout({
   marginTop,
 }:{
   children: Children | Children[],
-} & Parameters<typeof setVariable>[0])
+} & {[key in 'minColumnWidth'|'columnGap'|'rowGap'|'marginTop']?:string})
 {
   const items = Array.isArray(children) ? children : [children];
   return (
-    <div className={style.wrap} style={setVariable({minColumnWidth,columnGap,rowGap,marginTop})}>
+    <div className={style.wrap} style={setCSSVariable({minColumnWidth, columnGap, rowGap, marginTop})}>
       {items.map((item,index)=>{
         return (
         <div className={style.item} key={item.props.keyId ?? index}>

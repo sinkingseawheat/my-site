@@ -3,12 +3,13 @@ import style from './ResultTable.module.css'
 import { Button } from '@components/all'
 import { useState, useEffect, useContext } from 'react'
 import { PopupContext } from '@components/context'
+import { SetCSSVariable } from '@components/utility'
 
-type VariableCSSProperties = React.CSSProperties & {
-  [key:`--${string}`]:string,
-}
 
-const setVariableWrap = ({contentHeight, cellMinWidth}:{contentHeight?:string, cellMinWidth?:string}):VariableCSSProperties => (
+const setCSSVariable:SetCSSVariable<[
+  "--content-height",
+  "--min-cell-width"
+]> = ({contentHeight, cellMinWidth}) => (
   {
     "--content-height":contentHeight ?? '',
     "--min-cell-width":cellMinWidth ?? ''
@@ -70,7 +71,7 @@ export function ResultTable<T extends string[]>({
   const textCopying = tbodyData.map((row)=>row.join('\t')).join('\n');
 
   return (
-    <div className={style.wrap} style={setVariableWrap({contentHeight, cellMinWidth})}>
+    <div className={style.wrap} style={setCSSVariable({contentHeight, cellMinWidth})}>
       <table className={style.table}>
         <caption className={style.caption}>
           <span className={style.caption_i}>

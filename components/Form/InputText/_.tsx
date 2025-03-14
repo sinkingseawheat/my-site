@@ -2,13 +2,10 @@
 import { type ReactNode } from 'react'
 import style from './_.module.css'
 import { type UseFormRegisterReturn } from "react-hook-form"
+import { type SetCSSVariable } from '@components/utility'
 
 
-type VariableCSSProperties = React.CSSProperties & {
-  [key:`--${string}`]:string,
-}
-
-const setVariable = ({labelMinWidth}:{labelMinWidth?:string}):VariableCSSProperties => {
+const SetCSSVariable:SetCSSVariable<["--label-min-width"]> = ({labelMinWidth}) => {
   return   {
     "--label-min-width": labelMinWidth ?? '',
   }
@@ -25,7 +22,7 @@ export default function InputText({
 }){
 
   return  (
-    <div className={`${style.wrap}`} style={setVariable({labelMinWidth})}>
+    <div className={`${style.wrap}`} style={SetCSSVariable({labelMinWidth})}>
       <label className={style.label}>
         {
           typeof label === 'string' ?
