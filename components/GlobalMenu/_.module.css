@@ -1,7 +1,7 @@
 /* 開くボタン */
 .openHumbergerBtn{
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
 }
 .humberger__circle{
   fill: rgb(var(--color-bg));
