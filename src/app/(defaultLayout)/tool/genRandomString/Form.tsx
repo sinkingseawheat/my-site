@@ -92,7 +92,26 @@ export function Form(){
           </fieldset>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>英数字の使用</legend>
-            <label className={style.labelCheckbox}>
+            <F.InputCheckboxes
+              elms={[{
+                label:`大文字アルファベット`,
+                registerReturn:register(`src_A`,{
+                  validate:(v,d)=>d.src_A || d.src_a || d.src_0 || `最低でも1つにチェックをつけてください`
+                })
+              },{
+                label:`小文字アルファベット`,
+                registerReturn:register(`src_a`,{
+                  deps:[`src_A`]
+                })
+              },{
+                label:`数字`,
+                registerReturn:register(`src_0`,{
+                  deps:[`src_A`]
+                })
+              }]}
+              message={errors?.src_A?.message}
+            />
+            {/* <label className={style.labelCheckbox}>
               <input
                 type='checkbox'
                 {
@@ -121,7 +140,7 @@ export function Form(){
             </label>
             <div aria-live='polite' role='alert'>
               {errors.src_A && <p className={style.errorMessage}>{errors.src_A.message}</p> }
-            </div>
+            </div> */}
           </fieldset>
           <div>
             <Button type='button' isSubmit={true} isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>

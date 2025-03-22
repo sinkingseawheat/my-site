@@ -47,9 +47,11 @@ export {Header, Footer}
 
 /* Form Component */
 import InputText from "./Form/InputText/_";
+import InputCheckboxes from "./Form/InputCheckboxes/_";
 
 const F = {
   InputText,
+  InputCheckboxes,
 }
 
 export { F }
