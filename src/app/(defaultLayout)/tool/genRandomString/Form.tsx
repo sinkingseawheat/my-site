@@ -61,7 +61,7 @@ export function Form(){
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
-            <L.column minColumnWidth='100%' rowGap='.5rem' marginTop='0.7rem'>
+            <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
                 <F.InputText
                   label={`文字数`}
                   message={errors?.['length']?.message}
@@ -92,6 +92,7 @@ export function Form(){
           </fieldset>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>英数字の使用</legend>
+            <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
             <F.InputCheckboxes
               elms={[{
                 label:`大文字アルファベット`,
@@ -111,36 +112,7 @@ export function Form(){
               }]}
               message={errors?.src_A?.message}
             />
-            {/* <label className={style.labelCheckbox}>
-              <input
-                type='checkbox'
-                {
-                  ...register(`src_A`,{
-                    validate:(v,d)=>d.src_A || d.src_a || d.src_0 || `最低でも1つにチェックをつけてください`
-                  })}/>
-                <span>大文字アルファベット</span>
-            </label>
-            <label className={style.labelCheckbox}>
-              <input
-                type='checkbox'
-                {
-                  ...register(`src_a`,{
-                    deps:[`src_A`]
-                  })}/>
-              <span>小文字アルファベット</span>
-            </label>
-            <label className={style.labelCheckbox}>
-              <input
-                type='checkbox'
-                {
-                  ...register(`src_0`,{
-                    deps:[`src_A`]
-                  })}/>
-              <span>数字</span>
-            </label>
-            <div aria-live='polite' role='alert'>
-              {errors.src_A && <p className={style.errorMessage}>{errors.src_A.message}</p> }
-            </div> */}
+            </L.column>
           </fieldset>
           <div>
             <Button type='button' isSubmit={true} isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>
