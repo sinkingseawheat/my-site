@@ -25,6 +25,7 @@ import Button from "./Button/_";
 import ToggleHeaderFooter from "./ToggleHeaderFooter/_";
 import PageList from "./PageList/_";
 import BottomPopup from "./BottomPopup/_";
+import SVGIcon from "./SVGIcon/_";
 
 export {
   List,
@@ -37,6 +38,7 @@ export {
   ToggleHeaderFooter,
   PageList,
   BottomPopup,
+  SVGIcon,
 }
 
 /* Header Footer */

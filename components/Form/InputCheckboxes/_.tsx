@@ -35,7 +35,11 @@ export default function InputText({
             <div className={style.wrapCheckboxes__item} key={registerReturn.name}>
               <label className={style.label}>
                 <input className={style.input} type='checkbox' {...registerReturn}/>
-                <span className={style.pseudo} role='presentation'></span>
+                <span className={style.pseudo} role='presentation'>
+                <svg className={style.svg} viewBox="0 0 21 16" xmlns="http://www.w3.org/2000/svg">
+                  <use href='#svgFormCheckmark' />
+                </svg>
+                </span>
                 {
                   typeof label === 'string' ?
                   (<span className={style.innerLabel}>{label}</span>)
