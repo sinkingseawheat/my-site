@@ -5,13 +5,29 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Button, S, L, F } from '@components/all'
 import { PopupContext } from '@components/context';
 
+
+const UPPERCASE_ALPHABET = `ABCDEFGHIJKLMNOPQRSTUVWXYZ` as const
+const LOWERCASE_ALPHABET = `abcdefghijklmnopqrstuvwxyz` as const
+const NUMBER = `0123456789` as const
+const ALLOWED_SYMBOLS_ARRAY = ['!','&','@','#','$','%','*','(',')','+','-','=',] as const;
+
+type SymbolFields = {
+  // name属性には記号が使用できないので、数値（Arrayのindex）で処理する。
+  [key in `src_symbol_${number}`]: boolean
+}
+
+const defaultSymbolFields = Object.fromEntries(new Map(ALLOWED_SYMBOLS_ARRAY.map((_, index)=>{
+  return [`src_symbol_${index}` as const, true]
+}))) as SymbolFields // とりあえず型アサーション
+
 type Inputs = {
   length: string,
   count: string,
   src_A: boolean,
   src_a: boolean,
   src_0: boolean,
-}
+} & SymbolFields
+
 
 export function Form(){
 
@@ -21,12 +37,15 @@ export function Form(){
     formState: {errors, isValid}
   } = useForm<Inputs>({
     defaultValues:{
-      length: '8',
-      count: '10',
-      src_A: true,
-      src_a: true,
-      src_0: true,
-    },
+      ...{
+        length: '8',
+        count: '10',
+        src_A: true,
+        src_a: true,
+        src_0: true,
+      },
+      ...defaultSymbolFields
+    } satisfies Inputs,
     mode:'onChange',
   })
 
@@ -36,23 +55,26 @@ export function Form(){
   const [popupMessage, setPopupMessage] = useContext(PopupContext);
 
   const onSubmit:SubmitHandler<Inputs> = (data)=>{
-    const UPPERCASE_ALPHABET = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
-    const LOWERCASE_ALPHABET = `abcdefghijklmnopqrstuvwxyz`
-    const NUMBER = `0123456789`
     const source = (data.src_A ? UPPERCASE_ALPHABET : '')
     + (data.src_a ? LOWERCASE_ALPHABET : '')
     + (data.src_0 ? NUMBER : '')
-    const _all = [];
+    + ALLOWED_SYMBOLS_ARRAY.filter((_, index)=>{
+        return (
+          `src_symbol_${index}` in data
+          && data[`src_symbol_${index}`] === true
+        )
+      }).join('')
+    const _all = []
     for(let _count=0; _count < parseInt(data.count); _count++){
-      let _output = ``;
+      let _output = ``
       const sourceLength = source.length;
       for(let _length=0; _length < parseInt(data.length); _length++){
-        _output += source[Math.floor(Math.random() * sourceLength)];
+        _output += source[Math.floor(Math.random() * sourceLength)]
       }
       _all.push(_output)
     }
     setLength(`${data.length}em`)
-    setOutput(_all);
+    setOutput(_all)
   }
 
   return (
@@ -103,25 +125,39 @@ export function Form(){
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>英数字の使用</legend>
             <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
-            <F.InputCheckboxes
-              elms={[{
-                label:`大文字アルファベット`,
-                registerReturn:register(`src_A`,{
-                  validate:(v,d)=>d.src_A || d.src_a || d.src_0 || `最低でも1つにチェックをつけてください`
-                })
-              },{
-                label:`小文字アルファベット`,
-                registerReturn:register(`src_a`,{
-                  deps:[`src_A`]
-                })
-              },{
-                label:`数字`,
-                registerReturn:register(`src_0`,{
-                  deps:[`src_A`]
-                })
-              }]}
-              message={errors?.src_A?.message}
-            />
+              <F.InputCheckboxes
+                elms={[{
+                  label:`大文字アルファベット`,
+                  registerReturn:register(`src_A`,{
+                    validate:(v,d)=>d.src_A || d.src_a || d.src_0 || `最低でも1つにチェックをつけてください`
+                  })
+                },{
+                  label:`小文字アルファベット`,
+                  registerReturn:register(`src_a`,{
+                    deps:[`src_A`]
+                  })
+                },{
+                  label:`数字`,
+                  registerReturn:register(`src_0`,{
+                    deps:[`src_A`]
+                  })
+                }]}
+                message={errors?.src_A?.message}
+              />
+            </L.column>
+          </fieldset>
+          <fieldset className={style.fieldset}>
+            <legend className={style.legend}>記号の使用</legend>
+            <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
+              <F.InputCheckboxes
+                elms={ALLOWED_SYMBOLS_ARRAY.map((_symbol, index)=>{
+                  const registerReturn = register(`src_symbol_${index}`)
+                  return {
+                    label: _symbol,
+                    registerReturn,
+                  }
+                })}
+              />
             </L.column>
           </fieldset>
           <div>

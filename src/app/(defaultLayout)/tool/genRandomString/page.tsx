@@ -15,7 +15,7 @@ export default function Page() {
 <>
   <S.lv1 isSrOnly={false} h1Elm='ランダム文字列生成ツール'>
     <p>ランダムな文字列を生成します。ブラウザで自動生成できないパスワードの候補が欲しいとき等にご利用ください。</p>
-    <p>とりあえずは英数字だけ</p>
+    <p>英数字・一部記号に対応しています。</p>
   </S.lv1>
   <article>
     <Form/>
