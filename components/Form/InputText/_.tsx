@@ -3,6 +3,7 @@ import { type ReactNode } from 'react'
 import style from './_.module.css'
 import { type UseFormRegisterReturn } from "react-hook-form"
 import { type SetCSSVariable } from '@components/utility'
+import { type InputHTMLAttributes } from 'react'
 
 
 const setCSSVariable:SetCSSVariable<[
@@ -15,12 +16,13 @@ const setCSSVariable:SetCSSVariable<[
 
 
 export default function InputText({
-  label, registerReturn, message, labelMinWidth
+  label, registerReturn, message, labelMinWidth, inputHTMLAttribute,
 }:{
   label: ReactNode,
   registerReturn: UseFormRegisterReturn,
   message?: string,
-  labelMinWidth?: string
+  labelMinWidth?: string,
+  inputHTMLAttribute? : InputHTMLAttributes<HTMLInputElement>,
 }){
 
   return  (
@@ -31,7 +33,7 @@ export default function InputText({
           (<span className={style.innerLabel}>{label}</span>)
           : label
         }
-        <input className={style.input} type='text' {...registerReturn}/>
+        <input className={style.input} type='text' {...registerReturn} {...inputHTMLAttribute}/>
       </label>
       <div aria-live='polite' role='alert'>
         {message !==undefined && (

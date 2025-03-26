@@ -63,6 +63,7 @@ export function Form(){
             <legend className={style.legend}>出力形式</legend>
             <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
                 <F.InputText
+                  inputHTMLAttribute={{inputMode:'numeric'}}
                   label={`文字数`}
                   message={errors?.['length']?.message}
                   labelMinWidth='3em'
@@ -76,6 +77,7 @@ export function Form(){
                   })}
                 />
                 <F.InputText
+                  inputHTMLAttribute={{inputMode:'numeric'}}
                   label={`個数`}
                   message={errors?.['count']?.message}
                   labelMinWidth='3em'
