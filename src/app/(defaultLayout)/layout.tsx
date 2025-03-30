@@ -18,7 +18,7 @@ export default function LayoutDefault({
   const offsetElmRef = useRef<HTMLElement>(null)
 
   useEffect(()=>{
-    if(isNotifiedRedirect === false && document.referrer === 'https://www.sinkingseawheat.com/'){
+    if(isNotifiedRedirect === false && location.href.endsWith('?ref=sinkingseawheat')){
       setPopupMessage(`旧ドメインのsinkingseawheat.comからリダイレクトされました`)
       setIsNotifiedRedirect((_prev)=>!_prev)
     }
