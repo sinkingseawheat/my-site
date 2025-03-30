@@ -2,7 +2,7 @@
 /* h1 */
 .wrap_h1{
   & p + p{
-    margin-top: 1.2rem;
+    margin-top: 1.7rem;
   }
   &.-mb{
     margin-bottom: 6rem;
@@ -47,10 +47,10 @@ position: relative;
 }
 }
 .c_headLv2__cnt {
-margin-top: 2rem;
+margin-top: 1rem;
 display: grid;
 grid-template-columns: 100%;
-row-gap: 1rem;
+row-gap: 1.7rem;
 &.-center {
   justify-content: center;
 }
@@ -74,10 +74,10 @@ row-gap: 1rem;
 }
 
 .c_headLv3__cnt {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: 100%;
-  row-gap: 1rem;
+  row-gap: 1.7rem;
   &.-center {
     justify-content: center;
   }
