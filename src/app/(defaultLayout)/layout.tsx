@@ -2,19 +2,27 @@
 // import type { Metadata } from "next";
 import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon } from '@components/all';
 import { PopupContext } from '@components/context';
-import { useState, useRef, type ReactNode } from 'react';
+import { useState, useRef, type ReactNode, useEffect } from 'react';
 import Script from 'next/script';
 
 export default function LayoutDefault({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>){
 
-  const [ isHFExpanded, setIsHFExpanded] = useState<boolean>(true);
-  const [ popupMessage, setPopupMessage ] = useState<ReactNode>('');
+  const [ isHFExpanded, setIsHFExpanded] = useState<boolean>(true)
+  const [ popupMessage, setPopupMessage ] = useState<ReactNode>('')
+  const [ isNotifiedRedirect, setIsNotifiedRedirect] = useState<boolean>(false)
 
   const offsetElmRef = useRef<HTMLElement>(null)
+
+  useEffect(()=>{
+    if(isNotifiedRedirect === false && document.referrer === 'https://www.sinkingseawheat.com/'){
+      setPopupMessage(`旧ドメインのsinkingseawheat.comからリダイレクトされました`)
+      setIsNotifiedRedirect((_prev)=>!_prev)
+    }
+  },[isNotifiedRedirect])
 
   return (<L.innerBody>
         <PopupContext.Provider value={[popupMessage,setPopupMessage]}>

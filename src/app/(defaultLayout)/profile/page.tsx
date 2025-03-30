@@ -4,7 +4,7 @@ import { CardList } from "./CardList";
 
 export const metadata: Metadata = {
   title:`作者の紹介ページ`,
-  description: `sinkingseawheatのサイトの作者の紹介ページです。`,
+  description: `作者の紹介ページです。`,
   alternates: {
     canonical:'profile'
   }
@@ -18,9 +18,8 @@ export default function Page() {
     <S.lv2 title={`概要的なやつ`}>
       <p>
         1987年生まれの男性。沖縄住まい。<br />
-        フルスクラッチのLP制作が得意。WordPressとかのCMSはほとんど触ったことない。<br />
-        最近はNext.jsで遊んでたり、Figmaを触ってたりする。<br />
-        適当に生きながら転職活動中@2025/3現在
+        フルスクラッチのLP制作が得意。HTML/CSS/JavaScriptは結構自信あり。<br />
+        独立を目指している。
       </p>
     </S.lv2>
     <S.lv2 title={`他サイトのプロフィール`}>
