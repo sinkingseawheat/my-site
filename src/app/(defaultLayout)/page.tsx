@@ -17,7 +17,7 @@ export default async function Page() {
   <article>
     <S.lv2 title="このサイトについて">
       <p>
-        読みづらいのでアカウント名を変更中。<br/>
+        読みづらいのでアカウント名を変更中。ドメインも変更しましたsinkingseawheat.com→midori-no-kiga.com。8月ごろには旧ドメインを失効させる予定です。<br/>
         sinkingseawheat→<strong><ruby>緑ノ企鵝<rp>(</rp><rt>ミドリノキガ</rt><rp>)</rp></ruby></strong><br/>
         「企鵝」は中国語でペンギンという意味らしいです。「人鳥」よりも字面がかっこいいと感じたので採用しました。
       </p>
