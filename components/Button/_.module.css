@@ -5,6 +5,7 @@
   font-weight: bold;
   position: relative;
   font-size: 1em;
+  overflow: hidden;
 }
 .button:disabled{
   color: rgb(var(--color-disabled-text));
@@ -23,7 +24,6 @@
   pointer-events: none;
   backdrop-filter: invert(1);
   transition: width var(--animation-changing);
-  border-radius: 8px;
 }
 /* .button_i{} */
 
