@@ -35,6 +35,7 @@ export async function getPageList() {
 
   // 外部サイトはこちらに追記
   results.push({url:`https://github.com/sinkingseawheat/webpage_snapshot`,title:`Webページのスナップショット保存（GitHubのページへ移動します）`,label:'outside'})
+  results.push({url:`/blog/`,title:`緑ノ企鵝(ミドリノキガ)blog`,label:'other'})
 
   await fs.writeFile(path.join(process.cwd(), 'public/pagelist.json'),JSON.stringify(results));
   console.log(`pagelist.json created`)
