@@ -1,8 +1,9 @@
 import { type Dirent } from 'fs'
 import fs from 'fs/promises'
 import path from 'path'
+import { type LinkProps } from 'next/link'
 
-export type PageListJSON = {url:string,title:string,label:'tool'|'other'|'outside'}[]
+export type PageListJSON = {url:string,title:string,label:'tool'|'other'|'outside',prefetch?:LinkProps['prefetch']}[]
 
 const searchPage = async (dirents:Dirent[], results:PageListJSON):Promise<void>=>{
   for(const dirent of dirents){
@@ -35,7 +36,7 @@ export async function getPageList() {
 
   // 外部サイトはこちらに追記
   results.push({url:`https://github.com/sinkingseawheat/webpage_snapshot`,title:`Webページのスナップショット保存（GitHubのページへ移動します）`,label:'outside'})
-  results.push({url:`/blog/`,title:`緑ノ企鵝(ミドリノキガ)blog`,label:'other'})
+  results.push({url:`/blog/`,title:`緑ノ企鵝(ミドリノキガ)blog`,label:'other',prefetch:false})
 
   await fs.writeFile(path.join(process.cwd(), 'public/pagelist.json'),JSON.stringify(results));
   console.log(`pagelist.json created`)

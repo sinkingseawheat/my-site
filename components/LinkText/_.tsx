@@ -1,21 +1,25 @@
 import style from './_.module.css';
 
 import Link from 'next/link';
+import { type LinkProps } from 'next/link';
 
 export default function LinkText({
   href,
   isOpenAnotherTab,
   elm,
+  prefetch,
 }:{
   href: string,
   isOpenAnotherTab: boolean,
   elm: React.ReactElement | string,
+  prefetch?:LinkProps['prefetch']
 }){
   return (
     <Link
       className={style.link}
       href={href}
       target={isOpenAnotherTab ? '_blank' : undefined}
+      prefetch={prefetch}
     >
       {typeof elm === 'string' ?
         (<span className={style.text}>{elm}</span>) : elm

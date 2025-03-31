@@ -71,7 +71,7 @@ export default function Page() {
     </S.lv2>
     <S.lv2 title={`お問い合わせ`}>
       <p>本プライバシーポリシーに関するお問い合わせは、以下のフォームよりご連絡ください。</p>
-      <LinkText href="/script/mailform/contact/" isOpenAnotherTab={true} elm={`お問い合わせフォーム`}/>
+      <LinkText href="/script/mailform/contact/" isOpenAnotherTab={true} elm={`お問い合わせフォーム`} prefetch={false}/>
     </S.lv2>
   </article>
 </>
