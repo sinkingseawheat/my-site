@@ -18,7 +18,7 @@ export default function Footer({
         </div>
         <div className={style.l_f__inner}>
           <div className={`${style.l_f_i} ${style['-nav']}`}>
-            <LinkText href='/privacypolicy' isOpenAnotherTab={false} elm='プライバシーポリシー'/>
+            <LinkText href='/privacypolicy' isOpenAnotherTab={false} elm='プライバシーポリシー' fontSize='0.75rem'/>
           </div>
         </div>
         <div className={`${style.l_f_i} ${style['-copyright']}`}>

@@ -1,5 +1,6 @@
 .link {
   color: rgb(var(--color-primary));
+  font-size: var(--fz-link-text, inherit);
 }
 .linkIcon{
   padding: 0 .5em;

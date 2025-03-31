@@ -1,18 +1,28 @@
 import style from './_.module.css';
-
+import { type SetCSSVariable } from '@components/utility';
 import Link from 'next/link';
 import { type LinkProps } from 'next/link';
+
+const setCSSVariable:SetCSSVariable<[
+  "--fz-link-text"
+]> = ({fontSize}) => {
+  return   {
+    "--fz-link-text": fontSize ?? '',
+  }
+}
 
 export default function LinkText({
   href,
   isOpenAnotherTab,
   elm,
   prefetch,
+  fontSize,
 }:{
   href: string,
   isOpenAnotherTab: boolean,
   elm: React.ReactElement | string,
-  prefetch?:LinkProps['prefetch']
+  prefetch?:LinkProps['prefetch'],
+  fontSize?:string
 }){
   return (
     <Link
@@ -20,6 +30,7 @@ export default function LinkText({
       href={href}
       target={isOpenAnotherTab ? '_blank' : undefined}
       prefetch={prefetch}
+      style={setCSSVariable({fontSize})}
     >
       {typeof elm === 'string' ?
         (<span className={style.text}>{elm}</span>) : elm
