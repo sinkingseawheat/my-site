@@ -1,7 +1,6 @@
-import { Suspense, } from 'react';
 import style from './_.module.css';
 
-import { ToggleHeaderFooter, ShareButton, LinkText } from '@components/all';
+import { ToggleHeaderFooter, LinkText } from '@components/all';
 
 export default function Footer({
   isHFExpanded,
@@ -11,11 +10,6 @@ export default function Footer({
     <ToggleHeaderFooter isHFExpanded={isHFExpanded} setIsHFExpanded={setIsHFExpanded}/>
     <footer className={style.l_f} id='aria-footer' aria-hidden={!isHFExpanded} inert={!isHFExpanded}>
       <div className={style.l_f__inner}>
-        <div className={`${style.l_f_i} ${style['-share']}`}>
-          <Suspense>
-            <ShareButton/>
-          </Suspense>
-        </div>
         <div className={style.l_f__inner}>
           <div className={`${style.l_f_i} ${style['-nav']}`}>
             <LinkText href='/privacypolicy' isOpenAnotherTab={false} elm='プライバシーポリシー' fontSize='0.75rem'/>

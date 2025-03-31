@@ -1,8 +1,8 @@
 'use client'
 // import type { Metadata } from "next";
-import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon } from '@components/all';
+import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton } from '@components/all';
 import { PopupContext } from '@components/context';
-import { useState, useRef, type ReactNode, useEffect } from 'react';
+import { useState, useRef, type ReactNode, useEffect, Suspense } from 'react';
 import Script from 'next/script';
 
 export default function LayoutDefault({
@@ -37,6 +37,13 @@ export default function LayoutDefault({
             <main id="main-content">
               {children}
             </main>
+            <aside>
+              <L.column marginTop='3rem'>
+                <Suspense>
+                  <ShareButton/>
+                </Suspense>
+              </L.column>
+            </aside>
           </L.vb>
           <L.vb classNameOption='footer'>
             <BottomPopup />
