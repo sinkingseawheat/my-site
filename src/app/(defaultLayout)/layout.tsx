@@ -26,11 +26,11 @@ export default function LayoutDefault({
 
   return (<L.innerBody>
         <PopupContext.Provider value={[popupMessage,setPopupMessage]}>
-          <L.vb classNameOption='header'>
+          <L.vb className='header'>
             <SkipNav idToMove="main-content" ref={offsetElmRef}/>
             <Header isHFExpanded={isHFExpanded} ref={offsetElmRef}/>
           </L.vb>
-          <L.vb classNameOption='content'>
+          <L.vb className='content'>
             <noscript>
               JavaScriptの実行が許可されていません。ページの機能に不具合が出る可能性があります
             </noscript>
@@ -45,7 +45,7 @@ export default function LayoutDefault({
               </L.column>
             </aside>
           </L.vb>
-          <L.vb classNameOption='footer'>
+          <L.vb className='footer'>
             <BottomPopup />
             <Footer isHFExpanded={isHFExpanded} setIsHFExpanded={setIsHFExpanded}/>
           </L.vb>

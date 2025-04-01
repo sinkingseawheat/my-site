@@ -14,13 +14,13 @@ function innerBody({
 
 function vb({
   children,
-  classNameOption,
+  className,
 } : {
   children: React.ReactElement | React.ReactElement[]
-  classNameOption?: string
+  className?: string
 }){
   return (
-    <div className={`${style.veryBack}${classNameOption ? ` ${style[classNameOption]}` : ''}`}>
+    <div className={`${style.veryBack}${className ? ` ${style[className]}` : ''}`}>
       {children}
     </div>
   );
