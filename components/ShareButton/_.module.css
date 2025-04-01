@@ -1,6 +1,6 @@
 /* シェアボタン */
 .c_shareButton__ttl_i {
-  font-size: var(--fz-small);
+  font-size: var(--fz-headingLv3);
 }
 .c_shareButton__desc {
   padding-left: 1rem;
