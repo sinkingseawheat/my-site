@@ -22,7 +22,16 @@ export default function Page() {
         独立を目指している。
       </p>
     </S.lv2>
+    <S.lv2 title={`アカウント名（ハンドルネーム）を変更しました。`}>
+      <p>
+        読み辛いので、2024年4月ごろからアカウント名を以下のように変更しました。<br />
+        sinkingseawheat<span role="presentation"> </span>→<span role="presentation"> </span><ruby>緑ノ企鵝<rp>(</rp><rt>ミドリノキガ</rt><rp>)</rp></ruby>、アルファベット表記はmidori-no-kiga<br />
+        Webサイトのアドレスやメールアドレスも変更中（<span role="presentation"> </span>sinkingseawheat.com<span role="presentation"> </span>→<span role="presentation"> </span>midori-no-kiga.com<span role="presentation"> </span>）です。想定上に面倒くさいですが…<br />
+        旧ドメインsinkingseawheat.comの有効期限（2025/9/16）は更新せずに、失効させる予定です。
+      </p>
+    </S.lv2>
     <S.lv2 title={`他サイトのプロフィール`}>
+      <p>BlueSkyは日本語圏の情報が少ないのでアカウントを削除します。<br />情報発信は当サイトとXで固定しようかなって思ってます。</p>
       <S.lv3 title={`情報系・GitHub`}>
         <CardList
           listElms={[
@@ -38,7 +47,7 @@ export default function Page() {
                 height: 1227,
               },
               textName: 'X',
-              textAccount: '@sinkingseawheat',
+              textAccount: '緑ノ企鵝（ミドリノキガ）',
             },
             {
               href: 'https://github.com/sinkingseawheat',
@@ -52,10 +61,10 @@ export default function Page() {
                 height: 96,
               },
               textName: 'GitHub',
-              textAccount: 'sinkingseawheat',
+              textAccount: 'midori-no-kiga',
             },
             {
-              href: 'https://qiita.com/sinking-sea-wheat',
+              href: 'https://qiita.com/midori-no-kiga',
               isOpenAnotherTab: true,
               ariaLabel: 'Qiitaで筆者のプロフィール画面を開く',
               img: {
@@ -66,27 +75,12 @@ export default function Page() {
                 height: 300,
               },
               textName: 'Qiita',
-              textAccount: '@sinking-sea-wheat',
-            },
-            {
-              href:
-                'https://bsky.app/profile/sinkingseawheat.bsky.social',
-              isOpenAnotherTab: true,
-              ariaLabel: 'Blueskyで筆者のプロフィール画面を開く',
-              img: {
-                class: '-bluesky',
-                src: '/c/vendor/logo/bluesky.svg',
-                alt: 'Bluesky',
-                width: 300,
-                height: 300,
-              },
-              textName: 'Bluesky',
-              textAccount: '@sinkingseawheat.bsky.social',
+              textAccount: '@midori-no-kiga',
             },
           ]}
         />
       </S.lv3>
-      <S.lv3 title={`副業`}>
+      <S.lv3 title={`お仕事`}>
         <CardList
           listElms={[
             {
@@ -94,7 +88,7 @@ export default function Page() {
               isOpenAnotherTab: true,
               ariaLabel: 'Lancersで筆者のプロフィール画面を開く',
               textName: 'Lancers',
-              textAccount: 'sinkingseawheat',
+              textAccount: '緑ノ企鵝（ミドリノキガ）',
               noteElm: ['ブランドガイドラインが見つからなかったのでアイコン無し'],
             },
           ]}
