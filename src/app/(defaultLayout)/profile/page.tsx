@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
 <>
-  <S.lv1 isSrOnly={true} h1Elm='作者の紹介ページ' />
+  <S.lv1 isSrOnly={false} h1Elm='作者の紹介ページ' />
   <article>
     <S.lv2 title={`概要的なやつ`}>
       <p>
