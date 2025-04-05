@@ -6,7 +6,7 @@ const setCSSVariable:SetCSSVariable<[
   "--column-gap",
   "--row-gap",
   "--margin-top"
-]> = ({minColumnWidth,columnGap,rowGap,marginTop}) => {
+]> = ({columnGap,rowGap,marginTop}) => {
   return   {
     "--column-gap": columnGap ?? '',
     "--row-gap": rowGap ?? '',

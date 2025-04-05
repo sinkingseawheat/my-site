@@ -1,6 +1,6 @@
 import style from './_.module.css';
 
-import { ToggleHeaderFooter, LinkText } from '@components/all';
+import { ToggleHeaderFooter, LinkText, L } from '@components/all';
 
 export default function Footer({
   isHFExpanded,
@@ -12,7 +12,10 @@ export default function Footer({
       <div className={style.l_f__inner}>
         <div className={style.l_f__inner}>
           <div className={`${style.l_f_i} ${style['-nav']}`}>
-            <LinkText href='/privacypolicy' isOpenAnotherTab={false} elm='プライバシーポリシー' fontSize='0.75rem'/>
+            <L.flex>
+              <LinkText href='/privacypolicy/' isOpenAnotherTab={false} elm='プライバシーポリシー' fontSize='0.75rem'/>
+              <LinkText href='/accessibility/' isOpenAnotherTab={false} elm='ウェブアクセシビリティ方針' fontSize='0.75rem'/>
+            </L.flex>
           </div>
         </div>
         <div className={`${style.l_f_i} ${style['-copyright']}`}>
