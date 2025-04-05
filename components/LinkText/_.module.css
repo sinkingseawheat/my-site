@@ -1,6 +1,13 @@
 .link {
   color: rgb(var(--color-primary));
   font-size: var(--fz-link-text, inherit);
+  &[aria-current]{
+    text-decoration: none;
+    color: rgb(var(--color-fg));
+    &:hover{
+      cursor: default;
+    }
+  }
 }
 .linkIcon{
   padding: 0 .5em;
