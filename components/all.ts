@@ -6,10 +6,12 @@ export {S}
 /* Layout */
 import _L from './Layouts/_';
 import column from "./Layouts/column/_";
+import flex from "./Layouts/flex/_";
 
 const L = {
   ..._L,
-  column
+  column,
+  flex,
 }
 
 export {L}
