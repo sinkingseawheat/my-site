@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title:`作者の紹介ページ`,
   description: `作者の紹介ページです。`,
   alternates: {
-    canonical:'profile'
+    canonical:'profile/'
   }
 };
 

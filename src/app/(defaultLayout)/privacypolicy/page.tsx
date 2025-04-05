@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title:`プライバシーポリシー`,
   description: `プライバシーポリシーです`,
   alternates: {
-    canonical:'privacypolicy'
+    canonical:'privacypolicy/'
   }
 };
 
