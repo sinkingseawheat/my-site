@@ -12,7 +12,7 @@ export default function Footer({
       <div className={style.l_f__inner}>
         <div className={style.l_f__inner}>
           <div className={`${style.l_f_i} ${style['-nav']}`}>
-            <L.flex>
+            <L.flex rowGap='0'>
               <LinkText href='/privacypolicy/' isOpenAnotherTab={false} elm='プライバシーポリシー' fontSize='0.75rem'/>
               <LinkText href='/accessibility/' isOpenAnotherTab={false} elm='ウェブアクセシビリティ方針' fontSize='0.75rem'/>
             </L.flex>
