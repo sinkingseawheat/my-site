@@ -46,9 +46,7 @@ export async function getPageList() {
   results.push({url:`https://github.com/sinkingseawheat/webpage_snapshot`,title:`Webページのスナップショット保存（GitHubのページへ移動します）`,label:'outside', lastmod:''})
   results.push({url:`/blog/`,title:`緑ノ企鵝(ミドリノキガ)blog`,label:'other',prefetch:false,lastmod:''})
 
-  // ssg-sitemap.xml作成
-const PROTOCOL_AND_FQDN = (await fs.readFile(`./.env`,{encoding:'utf-8'})).match(/NEXT_PUBLIC_PROTOCOL_AND_FQDN=(.+)/)?.[1];
-  console.log(PROTOCOL_AND_FQDN)
+  const PROTOCOL_AND_FQDN = (await fs.readFile(`./.env`,{encoding:'utf-8'})).match(/NEXT_PUBLIC_PROTOCOL_AND_FQDN=(.+)/)?.[1];
   const sitemapURL = results.map(({url,lastmod})=>{
     if(lastmod === '' || PROTOCOL_AND_FQDN === undefined){return null}
     return `  <url>
@@ -66,13 +64,14 @@ const PROTOCOL_AND_FQDN = (await fs.readFile(`./.env`,{encoding:'utf-8'})).match
         return {url,title,label,prefetch}
       }
     ))),
+    // ssg-sitemap.xml作成
     fs.writeFile(path.join(process.cwd(), 'public/ssg-sitemap.xml'),
 `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURL.join(`\n`)}
 </urlset>`),
   ])
-  console.log(`pagelist.json created`)
+  console.log(`prebuild process completed`)
 }
 
 getPageList(); // 値を取り出す必要はないので、awaitは不要。tsxでtop-level awaitを使用する方法が分からなかった。
