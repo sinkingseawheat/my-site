@@ -4,7 +4,7 @@ import { Form } from "./Form";
 
 export const metadata: Metadata = {
   title:`ランダム文字列生成ツール`,
-  description: `パスワードなどに必要なランダムな文字列を設定できます`,
+  description: `パスワードなどに必要なランダムな文字列を取得できます。英数字と一部記号に対応しています。`,
   alternates: {
     canonical:'tool/genRandomString/'
   }

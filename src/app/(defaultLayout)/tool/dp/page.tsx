@@ -4,7 +4,7 @@ import { ResultTable } from "./ResultTable";
 
 export const metadata: Metadata = {
   title:`メディアの種別と特性を確認`,
-  description: `閲覧しているデバイス・ブラウザのメディアクエリの結果を確認できます`,
+  description: `閲覧しているデバイス・ブラウザのメディアクエリの結果を確認できます。表データはタブ区切りで取得できます`,
   alternates: {
     canonical:'tool/dp/'
   }

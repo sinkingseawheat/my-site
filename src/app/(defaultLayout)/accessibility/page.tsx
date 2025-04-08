@@ -4,7 +4,7 @@ import {S, List} from '@components/all'
 
 export const metadata: Metadata = {
   title:`ウェブアクセシビリティ方針`,
-  description:`このサイトのウェブアクセシビリティ方針を記述したページとなります。`,
+  description:`このサイトのウェブアクセシビリティ方針を記述したページとなります。一部のページを除き、WCAGのAAへの適合を目指しています。`,
   alternates: {
     canonical:'/accessibility/'
   }

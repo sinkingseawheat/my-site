@@ -3,7 +3,7 @@ import { S, List, LinkText } from "@components/all";
 
 export const metadata: Metadata = {
   title:`プライバシーポリシー`,
-  description: `プライバシーポリシーです`,
+  description: `プライバシーポリシーです。サイトで取得したユーザーデータや個人情報の扱いを記述しています。`,
   alternates: {
     canonical:'privacypolicy/'
   }

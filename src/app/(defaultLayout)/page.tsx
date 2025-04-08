@@ -4,7 +4,7 @@ import {S, LinkText, PageList} from '@components/all'
 
 export const metadata: Metadata = {
   title:`TOPページ`,
-  description:`Sinking Sea WheatサイトのTOPページです。作成したツールやブログを執筆しています。`,
+  description:`Sinking Sea WheatサイトのTOPページです。作成したツールの紹介やブログを執筆しています。Next.jsのSSG生成とWordpress、レンタルサーバーで用意されているCGIツールで構成されています`,
   alternates: {
     canonical:'/'
   }

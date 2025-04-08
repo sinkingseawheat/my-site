@@ -4,7 +4,7 @@ import { CardList } from "./CardList";
 
 export const metadata: Metadata = {
   title:`作者の紹介ページ`,
-  description: `作者の紹介ページです。`,
+  description: `作者の紹介ページです。2025年ごろから読みづらかったのでハンドルネームを「sinkingseawheat」から「ミドリノキガ」に変更しました`,
   alternates: {
     canonical:'profile/'
   }
