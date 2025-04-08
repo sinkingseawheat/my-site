@@ -1,11 +1,11 @@
 "use client"
-import { type PageListJSON } from '@preprocess/getPageList';
+import { type PageProperty } from '@preprocess/getPageList';
 import { S, List, LinkText } from '@components/all';
 import { useState, useEffect } from 'react';
 
 export default function PageList(){
 
-  const [list, setList] = useState<PageListJSON>([])
+  const [list, setList] = useState<PageProperty>([])
 
   useEffect(()=>{
     (async ()=>{
