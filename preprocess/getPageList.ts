@@ -51,9 +51,8 @@ const PROTOCOL_AND_FQDN = (await fs.readFile(`./.env`,{encoding:'utf-8'})).match
   console.log(PROTOCOL_AND_FQDN)
   const sitemapURL = results.map(({url,lastmod})=>{
     if(lastmod === '' || PROTOCOL_AND_FQDN === undefined){return null}
-    return `
-  <url>
-    <loc>${path.join(PROTOCOL_AND_FQDN, url)}</loc>
+    return `  <url>
+    <loc>${path.join(PROTOCOL_AND_FQDN, url).replace(/\:\/(?!\/)/,'://')}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${url==='/'?'weekly':'monthly'}</changefreq>
     <priority>${url==='/'?'1.0':'0.5'}</priority>
@@ -67,12 +66,11 @@ const PROTOCOL_AND_FQDN = (await fs.readFile(`./.env`,{encoding:'utf-8'})).match
         return {url,title,label,prefetch}
       }
     ))),
-    fs.writeFile(path.join(process.cwd(), 'public/ssg-sitemap.xml'),`
-<?xml version="1.0" encoding="UTF-8"?>
+    fs.writeFile(path.join(process.cwd(), 'public/ssg-sitemap.xml'),
+`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemapURL.join(`\n`)}
-</urlset>
-    `),
+</urlset>`),
   ])
   console.log(`pagelist.json created`)
 }
