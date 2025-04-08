@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "prebuild": "npx tsx .\\preprocess\\getPageList.ts"
+    "prebuild": "npx tsx ./preprocess/getPageList.ts"
   },
   "dependencies": {
     "next": "^15.2.4",
