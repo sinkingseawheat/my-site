@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# user-specific configuration file
+my-site.config.ts
+
 # vercel
 .vercel
 
@@ -40,4 +43,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-public
+# track empty directory
+!public
+public/*
