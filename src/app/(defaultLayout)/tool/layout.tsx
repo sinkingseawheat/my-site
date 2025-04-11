@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title:{
-    default:`sinkingseawheatのページです`,
+    default:`Sinking Sea Wheatのtoolページ`,
     template:`%s | tool`
   },
 };
