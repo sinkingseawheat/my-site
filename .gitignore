@@ -46,3 +46,6 @@ next-env.d.ts
 # track empty directory
 !public
 public/*
+
+# ignore page.tsx
+**/page.tsx
