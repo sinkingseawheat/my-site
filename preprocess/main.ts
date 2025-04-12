@@ -42,12 +42,13 @@ const writeSitemap = async ()=>{
 // pagelist.jsonのJSONの作成
 const writePageList = async ()=>{
   const {notControlledLink} = userSpecificData
+  const _pageList = structuredClone(pageList)
   notControlledLink.forEach((elm, index)=>{
     // Next.jsで制御していないページのURLの場合はfullPathを数値のみにする
-    pageList.set(index.toString(), elm)
+    _pageList.set(index.toString(), elm)
   })
   const pageListJSON:(z.infer<typeof schemaPageListJSON>)[] = []
-  for(const [fullPath,result] of pageList){
+  for(const [fullPath,result] of _pageList){
     const parsed = schemaPageList.safeParse(result).data
     if(parsed === undefined){continue}
     pageListJSON.push({
@@ -61,9 +62,38 @@ const writePageList = async ()=>{
   )
 }
 
+// page.tsxを別ディレクトリにバックアップ
+const storePageData = ()=>{
+  const {pageBackupPath} = userSpecificData
+  if(typeof pageBackupPath !== 'string'){
+    console.log(`page.tsxのバックアップ：無し`)
+    return [];
+  }
+  const fullPathArray:string[] = []
+  for(const [fullPath,] of pageList){
+    fullPathArray.push(fullPath)
+  }
+  return fullPathArray.map((fullPath)=>{
+    return (async ()=>{
+      const destPath = path.join(
+        pageBackupPath,
+        fullPath.replace(process.cwd(),'')
+      )
+      try{
+        await fs.mkdir(path.dirname(destPath), {recursive:true})
+      }catch(e){
+        console.log(e)
+      }finally{
+        await fs.copyFile(fullPath, destPath)
+      }
+    })()
+  })
+}
+
 await Promise.all([
   writeSitemap(),
   writePageList(),
+  [...storePageData()],
 ])
 
 console.log(`prebuild process completed`)

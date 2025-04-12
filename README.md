@@ -24,5 +24,6 @@ export const userSpecificData = {
   protocolAndFQDN: `https://example.com`, // サイトのTOPページのURL（トレイリングスラッシュ無し）
   authorName: `author name`, // 製作者の名前。headタグに挿入
   siteName: `site name`, // サイトの名前。headタグに挿入
+  pageBackupPath: `backuppath`, // page.tsxのバックアップ場所を指定します。
 }
 ```
