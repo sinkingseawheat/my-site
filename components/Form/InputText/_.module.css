@@ -13,7 +13,7 @@
   }
 }
 .innerLabel{
-  flex:0 1 var(--label-min-width, 4em);
+  flex:0 1 var(--label-min-width, auto);
 }
 .input{
   font-size: var(--fz);
