@@ -10,27 +10,6 @@
   font-size: var(--fz-headingLv3);
   font-weight: bold;
 }
-.column1{
-  display: grid;
-  grid-template-columns: 1fr;
-}
-.labelTextfield{
-  display: block;
-  & span{
-    padding-right: 0.4em;
-  }
-}
-.labelCheckbox{
-  padding-right: 1rem;
-}
-.errorMessage{
-  font-weight: bold;
-  color: rgb(var(--color-error));
-  font-size: 90%;
-  &::before{
-    content:'*'
-  }
-}
 /* .output{} */
 .outputItem{
   border: 1px solid rgb(var(--color-fg));
