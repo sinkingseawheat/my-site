@@ -2,19 +2,8 @@
 import { type ReactNode } from 'react'
 import style from './_.module.css'
 import { type UseFormRegisterReturn } from "react-hook-form"
-/* import { type SetCSSVariable } from '@components/utility' */
 
-
-/* const setCSSVariable:SetCSSVariable<[
-  "--label-min-width"
-]> = ({labelMinWidth}) => {
-  return   {
-    "--label-min-width": labelMinWidth ?? '',
-  }
-} */
-
-
-export default function InputText({
+export default function InputCheckBoxes({
   elms, message,
 }:{
   elms:{
