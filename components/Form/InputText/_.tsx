@@ -1,4 +1,3 @@
-'use client'
 import style from './_.module.css'
 import { type SetCSSVariable, type FormInputItemExtended } from '@components/utility'
 
