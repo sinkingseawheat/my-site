@@ -1,6 +1,6 @@
 'use client'
 import style from './_.module.css'
-import { type SetCSSVariable, type FormItemExtended } from '@components/utility'
+import { type SetCSSVariable, type FormInputItemExtended } from '@components/utility'
 
 
 const setCSSVariable:SetCSSVariable<[
@@ -14,24 +14,24 @@ const setCSSVariable:SetCSSVariable<[
 
 export default function InputText({
   elms, message, labelMinWidth,
-}:FormItemExtended & {
+}:FormInputItemExtended<false> & {
   labelMinWidth?: string,
 }){
-
+  const {
+    label,
+    registerReturn,
+    inputHTMLAttribute
+  } = elms
   return  (
     <div className={`${style.wrap}`} style={setCSSVariable({labelMinWidth})}>
-      {elms.map(({label, registerReturn, inputHTMLAttribute})=>{
-        return (
-          <label className={style.label} key={registerReturn.name}>
-            {
-              typeof label === 'string' ?
-              (<span className={style.innerLabel}>{label}</span>)
-              : label
-            }
-            <input className={style.input} type='text' {...registerReturn} {...inputHTMLAttribute}/>
-          </label>
-        )
-      })}
+      <label className={style.label}>
+        {
+          typeof label === 'string' ?
+          (<span className={style.innerLabel}>{label}</span>)
+          : label
+        }
+        <input className={style.input} type='text' {...registerReturn} {...inputHTMLAttribute}/>
+      </label>
       <div aria-live='polite' role='alert'>
         {message !==undefined && (
           <p className={style.errorMessage}>{message}</p>
