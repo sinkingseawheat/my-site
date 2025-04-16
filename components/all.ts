@@ -28,6 +28,7 @@ import ToggleHeaderFooter from "./ToggleHeaderFooter/_";
 import PageList from "./PageList/_";
 import BottomPopup from "./BottomPopup/_";
 import SVGIcon from "./SVGIcon/_";
+import Loader from "./Loader/_";
 
 export {
   List,
@@ -41,6 +42,7 @@ export {
   PageList,
   BottomPopup,
   SVGIcon,
+  Loader,
 }
 
 /* Header Footer */
