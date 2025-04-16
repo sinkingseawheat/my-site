@@ -85,9 +85,8 @@ export function Form(){
             <legend className={style.legend}>出力形式</legend>
             <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
                 <F.InputText
-                  elms={[
-                    {
-                      inputHTMLAttribute:{inputMode:'numeric'},
+                  elms={{
+                      baseAttributes:{inputMode:'numeric'},
                       label:`文字数`,
                       registerReturn:register(`length`,{
                         valueAsNumber:true,
@@ -97,15 +96,14 @@ export function Form(){
                         },
                         validate:(v)=>(!( v!==v || parseInt(v)>128) || `128以下の数値を半角で入力してください` )
                       })
-                    },
-                  ]}
+                    }
+                  }
                   message={errors?.['length']?.message}
                   labelMinWidth='3em'
                 />
                 <F.InputText
-                  elms={[
-                    {
-                      inputHTMLAttribute:{inputMode:'numeric'},
+                  elms={{
+                      baseAttributes:{inputMode:'numeric'},
                       label:`個数`,
                       registerReturn:register(`count`,{
                         valueAsNumber:true,
@@ -115,8 +113,8 @@ export function Form(){
                         },
                         validate:(v)=>(!( v!==v || parseInt(v)>20) || `20以下の数値を半角で入力してください` )
                       })
-                    },
-                  ]}
+                    }
+                  }
                   message={errors?.['count']?.message}
                   labelMinWidth='3em'
                 />

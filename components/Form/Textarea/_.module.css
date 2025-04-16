@@ -1,0 +1,35 @@
+.wrap{
+  --fz:1rem;
+  font-size: var(--fz);
+}
+.label{
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto auto;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 0.5em;
+  max-width: 100%;
+  &:has(input:focus) .innerLabel{
+    font-weight: bold;
+  }
+}
+.innerLabel{
+}
+.textarea{
+  font-size: var(--fz);
+  width: 100%;
+  min-height: var(--area-min-height, 3em);
+  padding: 0.1em 0.3em;
+  appearance: none;
+  border: 1px solid rgb(var(--color-fg));
+  border-radius: 4px;
+  resize: both;
+  &:focus{
+    outline-width: 2px;
+  }
+}
+.errorMessage{
+  color: rgb(var(--color-error));
+}

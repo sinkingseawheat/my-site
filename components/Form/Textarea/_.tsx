@@ -1,20 +1,20 @@
 import style from './_.module.css'
-import { type SetCSSVariable, type FormInputItemExtended } from '@components/utility'
+import { type SetCSSVariable, type FormTextareaItemExtended } from '@components/utility'
 
 
 const setCSSVariable:SetCSSVariable<[
-  "--label-min-width"
-]> = ({labelMinWidth}) => {
+  "--area-min-height"
+]> = ({areaMinHeight}) => {
   return   {
-    "--label-min-width": labelMinWidth ?? '',
+    "--area-min-height": areaMinHeight ?? '',
   }
 }
 
 
-export default function InputText({
-  elms, message, labelMinWidth,
-}:FormInputItemExtended<false> & {
-  labelMinWidth?: string,
+export default function Textarea({
+  elms, message, areaMinHeight,
+}:FormTextareaItemExtended & {
+  areaMinHeight?: string,
 }){
   const {
     label,
@@ -22,14 +22,14 @@ export default function InputText({
     baseAttributes
   } = elms
   return  (
-    <div className={`${style.wrap}`} style={setCSSVariable({labelMinWidth})}>
+    <div className={`${style.wrap}`} style={setCSSVariable({areaMinHeight})}>
       <label className={style.label}>
         {
           typeof label === 'string' ?
           (<span className={style.innerLabel}>{label}</span>)
           : label
         }
-        <input className={style.input} type='text' {...registerReturn} {...baseAttributes}/>
+        <textarea className={style.textarea} {...registerReturn} {...baseAttributes}/>
       </label>
       <div aria-live='polite' role='alert'>
         {message !==undefined && (

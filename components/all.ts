@@ -52,10 +52,12 @@ export {Header, Footer}
 /* Form Component */
 import InputText from "./Form/InputText/_";
 import InputCheckboxes from "./Form/InputCheckboxes/_";
+import Textarea from "./Form/Textarea/_";
 
 const F = {
   InputText,
   InputCheckboxes,
+  Textarea,
 }
 
 export { F }

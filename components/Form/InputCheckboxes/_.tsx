@@ -11,12 +11,12 @@ export default function InputCheckBoxes({
         {elms.map(({
           label,
           registerReturn,
-          inputHTMLAttribute,
+          baseAttributes,
         })=>{
           return(
             <div className={style.wrapCheckboxes__item} key={registerReturn.name}>
               <label className={style.label}>
-                <input className={style.input} type='checkbox' {...registerReturn} {...inputHTMLAttribute}/>
+                <input className={style.input} type='checkbox' {...registerReturn} {...baseAttributes}/>
                 <span className={style.pseudo} role='presentation'>
                 <svg className={style.svg} viewBox="0 0 21 16" xmlns="http://www.w3.org/2000/svg">
                   <use href='#svgFormCheckmark' />
