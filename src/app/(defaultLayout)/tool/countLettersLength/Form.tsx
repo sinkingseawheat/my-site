@@ -10,7 +10,7 @@ const schemaInput = z.object({
   writing: z.string().refine(
     (v)=>!/^[\s\r\n]*$/.test(v)
   ,{
-    message:`テキストが入っていません`
+    message:`有効なテキストが入っていません`
   }).nullable()
 })
 
