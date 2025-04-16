@@ -25,7 +25,7 @@
   appearance: none;
   border: 1px solid rgb(var(--color-fg));
   border-radius: 4px;
-  resize: both;
+  resize: vertical;
   &:focus{
     outline-width: 2px;
   }
