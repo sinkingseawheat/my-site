@@ -4,7 +4,7 @@ import z from 'zod'
 import { useState, useDeferredValue } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, S, L, F, Loader } from '@components/all'
+import { Button, S, L, F, Loader, Table } from '@components/all'
 
 const schemaInput = z.object({
   writing: z.string().refine(
@@ -81,7 +81,12 @@ export function Form(){
           {
             deferredOutput === null ?
             <>まだ1回も実行されてません、もしくは入力が無効です。</>
-            : <div>{Array.from(Object.entries(deferredOutput)).map(([p,v],index)=>(<span key={index}>{`${p}:${v}`}<br/></span>))}</div>
+            : <Table<[React.ReactNode, React.ReactNode]> // 推論で要素数の定まったReact.ReactNode[]を期待するが、仕様上narrowingされるようので、それを防ぐために直接指定する。
+                theadElement={['プロパティ','結果']}
+                columnMinWidthArray={['6em','5em']}
+                originalData={Array.from(Object.entries(deferredOutput))}
+                caption={`結果`}
+              />
           }
         </div>
       </S.lv2>

@@ -29,6 +29,7 @@ import PageList from "./PageList/_";
 import BottomPopup from "./BottomPopup/_";
 import SVGIcon from "./SVGIcon/_";
 import Loader from "./Loader/_";
+import Table from "./Table/_";
 
 export {
   List,
@@ -43,6 +44,7 @@ export {
   BottomPopup,
   SVGIcon,
   Loader,
+  Table,
 }
 
 /* Header Footer */
