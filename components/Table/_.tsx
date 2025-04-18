@@ -1,6 +1,6 @@
 'use client'
 import style from './_.module.css'
-import { useState, useDeferredValue, useContext } from 'react';
+import { useState, useDeferredValue, useContext, useEffect } from 'react';
 import { Button } from "@components/all";
 import { PopupContext } from '@components/context'
 import { SetCSSVariable } from '@components/utility'
@@ -46,13 +46,13 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
   // -1  0  1  2 ...
   // -1 th th th ...
   //  0 td td td ...
-  if (data === null) {
+  useEffect(()=>{
     setData([
-      (new Array(originalData.length+1).fill('').map((_, index) => index-1)),
+      (new Array((originalData.length)+1).fill('').map((_, index) => index-1)),
       [-1, ...theadElement],
       ...originalData.map<[number, ...TRows]>((row, index) => [index, ...row])
     ])
-  }
+  },[originalData, theadElement])
   if(data === null){
     return <></>
   }
