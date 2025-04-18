@@ -4,7 +4,7 @@ export const getTextDataFromReactNode:(elm:React.ReactNode)=>string = (elm)=>{
     || typeof elm === 'number'
     || typeof elm === 'boolean'
   ){
-    return elm.toString()
+    return elm.toString().trim()
   }else if(
     elm instanceof Object
     && Symbol.iterator in elm
