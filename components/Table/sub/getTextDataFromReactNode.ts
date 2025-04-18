@@ -13,8 +13,8 @@ export const getTextDataFromReactNode:(elm:React.ReactNode)=>string = (elm)=>{
     return Array.from(elm).map((child)=>getTextDataFromReactNode(child)).join('')
   }else if(
     elm instanceof Object
-    && 'props' in elm
-    && elm['props'] instanceof Object
+        && 'props' in elm
+        && elm['props'] instanceof Object
         && 'type' in elm
         && 'key' in elm
   ){
