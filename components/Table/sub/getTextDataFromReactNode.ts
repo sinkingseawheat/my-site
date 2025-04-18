@@ -15,11 +15,16 @@ export const getTextDataFromReactNode:(elm:React.ReactNode)=>string = (elm)=>{
     elm instanceof Object
     && 'props' in elm
     && elm['props'] instanceof Object
-    && 'children' in elm['props']
+        && 'type' in elm
+        && 'key' in elm
   ){
-    console.log('React.Element')
-    // Todo altデータを取得
-    return getTextDataFromReactNode(elm)
+    if(elm['type'] === 'img'){
+      return getTextDataFromReactNode( ((elm as any)?.props?.alt ?? '') as string )
+    }
+    if(elm.props instanceof Object && 'children' in elm.props){
+      return getTextDataFromReactNode(elm.props.children as React.ReactNode) // 一旦ReactNodeでアサート
+    }
+    return ''
   }else{
     return ''
   }
