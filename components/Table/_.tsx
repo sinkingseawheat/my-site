@@ -17,6 +17,13 @@ const setCSSVariable: SetCSSVariable<[
   }
 )
 
+/**
+ * 推論による型決定ではReact.ReactNodeの配列とは定まらない場合があります。そのため、
+ * ```tsx
+ * <Table<[React.ReactNode, React.ReactNode]>>
+ * ```
+ * のようにインスタンス化しないとエラーが出る場合があります。
+ */
 export default function Table<TRows extends Readonly<React.ReactNode>[]>({
   maxHeight,
   columnMinWidthArray,
