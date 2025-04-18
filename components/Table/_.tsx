@@ -67,12 +67,13 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
     <div className={style.wrap} style={setCSSVariable({ maxHeight })}>
       <div className={style.func}>
         <Button type="button" onClick={async () => {
-          const textData = data.map((rows) => {
-            [, ...rows].map((cell) => { getTextDataFromReactNode(cell) }).join(`\t`)
-          }).join(EOL)
+          const textData = data.toSpliced(0,1).map(
+            (rows) => rows.toSpliced(0,1).map(
+              (cell) => getTextDataFromReactNode(cell)
+            ).join(`\t`)).join(EOL)
           await navigator.clipboard.writeText(textData)
           if (setPopupMessage !== undefined) {
-            setPopupMessage(`「${caption}」のデータクリップボードにコピーしました`)
+            setPopupMessage(`「${getTextDataFromReactNode(caption)}」のデータクリップボードにコピーしました`)
           }
         }}>
           データをタブ区切りかつ結合無しでコピーする
@@ -84,48 +85,28 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
         </caption>
         <thead className={style.thead}>
           <tr className={style.theadTr}>
-            {data[1].map((cell, cellIndex)=>{
-              // 項番は非表示
-              if(cellIndex === 0){
-                return null
-              }
+            {data[1].toSpliced(0,1).map((cell, cellIndex)=>{
               return (<th
                 className={style.th}
                 scope='column'
-                key={`cell-${data[1][0]}-${data[0][cellIndex]}`}
-                style={setCSSVariable({columnMinWidth: columnMinWidthArray?.[data[0][cellIndex]]})}>
+                key={`cell-${data[1][0]}-${data[0][cellIndex+1]}`}
+                style={setCSSVariable({columnMinWidth: columnMinWidthArray?.[data[0][cellIndex+1]]})}>
                 {cell}
               </th>)
-            }).filter((cell)=>cell!==null)}
+            })}
           </tr>
         </thead>
         <tbody className={style.body}>
-          {data.map((row, rowIndex) => {
-            // 項番は非表示。theadはスキップ
-            if(rowIndex === 0 || rowIndex === 1){
-              return null
-            }
+          {data.toSpliced(0,2).map((row, rowIndex) => {
             return (
-              <tr className={style.tbodyTr} key={`tr-${row[0]}`}>
-                {row.map((cell, cellIndex) => {
-                  // 項番は非表示
-                  if(cellIndex === 0){
-                    return null
-                  }
+              <tr className={style.tbodyTr} key={`tr-${data[rowIndex+2][0]}`}>
+                {row.toSpliced(0,1).map((cell, cellIndex) => {
                   return (
-                    cellIndex === 0 ?
-                      <th
-                        className={style.th}
-                        scope='column'
-                        key={`cell-${data[rowIndex][0]}-${data[0][cellIndex]}`}
-                        style={setCSSVariable({columnMinWidth: columnMinWidthArray?.[cellIndex]})}>
+                    <td
+                      className={style.th}
+                      key={`cell-${data[rowIndex+2][0]}-${data[0][cellIndex+1]}`}>
                         {cell}
-                      </th>
-                      : <td
-                        className={style.th}
-                        key={`cell-${data[rowIndex][0]}-${data[0][cellIndex]}`}>
-                          {cell}
-                      </td>
+                    </td>
                   )
                 }).filter((cell)=>cell!==null)}
               </tr>
