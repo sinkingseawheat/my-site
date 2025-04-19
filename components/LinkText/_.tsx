@@ -1,43 +1,31 @@
 'use client';
 import style from './_.module.css';
-import { type SetCSSVariable } from '@components/utility';
+import { type StyleValue } from '@components/utility';
 import Link from 'next/link';
-import { type LinkProps } from 'next/link';
 import { usePathname } from 'next/navigation';
-
-const setCSSVariable:SetCSSVariable<[
-  "--fz-link-text"
-]> = ({fontSize}) => {
-  return   {
-    "--fz-link-text": fontSize ?? '',
-  }
-}
 
 export default function LinkText({
   href,
   isOpenAnotherTab,
-  elm,
-  prefetch,
-  fontSize,
+  children,
+  styleValue
 }:{
     href: string,
     isOpenAnotherTab: boolean,
-    elm: React.ReactElement | string,
-    prefetch?:LinkProps['prefetch'],
-    fontSize?:string
+    children: React.ReactNode,
+    styleValue?: StyleValue<'--fz-link-text'>
 }){
   if(href === usePathname()){
     return (
       <Link
         className={style.link}
         href={href}
-        prefetch={false}
-        style={setCSSVariable({fontSize})}
+        style={styleValue}
         aria-current='page'
       >
-        {typeof elm === 'string' ?
-          (<span className={style.text}>{elm}</span>)
-          : elm
+        {typeof children === 'string' ?
+          (<span className={style.text}>{children}</span>)
+          : children
         }
       </Link>);
   }else{
@@ -46,12 +34,11 @@ export default function LinkText({
         className={style.link}
         href={href}
         target={isOpenAnotherTab ? '_blank' : undefined}
-        prefetch={prefetch}
-        style={setCSSVariable({fontSize})}
+        style={styleValue}
       >
-        {typeof elm === 'string' ?
-          (<span className={style.text}>{elm}</span>)
-          : elm
+        {typeof children === 'string' ?
+          (<span className={style.text}>{children}</span>)
+          : children
         }
         <span className={style.linkIcon}>
           {isOpenAnotherTab ?

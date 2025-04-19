@@ -1,20 +1,11 @@
 import style from './_.module.css'
-import { type SetCSSVariable, type FormInputItemExtended } from '@components/utility'
-
-
-const setCSSVariable:SetCSSVariable<[
-  "--label-min-width"
-]> = ({labelMinWidth}) => {
-  return   {
-    "--label-min-width": labelMinWidth ?? '',
-  }
-}
+import { type StyleValue, type FormInputItemExtended } from '@components/utility'
 
 
 export default function InputText({
-  elms, message, labelMinWidth,
+  elms, message, styleValue,
 }:FormInputItemExtended<false> & {
-  labelMinWidth?: string,
+  styleValue?: StyleValue<'--label-min-width'>
 }){
   const {
     label,
@@ -22,7 +13,7 @@ export default function InputText({
     baseAttributes
   } = elms
   return  (
-    <div className={`${style.wrap}`} style={setCSSVariable({labelMinWidth})}>
+    <div className={`${style.wrap}`} style={styleValue}>
       <label className={style.label}>
         {
           typeof label === 'string' ?

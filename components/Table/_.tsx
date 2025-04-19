@@ -1,21 +1,11 @@
 'use client'
 import style from './_.module.css'
 import { useState, useDeferredValue, useContext, useEffect } from 'react';
-import { Button } from "@components/all";
+import { Button, SVGIcon } from "@components/all";
 import { PopupContext } from '@components/context'
-import { SetCSSVariable } from '@components/utility'
-import { EOL } from "node:os"
+import { StyleValue } from '@components/utility'
+import { EOL } from "os"
 import { getTextDataFromReactNode } from "./sub/getTextDataFromReactNode"
-
-const setCSSVariable: SetCSSVariable<[
-  "--max-height",
-  "--min-column-width"
-]> = ({ maxHeight, columnMinWidth }) => (
-  {
-    "--max-height": maxHeight ?? '',
-    "--min-column-width": columnMinWidth ?? ''
-  }
-)
 
 /**
  * 推論による型決定ではReact.ReactNodeの配列とは定まらない場合があります。そのため、
@@ -25,17 +15,17 @@ const setCSSVariable: SetCSSVariable<[
  * のようにインスタンス化しないとエラーが出る場合があります。
  */
 export default function Table<TRows extends Readonly<React.ReactNode>[]>({
-  maxHeight,
-  columnMinWidthArray,
+  styleValue,
+  styleValueArray,
   caption,
   theadElement,
-  originalData,
+  children,
 }: {
-  maxHeight?: string,
-  columnMinWidthArray?: string[],
+  styleValue?: StyleValue<'--max-height'>,
+  styleValueArray: StyleValue<'--min-column-width',string[]>
   caption: React.ReactNode,
   theadElement: TRows,
-  originalData: Readonly<Readonly<TRows>[]>,
+  children: Readonly<Readonly<TRows>[]>,
 }) {
   // 最初の行と列に項番を追加
   type Data = [
@@ -46,7 +36,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
   const [_data, setData] = useState<Data | null>(null)
   const data = useDeferredValue(_data, null)
 
-  const [_, setPopupMessage] = useContext(PopupContext)
+  const [, setPopupMessage] = useContext(PopupContext)
 
   // 最初の行に項番と見出し、最初の列に項番を追加する。そして、各配列の添え字のみを複製してミュータブルにして並び替えを可能にする。
   // thは一旦最初の行で固定する
@@ -55,16 +45,16 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
   //  0 td td td ...
   useEffect(()=>{
     setData([
-      (new Array((originalData.length)+1).fill('').map((_, index) => index-1)),
+      (new Array((children.length)+1).fill('').map((_, index) => index-1)),
       [-1, ...theadElement],
-      ...originalData.map<[number, ...TRows]>((row, index) => [index, ...row])
+      ...children.map<[number, ...TRows]>((row, index) => [index, ...row])
     ])
-  },[originalData, theadElement])
+  },[children, theadElement])
   if(data === null){
     return <></>
   }
   return (
-    <div className={style.wrap} style={setCSSVariable({ maxHeight })}>
+    <div className={style.wrap} style={styleValue}>
       <div className={style.func}>
         <Button type="button" onClick={async () => {
           const textData = data.toSpliced(0,1).map(
@@ -76,7 +66,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
             setPopupMessage(`「${getTextDataFromReactNode(caption)}」のデータクリップボードにコピーしました`)
           }
         }}>
-          データをタブ区切りかつ結合無しでコピーする
+          <SVGIcon.copy styleVariable={{'--color-svg':''}}/>
         </Button>
       </div>
       <table className={style.table}>
@@ -90,7 +80,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
                 className={style.th}
                 scope='column'
                 key={`cell-${data[1][0]}-${data[0][cellIndex+1]}`}
-                style={setCSSVariable({columnMinWidth: columnMinWidthArray?.[data[0][cellIndex+1]]})}>
+                style={{'--min-column-width': styleValueArray['--min-column-width']?.[data[0][cellIndex+1]]} as StyleValue<'--min-column-width'>}> {/* いい案が浮かばないのでアサートでごまかす */}
                 {cell}
               </th>)
             })}

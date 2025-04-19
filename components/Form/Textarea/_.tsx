@@ -1,20 +1,11 @@
 import style from './_.module.css'
-import { type SetCSSVariable, type FormTextareaItemExtended } from '@components/utility'
-
-
-const setCSSVariable:SetCSSVariable<[
-  "--area-min-height"
-]> = ({areaMinHeight}) => {
-  return   {
-    "--area-min-height": areaMinHeight ?? '',
-  }
-}
+import { type StyleValue, type FormTextareaItemExtended } from '@components/utility'
 
 
 export default function Textarea({
-  elms, message, areaMinHeight,
+  elms, message, styleValue,
 }:FormTextareaItemExtended & {
-  areaMinHeight?: string,
+  styleValue?: StyleValue<'--area-min-height'>
 }){
   const {
     label,
@@ -22,7 +13,7 @@ export default function Textarea({
     baseAttributes
   } = elms
   return  (
-    <div className={`${style.wrap}`} style={setCSSVariable({areaMinHeight})}>
+    <div className={`${style.wrap}`} style={styleValue}>
       <label className={style.label}>
         {
           typeof label === 'string' ?

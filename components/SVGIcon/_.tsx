@@ -17,7 +17,7 @@ const hiddenData= ()=>{
 const copy = ({
   styleVariable
   }:{
-    styleVariable:StyleValue<'--color-svg'|'--color-fg'>
+    styleVariable: StyleValue<'--color-svg'|'--color-fg'>
 })=>(
   <svg width="1.5em" height="1.5em" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style={styleVariable}>
     <use href='#svgCopy' />
