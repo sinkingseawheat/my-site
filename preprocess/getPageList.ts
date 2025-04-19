@@ -8,10 +8,6 @@ export const schemaPageList = z.object({
   label: z.enum(['tool','other','outside']),
 })
 
-export const schemaPageListJSON = schemaPageList.extend({
-  prefetch:z.boolean(),
-})
-
 export const getPageList:Survey = (fullPath,stat,url,content)=>{
   type Label = z.infer<typeof schemaPageList>['label']
   const titleMatched = content.match(/title:\s*`([^`]+)`/);
