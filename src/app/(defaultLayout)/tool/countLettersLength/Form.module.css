@@ -25,6 +25,7 @@
 }
 .outputLoading{
   position: relative;
+  display: inline-block;
   &[aria-busy="true"]::after{
     pointer-events: none;
     content: '';

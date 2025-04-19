@@ -76,19 +76,21 @@ export function Form(){
         </form>
       </S.lv2>
       <S.lv2 title={`出力`}>
-        <div className={style.outputLoading} aria-busy={output !== deferredOutput}>
-          {output !== deferredOutput && <Loader/>}
-          {
-            deferredOutput === null ?
-            <>まだ1回も実行されてません、もしくは入力が無効です。</>
-            : <Table<[React.ReactNode, React.ReactNode]> // 推論で要素数の定まったReact.ReactNode[]を期待するが、仕様上narrowingされるようので、それを防ぐために直接指定する。
-                caption={`調べるテキストの解析結果`}
-                theadElement={['プロパティ','結果']}
-                columnMinWidthArray={['6em','5em']}
-                originalData={Array.from(Object.entries(deferredOutput))}
-              />
-          }
-        </div>
+        <L.column minColumnWidth="10em">
+          <div className={style.outputLoading} aria-busy={output !== deferredOutput}>
+            {output !== deferredOutput && <Loader/>}
+            {
+              deferredOutput === null ?
+              <>まだ1回も実行されてません、もしくは入力が無効です。</>
+              : <Table<[React.ReactNode, React.ReactNode]> // 推論で要素数の定まったReact.ReactNode[]を期待するが、仕様上narrowingされるようので、それを防ぐために直接指定する。
+                  caption={`調べるテキストの解析結果`}
+                  theadElement={['プロパティ','結果']}
+                  columnMinWidthArray={['6em','5em']}
+                  originalData={Array.from(Object.entries(deferredOutput))}
+                />
+            }
+          </div>
+        </L.column>
       </S.lv2>
     </>
   )
