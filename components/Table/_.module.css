@@ -10,7 +10,7 @@
   table-layout: fixed;
 }
 .caption {
-  padding: 0 0.5rem 0.5rem;
+  padding: 0 0.3em;
 }
 .th{
   min-width: var(--min-column-width, auto);
@@ -21,10 +21,6 @@
   align-items: center;
   gap: 2rem;
   font-size: var(--fz-small);
-}
-.p_table + .c_cautionNote {
-  max-width: var(--max-width-inner);
-  width: 100%;
 }
 .tbodyTr[data-match-media='true'] td {
   --color: var(--color-secondary);
