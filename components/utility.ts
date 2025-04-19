@@ -1,13 +1,7 @@
 import { type ReactNode, type InputHTMLAttributes, TextareaHTMLAttributes } from "react"
 import { type UseFormRegisterReturn } from "react-hook-form"
 
-/* export type VariableCSSProperties<TKeys extends `--${string}`[]> = React.CSSProperties & {
-  [key in TKeys[number]]:string
-}
-
-export type SetCSSVariable<TKeys extends `--${string}`[]> = (styleValue:Partial<Record<string,string>>)=>VariableCSSProperties<TKeys> */
-
-export type StyleValue<T extends `--${string}`> = React.CSSProperties & Partial<Record<T,string>>
+export type StyleValue<TProperty extends `--${string}`, TValue extends string|string[] = string> = React.CSSProperties & Partial<Record<TProperty, TValue>>
 
 export type FormInputItemExtended<TIsArray extends Boolean = true> = {
   elms: TIsArray extends true ? {
