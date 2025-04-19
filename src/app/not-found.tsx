@@ -31,6 +31,6 @@ export default function Page() {
         <L.vb className='footer'>
           <Footer/>
         </L.vb>
-      <SVGIcon />
+      <SVGIcon.hiddenData />
     </L.innerBody>);
 }
