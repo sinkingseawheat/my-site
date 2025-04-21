@@ -7,6 +7,7 @@
   display: grid;
   grid-template-rows: 1fr;
   padding: var(--pd-outermost-top) var(--pd-outermost-both-sides);
+  background-color: rgb(var(--color-bg));
 }
 @media (prefers-reduced-motion: no-preference){
   .l_h {
@@ -34,7 +35,9 @@
   column-gap: 8px;
   padding: 4px;
   border-radius: 4px;
-  background-color: rgb(var(--color-fixed-white));
+  @media (prefers-color-scheme: dark) {
+    background-color: rgb(var(--color-fixed-white));
+  }
   position: relative;
 }
 a.c_headerLogo {

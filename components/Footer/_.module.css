@@ -6,6 +6,7 @@
   display: grid;
   grid-template-rows: 1fr;
   padding: var(--pd-outermost-bottom) var(--pd-outermost-both-sides);
+  background-color: rgb(var(--color-bg));
 }
 @media (prefers-reduced-motion: no-preference){
   .l_f{
