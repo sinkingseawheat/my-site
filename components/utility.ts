@@ -3,7 +3,7 @@ import { type UseFormRegisterReturn } from "react-hook-form"
 
 export type StyleValue<TProperty extends `--${string}`, TValue extends string|string[] = string> = React.CSSProperties & Partial<Record<TProperty, TValue>>
 
-export type FormInputItemExtended<TIsArray extends Boolean = true> = {
+export type FormInputItemExtended<TIsArray extends boolean = true> = {
   elms: TIsArray extends true ? {
     label: ReactNode,
     registerReturn: UseFormRegisterReturn,
