@@ -19,7 +19,8 @@ export const getTextDataFromReactNode:(elm:React.ReactNode)=>string = (elm)=>{
         && 'key' in elm
   ){
     if(elm['type'] === 'img'){
-      return getTextDataFromReactNode( ((elm as any)?.props?.alt ?? '') as string )
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return getTextDataFromReactNode( ((elm as any)?.props?.alt ?? '') as string ) // アサートする。elmは<img>タグから作成されたReact.ReactElementを想定
     }
     if(elm.props instanceof Object && 'children' in elm.props){
       return getTextDataFromReactNode(elm.props.children as React.ReactNode) // 一旦ReactNodeでアサート
