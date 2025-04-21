@@ -1,102 +1,90 @@
 'use client'
-import style from './ResultTable.module.css'
-import { Button } from '@components/all'
-import { useState, useEffect, useContext } from 'react'
-import { PopupContext } from '@components/context'
-import { StyleValue } from '@components/utility'
+import { Table, L } from '@components/all'
+import { useState, useEffect, } from 'react'
 
-export function ResultTable<T extends string[]>({
-  styleValue,
-  caption,
-  data,
-  fillType,
-}: {
-  styleValue?: StyleValue<'--content-height'|'--min-cell-width'>,
-  caption: React.ReactElement|string,
-  data: T[],
-  fillType: string,
-}) {
+export function ResultTable() {
+  const [filledData1, setFilledData1] = useState([
+    ['all',''],
+    ['print',''],
+    ['screen',''],
+    ['speech',''],
+  ])
+  const [filledData2, setFilledData2] = useState([
+    ['any-hover','none','',''],
+    ['any-hover','hover','',''],
+    ['hover','none','',''],
+    ['hover','hover','',''],
+    ['any-pointer','none','',''],
+    ['any-pointer','coarse','',''],
+    ['any-pointer','fine','',''],
+    ['pointer','none','',''],
+    ['pointer','coarse','',''],
+    ['pointer','fine','',''],
+    ['prefers-reduced-motion','no-preference','',''],
+    ['prefers-reduced-motion','reduce','',''],
+    ['update','none','',''],
+    ['update','slow','',''],
+    ['update','fast','',''],
+    ['prefers-color-scheme','light','',''],
+    ['prefers-color-scheme','dark','',''],
+    ['scripting','none','',''],
+    ['scripting','initial-only','',''],
+    ['scripting','enabled','',''],
+    ['monochrome','0','',''],
+    ['monochrome','','',''],
+    ['orientation','portrait','',''],
+    ['orientation','landscape','',''],
+    ['display-mode','fullscreen','',''],
+    ['display-mode','standalone','',''],
+    ['display-mode','minimal-ui','',''],
+    ['display-mode','browser','',''],
+    ['color','','',''],
+    ['color-gamut','srgb','',''],
+    ['color-gamut','p3','',''],
+    ['color-gamut','rec2020','',''],
+    ['forced-colors','none','',''],
+    ['forced-colors','active','',''],
+    ['prefers-contrast','no-preference','',''],
+    ['prefers-contrast','more','',''],
+    ['prefers-contrast','less','',''],
+    ['inverted-colors','none','',''],
+    ['inverted-colors','inverted','',''],
+    ['overflow-block','none','',''],
+    ['overflow-block','scroll','',''],
+    ['overflow-block','optional-paged','',''],
+    ['overflow-block','paged','',''],
+    ['overflow-inline','none','',''],
+    ['overflow-inline','scroll','',''],
+    ['grid','0','',''],
+    ['grid','1','',''],
+  ])
 
-  const [, setPopupMessage] = useContext(PopupContext)
-
-  const fillInBrowserType01:(row:T)=>T = (row)=>{
-    const v = structuredClone(row)
-    v[1] = window.matchMedia(`${v[0]}`)?.matches.toString()
-    return v;
-  }
-
-  const fillInBrowserType02:(row:T)=>T = (row)=>{
-    const v = structuredClone(row)
-    v[3] = `(${v[0]}${v[1] ? `: ${v[1]}` : ''})`
-    v[2] = window.matchMedia(`${v[3]}`)?.matches.toString()
-    return v;
-  };
-
-  const [filledData, setFilledData] = useState<T[]>([]);
-
-  useEffect(()=>{
-    setFilledData(data.map((row,index) => {
-      if(index===0){
-        return row;
-      }else{
-        if(fillType==='1'){
-          return fillInBrowserType01(row)
-        }else if(fillType==='2'){
-          return fillInBrowserType02(row)
-        }else{
-          return row
-        }
-      }})
-    );
-  },[data, fillType]);
-
-  const [theadData, ...tbodyData] = filledData;
-  if(!Array.isArray(tbodyData) || tbodyData.length===0){
-    return (<></>)
-  }
-
-  const textCopying = tbodyData.map((row)=>row.join('\t')).join('\n');
+  useEffect((()=>{
+    setFilledData1((prev)=>prev.map((([p])=>[p, window.matchMedia(p).matches.toString()])))
+    setFilledData2((prev)=>prev.map(([group,v])=>{
+      const condition = `(${v ? `${group}: ${v}` : group})`
+      const isMatch = window.matchMedia(condition).matches.toString()
+      return [group, v, isMatch, condition]
+    }))
+  }),[])
 
   return (
-    <div className={style.wrap} style={styleValue}>
-      <table className={style.table}>
-        <caption className={style.caption}>
-          <span className={style.caption_i}>
-            {caption}
-            <Button type="button" onClick={()=>{
-              navigator.clipboard.writeText(textCopying).then(()=>{
-                if(setPopupMessage !== undefined){
-                  setPopupMessage(`クリップボードにコピーしました\n${textCopying}`)
-                }
-              })
-            }}>
-              データをタブ区切りかつ結合無しでコピーする
-            </Button>
-          </span>
-        </caption>
-        <thead>
-          <tr>
-            {theadData.map((cell)=>{
-              return (<th scope='col' key={`thead${cell}`}>{cell}</th>);
-            })}
-          </tr>
-        </thead>
-        <tbody className="p_table__body">
-          {tbodyData.map((row)=>{
-            return (
-              <tr className={style.tr} key={`tBodyTr${row[0]}${row[1]}`} data-match-media={row.includes('true')}>
-                {row.map((cell, index)=>{
-                  return (
-                    index===0 ?
-                    <th scope='row' key={`tBody${index}`}>{cell}</th>
-                    : <td key={`tBody${index}`}>{cell}</td>
-                  )
-                })}
-              </tr>
-              )
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+      <L.column styleValue={{'--min-width':'35em','--column-gap':'2em'}}>
+    <Table
+      styleValue={{'--max-height':'60vh'}}
+      styleValueArray={{'--min-column-width':['6em','6em']}}
+      caption='メディア種別'
+      theadElement={['プロパティ','真偽値']}
+    >
+      {filledData1}
+    </Table>
+    <Table
+      styleValue={{'--max-height':'60vh'}}
+      styleValueArray={{'--min-column-width':['8em','8em','8em','8em']}}
+      caption='メディア種別'
+      theadElement={['プロパティ','値','真偽値','メディアクエリ']}
+    >
+      {filledData2}
+    </Table>
+    </L.column>)
 }
