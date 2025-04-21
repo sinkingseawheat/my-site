@@ -1,11 +1,11 @@
 'use client'
 import style from './_.module.css'
-import { useState, useDeferredValue, useContext, useEffect } from 'react';
-import { Button, SVGIcon } from "@components/all";
-import { PopupContext } from '@components/context'
+import { useState, useDeferredValue, useContext, useEffect } from 'react'
+import { Button, SVGIcon } from "@components/all"
 import { StyleValue } from '@components/utility'
-import { EOL } from "os"
-import { getTextDataFromReactNode } from "./sub/getTextDataFromReactNode"
+import { copyTextData } from './sub/copy'
+import { PopupContext } from '@components/context'
+import { getTextDataFromReactNode } from './sub/getTextDataFromReactNode'
 
 /**
  * 推論による型決定ではReact.ReactNodeの配列とは定まらない場合があります。そのため、
@@ -22,7 +22,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
   children,
 }: {
   styleValue?: StyleValue<'--max-height'>,
-  styleValueArray: StyleValue<'--min-column-width',string[]>
+  styleValueArray?: StyleValue<'--min-column-width',string[]>
   caption: React.ReactNode,
   theadElement: TRows,
   children: Readonly<Readonly<TRows>[]>,
@@ -35,7 +35,6 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
 
   const [_data, setData] = useState<Data | null>(null)
   const data = useDeferredValue(_data, null)
-
   const [, setPopupMessage] = useContext(PopupContext)
 
   // 最初の行に項番と見出し、最初の列に項番を追加する。そして、各配列の添え字のみを複製してミュータブルにして並び替えを可能にする。
@@ -50,28 +49,33 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
       ...children.map<[number, ...TRows]>((row, index) => [index, ...row])
     ])
   },[children, theadElement])
+
   if(data === null){
     return <></>
   }
   return (
     <div className={style.wrap} style={styleValue}>
       <div className={style.func}>
-        <Button type="button" onClick={async () => {
-          const textData = data.toSpliced(0,1).map(
-            (rows) => rows.toSpliced(0,1).map(
-              (cell) => getTextDataFromReactNode(cell)
-            ).join(`\t`)).join(EOL)
-          await navigator.clipboard.writeText(textData)
-          if (setPopupMessage !== undefined) {
-            setPopupMessage(`「${getTextDataFromReactNode(caption)}」のデータクリップボードにコピーしました`)
-          }
-        }}>
-          <SVGIcon.copy styleVariable={{'--color-svg':''}}/>
-        </Button>
       </div>
       <table className={style.table}>
-        <caption className={style.caption}>
-          {caption}
+        <caption>
+          <span className={style.captionInner}>
+            <span className={style.captionText}>
+              {caption}
+            </span>
+            <span className={style.captionButton}>
+              <Button type="button"
+                onClick={async ()=>{
+                  await copyTextData(data)
+                  if (setPopupMessage !== undefined) {
+                    setPopupMessage(`「${getTextDataFromReactNode(caption)}」のデータクリップボードにコピーしました`)
+                  }
+                }}
+              >
+                <SVGIcon.copy styleVariable={{'--color-stroke':'var(--color-bg)'}}/>
+              </Button>
+            </span>
+          </span>
         </caption>
         <thead className={style.thead}>
           <tr className={style.theadTr}>
@@ -80,7 +84,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
                 className={style.th}
                 scope='column'
                 key={`cell-${data[1][0]}-${data[0][cellIndex+1]}`}
-                style={{'--min-column-width': styleValueArray['--min-column-width']?.[data[0][cellIndex+1]]} as StyleValue<'--min-column-width'>}> {/* いい案が浮かばないのでアサートでごまかす */}
+                style={{'--min-column-width': styleValueArray?.['--min-column-width']?.[data[0][cellIndex+1]]} as StyleValue<'--min-column-width'>}> {/* いい案が浮かばないのでアサートでごまかす */}
                 {cell}
               </th>)
             })}
