@@ -83,7 +83,7 @@ export function Form(){
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
-            <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
+            <L.column styleValue={{'--min-width':'100%', '--row-gap':'.3rem', '--margin-top':'.4rem'}}>
                 <F.InputText
                   elms={{
                       baseAttributes:{inputMode:'numeric'},
@@ -99,7 +99,7 @@ export function Form(){
                     }
                   }
                   message={errors?.['length']?.message}
-                  labelMinWidth='3em'
+                  styleValue={{'--label-min-width':'3em'}}
                 />
                 <F.InputText
                   elms={{
@@ -116,13 +116,13 @@ export function Form(){
                     }
                   }
                   message={errors?.['count']?.message}
-                  labelMinWidth='3em'
+                  styleValue={{'--label-min-width':'3em'}}
                 />
             </L.column>
           </fieldset>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>英数字の使用</legend>
-            <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
+            <L.column styleValue={{'--min-width':'100%', '--row-gap':'.3rem', '--margin-top':'.4rem'}}>
               <F.InputCheckboxes
                 elms={[{
                   label:`大文字アルファベット`,
@@ -146,7 +146,7 @@ export function Form(){
           </fieldset>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>記号の使用</legend>
-            <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
+            <L.column styleValue={{'--min-width':'100%', '--row-gap':'.3rem', '--margin-top':'.4rem'}}>
               <F.InputCheckboxes
                 elms={ALLOWED_SYMBOLS_ARRAY.map((_symbol, index)=>{
                   const registerReturn = register(`src_symbol_${index}`)
@@ -165,7 +165,7 @@ export function Form(){
       </S.lv2>
       <S.lv2 title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
-        {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><L.column minColumnWidth={length} columnGap='1em'>
+        {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><L.column styleValue={{'--min-width': length, '--column-gap':'1em'}}>
           {output.map((randomString)=><Button type='button' className={style.outputItem} key={randomString} onClick={()=>{
             navigator.clipboard.writeText(randomString).then(()=>{
               if(popupMessage!==undefined && setPopupMessage!==undefined){
