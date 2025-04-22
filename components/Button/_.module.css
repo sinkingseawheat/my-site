@@ -4,8 +4,8 @@
   color: rgb(var(--color-bg));
   font-weight: bold;
   position: relative;
-  font-size: 1em;
   overflow: hidden;
+  font-size: inherit;
 }
 .button:disabled{
   color: rgb(var(--color-disabled-text));
