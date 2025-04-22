@@ -16,11 +16,6 @@ const schemaInput = z.object({
 
 type Inputs = z.infer<typeof schemaInput>
 
-const schemaOutput = z.object({
-  lettersLength: z.number(),
-  lineLength: z.number(),
-})
-
 export function Form(){
   const {
     register,
@@ -30,7 +25,7 @@ export function Form(){
     resolver: zodResolver(schemaInput),
     mode: 'onChange',
   })
-  const [output, setOutput] = useState<z.infer<typeof schemaOutput>|null>(null)
+  const [output, setOutput] = useState<{lettersLength:number,lineLength:number}|null>(null)
   const deferredOutput = useDeferredValue(output, null)
 
   const onSubmit:SubmitHandler<Inputs> = (data)=>{
@@ -60,7 +55,7 @@ export function Form(){
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
-            <L.column minColumnWidth='100%' rowGap='.3rem' marginTop='0.4rem'>
+            <L.column styleValue={{'--min-width':'100%','--row-gap':'.3em','--margin-top':'.4em'}}>
                 <F.Textarea
                   elms={{
                     label:`調べるテキスト`,
@@ -76,18 +71,19 @@ export function Form(){
         </form>
       </S.lv2>
       <S.lv2 title={`出力`}>
-        <L.column minColumnWidth="10em">
+        <L.column styleValue={{'--min-width':'10em'}}>
           <div className={style.outputLoading} aria-busy={output !== deferredOutput}>
             {output !== deferredOutput && <Loader/>}
             {
               deferredOutput === null ?
               <>まだ1回も実行されてません、もしくは入力が無効です。</>
-              : <Table<[React.ReactNode, React.ReactNode]> // 推論で要素数の定まったReact.ReactNode[]を期待するが、仕様上narrowingされるようので、それを防ぐために直接指定する。
+              : (<Table<[React.ReactNode, React.ReactNode]> // 推論で要素数の定まったReact.ReactNode[]を期待するが、仕様上narrowingされるようので、それを防ぐために直接指定する。
                   caption={`調べるテキストの解析結果`}
                   theadElement={['プロパティ','結果']}
-                  columnMinWidthArray={['6em','5em']}
-                  originalData={Array.from(Object.entries(deferredOutput))}
-                />
+                  styleValueArray={{'--min-column-width':['6em','5em']}}
+                >
+                  {Array.from(Object.entries(deferredOutput))}
+                </Table>)
             }
           </div>
         </L.column>
