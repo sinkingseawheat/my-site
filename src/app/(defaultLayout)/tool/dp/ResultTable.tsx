@@ -81,7 +81,7 @@ export function ResultTable() {
     <Table
       styleValue={{'--max-height':'60vh'}}
       styleValueArray={{'--min-column-width':['8em','8em','8em','8em']}}
-      caption='メディア種別'
+      caption='メディア特性'
       theadElement={['プロパティ','値','真偽値','メディアクエリ']}
     >
       {filledData2}
