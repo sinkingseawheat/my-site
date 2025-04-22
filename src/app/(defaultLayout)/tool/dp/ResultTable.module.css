@@ -14,10 +14,6 @@
   gap: 2rem;
   font-size: var(--fz-small);
 }
-.p_table + .c_cautionNote {
-  max-width: var(--max-width-inner);
-  width: 100%;
-}
 .tr[data-match-media='true'] td {
   --color: var(--color-secondary);
   background-color: rgb(var(--color) / 0.4);

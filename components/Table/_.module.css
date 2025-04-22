@@ -4,9 +4,6 @@
   position: relative;
   width: 100%;
 }
-.func{
-
-}
 .table {
   table-layout: fixed;
   width: 100%;
@@ -23,11 +20,8 @@
 }
 .captionButton{
   flex: auto 0 0;
+  font-size: 1rem;
 }
 .th{
   min-width: var(--min-column-width, auto);
-}
-.tbodyTr[data-match-media='true'] td {
-  --color: var(--color-secondary);
-  background-color: rgb(var(--color) / 0.4);
 }
