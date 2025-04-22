@@ -52,7 +52,7 @@ export function Form(){
   const [output, setOutput] = useState<string[]>([])
   const [length, setLength] = useState<string>(`100%`)
 
-  const [popupMessage, setPopupMessage] = useContext(PopupContext);
+  const [, setPopupMessage] = useContext(PopupContext);
 
   const onSubmit:SubmitHandler<Inputs> = (data)=>{
     const source = (data.src_A ? UPPERCASE_ALPHABET : '')
@@ -168,7 +168,7 @@ export function Form(){
         {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><L.column styleValue={{'--min-width': length, '--column-gap':'1em'}}>
           {output.map((randomString)=><Button type='button' className={style.outputItem} key={randomString} onClick={()=>{
             navigator.clipboard.writeText(randomString).then(()=>{
-              if(popupMessage!==undefined && setPopupMessage!==undefined){
+              if(setPopupMessage!==undefined){
                 setPopupMessage(`${randomString}がコピーされました`)
               }
             })
