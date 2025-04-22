@@ -43,7 +43,7 @@ const copy = ({
 const link = ({
   styleVariable
   }:{
-    styleVariable: StyleValue<'--color-stroke'>
+    styleVariable?: StyleValue<'--color-stroke'>
 })=>(
   <svg width="1em" height="1em" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style={styleVariable}>
     <use href='#svgLink' />
@@ -53,7 +53,7 @@ const link = ({
 const linkAnotherTab = ({
   styleVariable
   }:{
-    styleVariable: StyleValue<'--color-stroke'>
+    styleVariable?: StyleValue<'--color-stroke'>
 })=>(
   <svg width="1em" height="1em" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style={styleVariable}>
     <use href='#svgLinkAnotherTab' />
@@ -63,7 +63,7 @@ const linkAnotherTab = ({
 const checkbox = ({
   styleVariable
   }:{
-    styleVariable: StyleValue<'--color-stroke'|'--color-fill'>
+    styleVariable?: StyleValue<'--color-stroke'|'--color-fill'>
 })=>(
   <svg width="1.3125em" height="1em" viewBox="0 0 21 16" xmlns="http://www.w3.org/2000/svg" style={styleVariable}>
     <use href='#svgFormCheckbox' />
