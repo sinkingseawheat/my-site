@@ -14,21 +14,25 @@ const schemaInput = z.object({
   }).nullable()
 })
 
-type Inputs = z.infer<typeof schemaInput>
+type Input = z.infer<typeof schemaInput>
+type Output = {
+  lettersLength:number,
+  lineLength:number
+}
 
 export function Form(){
   const {
     register,
     handleSubmit,
     formState: {errors, isValid}
-  } = useForm<Inputs>({
+  } = useForm<Input>({
     resolver: zodResolver(schemaInput),
     mode: 'onChange',
   })
-  const [output, setOutput] = useState<{lettersLength:number,lineLength:number}|null>(null)
+  const [output, setOutput] = useState<Output|null>(null)
   const deferredOutput = useDeferredValue(output, null)
 
-  const onSubmit:SubmitHandler<Inputs> = (data)=>{
+  const onSubmit:SubmitHandler<Input> = (data)=>{
     const { writing } = data
     if(writing === null){
       setOutput(null)
@@ -82,7 +86,13 @@ export function Form(){
                   theadElement={['プロパティ','結果']}
                   styleValueArray={{'--min-column-width':['6em','5em']}}
                 >
-                  {Array.from(Object.entries(deferredOutput))}
+                  {Array.from(Object.entries(deferredOutput)).map(([n,v])=>{
+                    const displayingValue:{[key in keyof Output]:string} = {
+                      'lettersLength': '文字数',
+                      'lineLength': '行数（空行を除く）',
+                    }
+                    return [displayingValue[n as keyof Output], v] // TypescriptにおけるObject.entriesの仕様上、アサーションする
+                  })}
                 </Table>)
             }
           </div>
