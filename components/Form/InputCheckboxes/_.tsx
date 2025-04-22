@@ -1,5 +1,6 @@
 import style from './_.module.css'
 import { type FormInputItemExtended } from '@components/utility'
+import { SVGIcon } from '@components/all';
 
 export default function InputCheckBoxes({
   elms, message,
@@ -18,9 +19,7 @@ export default function InputCheckBoxes({
               <label className={style.label}>
                 <input className={style.input} type='checkbox' {...registerReturn} {...baseAttributes}/>
                 <span className={style.pseudo} role='presentation'>
-                <svg className={style.svg} viewBox="0 0 21 16" xmlns="http://www.w3.org/2000/svg">
-                  <use href='#svgFormCheckmark' />
-                </svg>
+                <SVGIcon.checkbox styleVariable={{'--color-fill':'var(--color-fixed-black)','--color-stroke':'var(--color-fg)'}} />
                 </span>
                 {
                   typeof label === 'string' ?

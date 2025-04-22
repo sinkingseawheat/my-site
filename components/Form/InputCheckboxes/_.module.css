@@ -37,14 +37,22 @@
   background-color: rgb(var(--color-fg));
   border-radius: 4px;
   position: relative;
+  border:1px solid transparent;
+  @media (prefers-color-scheme: light) {
+    border-color: rbg(var(--color-fg));
+    background-color: rgb(var(--color-bg));
+  }
 }
-.input:not(:checked) + .pseudo > .svg {
+.input:not(:checked) + .pseudo > svg {
   display: none;
 }
-.input:checked + .pseudo > .svg{
+.input:checked + .pseudo > svg{
   width: 1.4em;
   aspect-ratio: 21/16;
   max-width: none;
+}
+.input:checked ~ .innerLabel {
+  font-weight: bold;
 }
 .errorMessage{
   color: rgb(var(--color-error));
