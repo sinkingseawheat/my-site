@@ -16,7 +16,7 @@ export default function BottomPopup(
       return
     }
     setMessages((messages)=>{
-      // Todo:popupMessageがプリミティブ値の場合、そもそもuseEffectは再実行されない。
+      // Todo:popupMessageが同一の値のプリミティブ値の場合、そもそもuseEffectは再実行されない。
       if(popupMessage === messages.at(-1)){
         console.log('同じメッセージを連続して表示することはできません')
         // 同じメッセージの参照であれば何もしない
