@@ -17,7 +17,8 @@ export default function BottomPopup(
     }
     setMessages((messages)=>{
       if(popupMessage === messages.at(-1)){
-        // 同じメッセージの参照であればそのままにしておく
+        console.log('同じメッセージを連続して表示することはできません')
+        // 同じメッセージの参照であれば何もしない
         return messages
       }
       const newMessage = [...messages]
