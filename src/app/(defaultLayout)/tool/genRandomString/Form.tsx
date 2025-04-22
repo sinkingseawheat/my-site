@@ -122,7 +122,7 @@ export function Form(){
           </fieldset>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>英数字の使用</legend>
-            <L.column styleValue={{'--min-width':'100%', '--row-gap':'.3rem', '--margin-top':'.4rem'}}>
+            <L.column styleValue={{'--min-width':'100%', '--row-gap':'.3rem', '--margin-top':'.2rem'}}>
               <F.InputCheckboxes
                 elms={[{
                   label:`大文字アルファベット`,

@@ -38,7 +38,7 @@ export default function LayoutDefault({
               {children}
             </main>
             <aside>
-              <L.column marginTop='4rem'>
+              <L.column styleValue={{'--margin-top': '4rem'}}>
                 <Suspense>
                   <ShareButton/>
                 </Suspense>
