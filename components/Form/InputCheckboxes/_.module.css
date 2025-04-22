@@ -1,6 +1,12 @@
 .wrap{
   --fz:1rem;
   font-size: var(--fz);
+  --color-stroke:var(--color-fg);
+  --color-fill:var(--color-bg);
+  @media (prefers-color-scheme: light) {
+    --color-stroke:var(--color-bg);
+    --color-fill:var(--color-fg);
+  }
 }
 .wrapCheckboxes{
   display: flex;

@@ -19,7 +19,7 @@ export default function InputCheckBoxes({
               <label className={style.label}>
                 <input className={style.input} type='checkbox' {...registerReturn} {...baseAttributes}/>
                 <span className={style.pseudo} role='presentation'>
-                <SVGIcon.checkbox styleVariable={{'--color-fill':'var(--color-fixed-black)','--color-stroke':'var(--color-fg)'}} />
+                <SVGIcon.checkbox/>
                 </span>
                 {
                   typeof label === 'string' ?
