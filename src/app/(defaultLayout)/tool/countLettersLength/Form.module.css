@@ -4,16 +4,10 @@
   padding: 1rem;
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 1em;
+  row-gap: 2em;
 }
 .legend{
   font-size: var(--fz-headingLv3);
-  font-weight: bold;
-}
-.iframe{
-  width: 100%;
-  height: max(200px,50vh);
-  resize: both;
 }
 /* .output{} */
 .outputItem{
