@@ -6,8 +6,8 @@ function lv1({
   children,
 }:{
   isSrOnly: boolean,
-  h1Elm: React.ReactElement | React.ReactElement[] | string,
-  children?: React.ReactElement | React.ReactElement[],
+  h1Elm: React.ReactNode | React.ReactNode[],
+  children?: React.ReactNode | React.ReactNode[],
 }){
   const headingElm = typeof h1Elm === 'string' ?
     (<h1 className={`${style.c_headLv1}${isSrOnly ? ` u_sr_only` : ` ${style['-mb']}`}`}><span className={style.c_headLv1_i}>{h1Elm}</span></h1>)
@@ -22,8 +22,8 @@ function lv2({
   title,
   children,
 }: {
-  title: React.ReactElement | string
-  children: React.ReactElement | React.ReactElement[] | null
+  title: React.ReactNode
+  children: React.ReactNode | React.ReactNode[] | null
 }) {
   return children!==null ? (
     <section className={style.l_secLv2}>
@@ -43,8 +43,8 @@ function lv3({
   title,
   children,
 }: {
-  title: React.ReactElement | string
-  children: React.ReactElement | React.ReactElement[] | null
+  title: React.ReactNode
+  children: React.ReactNode | React.ReactNode[] | null
 }) {
   return children !== null ? (
     <section className={style.l_secLv3}>
@@ -60,6 +60,40 @@ function lv3({
   ) : null
 }
 
-const aggregation = {lv1, lv2, lv3}
+function dl(props: {
+  title: React.ReactNode
+  children: React.ReactNode | React.ReactNode[] | null
+} | {
+  title: React.ReactNode
+  children: React.ReactNode | React.ReactNode[] | null
+}[]) {
+  const array = [props].flat()
+  // 小要素がすべてない場合はdlを作らない
+  if(array.every(({children})=>children===null)){
+    return <></>
+  }
+  return (
+    <dl className={style.dl}>
+      {
+        array.map(({title, children}, index)=>{
+          return children !== null ? (
+            <div className={style.dlInner} key={index}>
+              <dt className={style.dt}>
+                {typeof title === 'string'
+                  ? <span className={style.dt_i}>{title}</span>
+                  : title}
+              </dt>
+              <dd className={style.dd}>
+                {children}
+              </dd>
+            </div>
+          ) : null
+        }).filter(item=>item!==null)
+      }
+    </dl>
+  )
+}
+
+const aggregation = {lv1, lv2, lv3, dl}
 
 export default aggregation
