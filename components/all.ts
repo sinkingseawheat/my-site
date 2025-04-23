@@ -30,6 +30,7 @@ import BottomPopup from "./BottomPopup/_";
 import SVGIcon from "./SVGIcon/_";
 import Loader from "./Loader/_";
 import Table from "./Table/_";
+import AdsenseBlock from "./AdsenseBlock/_";
 
 export {
   List,
@@ -45,6 +46,7 @@ export {
   SVGIcon,
   Loader,
   Table,
+  AdsenseBlock,
 }
 
 /* Header Footer */

@@ -1,0 +1,9 @@
+.dl{
+  margin-top: 3rem;
+}
+.dt{
+  font-size: var(--fz-headingLv3);
+}
+.dd{
+  margin-top: 1rem;
+}

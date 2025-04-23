@@ -25,5 +25,11 @@ export const userSpecificData = {
   authorName: `author name`, // 製作者の名前。headタグに挿入
   siteName: `site name`, // サイトの名前。headタグに挿入
   pageBackupPath: `backuppath`, // page.tsxのバックアップ場所を指定します。
+  adsenseURL:{ // google adsenseの広告ブロック
+    banner01: {
+      publisherId:'ca-pub-XXXXXXXXXXXXXXXX', // パブリッシャーID
+      slot:'XXXXXXXXXX', // 広告ブロックのスロット
+    }
+  },
 }
 ```

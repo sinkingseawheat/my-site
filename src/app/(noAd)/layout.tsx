@@ -1,6 +1,6 @@
 'use client'
 // import type { Metadata } from "next";
-import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton, AdsenseBlock } from '@components/all';
+import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton, } from '@components/all';
 import { PopupContext } from '@components/context';
 import { useState, useRef, type ReactNode, useEffect, Suspense } from 'react';
 import Script from 'next/script';
@@ -43,7 +43,9 @@ export default function LayoutDefault({
                   <ShareButton/>
                 </Suspense>
               </L.column>
-              <AdsenseBlock id='bottomPage' />
+              {/* <L.column>
+                <AdsenseBlock />
+              </L.column> */}
             </aside>
           </L.vb>
           <L.vb className='footer'>
