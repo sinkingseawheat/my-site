@@ -3,7 +3,7 @@ import style from './_.module.css'
 function innerBody({
   children
 } : {
-  children: React.ReactElement | React.ReactElement[]
+  children: React.ReactNode | React.ReactNode[]
 }){
   return (
     <div className={style.wrapper}>
@@ -16,7 +16,7 @@ function vb({
   children,
   className,
 } : {
-  children: React.ReactElement | React.ReactElement[]
+  children: React.ReactNode | React.ReactNode[]
   className?: string
 }){
   return (
