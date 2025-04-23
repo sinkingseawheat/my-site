@@ -22,7 +22,12 @@ export default function AdsenseBlock({
   const [isLoadedAdsbyGoogle, setIsLoadedAdsbyGoogle] = useState<boolean>(false)
 
   useEffect(()=>{
-    if(isDisplay && isLoadedAdsbyGoogle === true && 'adsbygoogle' in window){
+    if(
+      process.env.NODE_ENV === 'production'
+      && isDisplay
+      && isLoadedAdsbyGoogle
+      && 'adsbygoogle' in window
+      ){
       // window.adsbygoogleが存在すれば、実行可能と判断する
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ((window.adsbygoogle || []) as any).push({})
