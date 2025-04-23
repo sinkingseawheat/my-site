@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { usePathname, useSearchParams  } from 'next/navigation';
+import { S } from '@components/all';
 
 import style from './_.module.css';
 
@@ -18,23 +19,17 @@ export default function ShareButton(){
   },[_pathname, _searchParams])
 
   return currentHref !== null && (
-    <dl className={style.c_shareButton}>
-      <div className={style.c_shareButton_i}>
-        {/* <!-- Todo:aria-labelledbyでリンクをちゃんと説明する --> */}
-        <dt className={style.c_shareButton__ttl}>
-          <span className={style.c_shareButton__ttl_i}>記事を共有する</span>
-        </dt>
-        <dd className={style.c_shareButton__desc}>
-          <ul className={style.c_shareButton__list}>
-            <li className={style.c_shareButton__item}>
+    <S.dl title="記事を共有する">
+      <ul className={style.wrap}>
+            <li className={style.item}>
               <a
-                className={`${style.c_shareButton__link} ${style['-x']} twitter-share-button`}
+                className={`${style.link} ${style['-x']} twitter-share-button`}
                 href='https://twitter.com/share?ref_src=twsrc%5Etfw'
                 data-show-count='false'
                 target='_blank'
               >
                 <img
-                  className={style.c_shareButton__icon}
+                  className={style.icon}
                   width='1200'
                   height='1227'
                   src='/c/vendor/logo/logo_x.svg'
@@ -42,14 +37,14 @@ export default function ShareButton(){
                 />
               </a>
             </li>
-            <li className={style.c_shareButton__item}>
+            <li className={style.item}>
               <a
-                className={`${style.c_shareButton__link} ${style['-bluesky']}`}
+                className={`${style.link} ${style['-bluesky']}`}
                 href={currentHref === null ? `javascript:void(0);` : `https://bsky.app/intent/compose?text=${currentHref}`}
                 target='_blank'
               >
                 <img
-                  className={style.c_shareButton__icon}
+                  className={style.icon}
                   width='576'
                   height='512'
                   src='/c/vendor/logo/bluesky.svg'
@@ -57,32 +52,32 @@ export default function ShareButton(){
                 />
               </a>
             </li>
-            <li className={style.c_shareButton__item}>
+            <li className={style.item}>
               <a
-                className={`${style.c_shareButton__link} ${style['-line']}`}
+                className={`${style.link} ${style['-line']}`}
                 href={currentHref === null ? `javascript:void(0);` : `https://social-plugins.line.me/lineit/share?url=${currentHref}`}
                 target='_blank'
               >
-                <img className={style.c_shareButton__icon} src={`/c/vendor/logo/LINE_Brand_icon.png`} alt='Line' />
+                <img className={style.icon} src={`/c/vendor/logo/LINE_Brand_icon.png`} alt='Line' />
               </a>
             </li>
-            <li className={style.c_shareButton__item}>
+            <li className={style.item}>
               <a
-                className={`${style.c_shareButton__link} ${style['-hatena']}`}
+                className={`${style.link} ${style['-hatena']}`}
                 href={currentHref === null ? `javascript:void(0);` : `http://b.hatena.ne.jp/add?mode=confirm&url=${currentHref}&title=${pageTitle}`}
                 target='_blank'
               >
-                <img className={style.c_shareButton__icon} src={`/c/vendor/logo/hatenabookmark_symbolmark.png`} alt='はてなブックマーク'/>
+                <img className={style.icon} src={`/c/vendor/logo/hatenabookmark_symbolmark.png`} alt='はてなブックマーク'/>
               </a>
             </li>
-            <li className={style.c_shareButton__item}>
+            <li className={style.item}>
               <a
-                className={`${style.c_shareButton__link} ${style['-pocket']}`}
+                className={`${style.link} ${style['-pocket']}`}
                 href={currentHref === null ? `javascript:void(0);` : `http://getpocket.com/edit?url=${currentHref}&title=${pageTitle}`}
                 target='_blank'
               >
                 <img
-                  className={style.c_shareButton__icon}
+                  className={style.icon}
                   width='448'
                   height='512'
                   src='/c/vendor/logo/pocket.svg'
@@ -91,8 +86,6 @@ export default function ShareButton(){
               </a>
             </li>
           </ul>
-        </dd>
-      </div>
-    </dl>
+    </S.dl>
   );
 }

@@ -1,45 +1,39 @@
 /* シェアボタン */
-.c_shareButton__ttl_i {
-  font-size: var(--fz-headingLv3);
-}
-.c_shareButton__desc {
-  padding-left: 1rem;
-}
-.c_shareButton__list {
+.wrap {
   --icon-size: 2.8rem;
   --gap-size: 1.4rem; /* --icon-sizeの0.5倍以上の設定必須 */
   display: grid;
   grid-template-columns: repeat(auto-fill, var(--icon-size));
   column-gap: var(--gap-size);
 }
-.c_shareButton__item {
+.item {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.c_shareButton__link {
+.link {
   outline: none;
   border: 2px solid transparent;
   display: block;
   max-width: 100%;
   position: relative;
 }
-.c_shareButton__link:focus {
+.link:focus {
   border-color: rgb(var(--color-fg));
 }
 @media (hover: hover) {
-  .c_shareButton__link:hover {
+  .link:hover {
     border-color: rgb(var(--color-fg));
   }
 }
-.c_shareButton__link.-x {
+.link.-x {
   width: 100%;
   aspect-ratio: 1/1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.c_shareButton__link.-x::before {
+.link.-x::before {
   border: 2px solid transparent;
   content: '';
   width: calc(100% - 4px);
@@ -53,12 +47,12 @@
   overflow: hidden;
   border-radius: 0.6875rem;
 }
-.c_shareButton__link.-x .c_shareButton__icon {
+.link.-x .icon {
   width: 1.5rem;
   position: relative;
   z-index: 10;
 }
-.c_shareButton__icon {
+.icon {
   display: block;
   height: auto;
 }
