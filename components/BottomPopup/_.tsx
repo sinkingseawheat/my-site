@@ -29,10 +29,12 @@ export default function BottomPopup(
 
     const timer = setTimeout(()=>{
       setMessages([])
+      setPopupMessage('')
     }, _duration)
 
     return ()=>{clearTimeout(timer)}
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[popupMessage, _duration])
 
   if(popupMessage === undefined || setPopupMessage === undefined){
