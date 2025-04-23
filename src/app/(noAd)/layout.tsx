@@ -1,9 +1,12 @@
 'use client'
-// import type { Metadata } from "next";
-import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton, } from '@components/all';
-import { PopupContext } from '@components/context';
-import { useState, useRef, type ReactNode, useEffect, Suspense } from 'react';
-import Script from 'next/script';
+// import type { Metadata } from "next"
+import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton, } from '@components/all'
+import { PopupContext } from '@components/context'
+import { useState, useRef, type ReactNode, useEffect, Suspense } from 'react'
+import Script from 'next/script'
+import { userSpecificData } from '@/../my-site.config'
+
+const {googleAnalyticsId} = userSpecificData
 
 export default function LayoutDefault({
   children,
@@ -53,8 +56,8 @@ export default function LayoutDefault({
             <Footer isHFExpanded={isHFExpanded} setIsHFExpanded={setIsHFExpanded}/>
           </L.vb>
         </PopupContext.Provider>
-        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID === undefined ? <></> : <><Script strategy="beforeInteractive" async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`} />
-        <Script strategy="beforeInteractive" id="gtagInitialize">{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');`}</Script></>}
+        {googleAnalyticsId === undefined ? <></> : <><Script strategy="beforeInteractive" async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`} />
+        <Script strategy="beforeInteractive" id="gtagInitialize">{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${googleAnalyticsId}');`}</Script></>}
         <SVGIcon.hiddenData />
       </L.innerBody>);
 }
