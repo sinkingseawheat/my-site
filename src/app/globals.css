@@ -22,6 +22,8 @@
   --animation-changing: ease-out 0.3s;
   --animation-duration: 0.3s;
   --max-width-inner: min(100%, calc(100% - 4rem));
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--scroll-padding-top, 0);
 }
 @media (prefers-color-scheme: dark) {
   :root {

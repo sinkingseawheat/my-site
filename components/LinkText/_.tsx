@@ -4,6 +4,8 @@ import { type StyleValue } from '@components/utility';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SVGIcon } from '@components/all';
+import { useContext } from 'react';
+import { HeaderFooterContext } from '@components/context';
 
 export default function LinkText({
   href,
@@ -16,7 +18,10 @@ export default function LinkText({
     children: React.ReactNode,
     styleValue?: StyleValue<'--fz-link-text'>
 }){
+  const { headerRef } = useContext(HeaderFooterContext)
+  const hrefHash = URL.canParse(href, 'https://example.com') && (new URL(href, 'https://example.com')).hash
   if(href === usePathname()){
+    // pathnameが同じ場合はリンクのスタイルをつけない
     return (
       <Link
         className={style.link}
@@ -29,6 +34,23 @@ export default function LinkText({
           : children
         }
       </Link>);
+  }else if(hrefHash){
+    return (<Link
+      className={style.link}
+      href={href}
+      style={styleValue}
+      onClick={()=>{
+        if(headerRef && headerRef.current !== null){
+          document.documentElement.style.setProperty('--scroll-padding-top', `calc(20vh + ${headerRef.current.clientHeight}px)`)
+        }
+        return true
+      }}
+    >
+      {typeof children === 'string' ?
+        (<span className={style.text}>{children}</span>)
+        : children
+      }
+    </Link>)
   }else{
     return (
       <Link
