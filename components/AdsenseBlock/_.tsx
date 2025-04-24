@@ -34,7 +34,7 @@ export default function AdsenseBlock({
     }
   },[pathname, isLoadedAdsbyGoogle, isDisplay])
 
-  if(!publisherId){
+  if(!publisherId || process.env.NODE_ENV !== 'production'){
     return <></>
   }
 
