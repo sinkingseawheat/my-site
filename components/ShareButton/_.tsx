@@ -39,7 +39,7 @@ export default function ShareButton(){
             </li>
             <li className={style.item}>
               <a
-                className={`${style.link} ${style['-bluesky']}`}
+                className={style.link}
                 href={currentHref === null ? `javascript:void(0);` : `https://bsky.app/intent/compose?text=${currentHref}`}
                 target='_blank'
               >
@@ -54,7 +54,7 @@ export default function ShareButton(){
             </li>
             <li className={style.item}>
               <a
-                className={`${style.link} ${style['-line']}`}
+                className={style.link}
                 href={currentHref === null ? `javascript:void(0);` : `https://social-plugins.line.me/lineit/share?url=${currentHref}`}
                 target='_blank'
               >
@@ -63,7 +63,7 @@ export default function ShareButton(){
             </li>
             <li className={style.item}>
               <a
-                className={`${style.link} ${style['-hatena']}`}
+                className={style.link}
                 href={currentHref === null ? `javascript:void(0);` : `http://b.hatena.ne.jp/add?mode=confirm&url=${currentHref}&title=${pageTitle}`}
                 target='_blank'
               >
@@ -72,7 +72,7 @@ export default function ShareButton(){
             </li>
             <li className={style.item}>
               <a
-                className={`${style.link} ${style['-pocket']}`}
+                className={style.link}
                 href={currentHref === null ? `javascript:void(0);` : `http://getpocket.com/edit?url=${currentHref}&title=${pageTitle}`}
                 target='_blank'
               >
