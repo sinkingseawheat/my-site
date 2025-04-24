@@ -1,11 +1,14 @@
+'use client'
+import { useContext } from 'react';
 import style from './_.module.css';
 
 import { ToggleHeaderFooter, LinkText, L } from '@components/all';
+import { HeaderFooterContext } from '@components/context';
 
-export default function Footer({
-  isHFExpanded,
-  setIsHFExpanded,
-}: Partial<Parameters<typeof ToggleHeaderFooter>[0]>) {
+export default function Footer() {
+
+  const {isHFExpanded, setIsHFExpanded} = useContext(HeaderFooterContext)
+
   return (<>
     {
       (isHFExpanded !== undefined && setIsHFExpanded !== undefined)

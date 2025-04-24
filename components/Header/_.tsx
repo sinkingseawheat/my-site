@@ -1,22 +1,25 @@
+'use client'
 import style from './_.module.css'
-import { Picture, GlobalMenu, ToggleHeaderFooter } from '@components/all';
+import { Picture, GlobalMenu } from '@components/all';
+import { HeaderFooterContext } from '@components/context';
 import Link from 'next/link';
-import { Suspense } from 'react';
-
-type IsHFExpanded = Parameters<typeof ToggleHeaderFooter>[0]["isHFExpanded"]
+import { Suspense, useContext } from 'react';
 
 export default function Header({
-  isHFExpanded,
-  ref,
-}:Partial<{isHFExpanded:IsHFExpanded,ref:React.RefObject<HTMLElement | null>}>
-){
+  headerRef
+}:{
+  headerRef:React.RefObject<HTMLElement|null>
+}){
+
+  const { isHFExpanded } = useContext(HeaderFooterContext)
+
   return (
   <header
     className={style.l_h}
     id={isHFExpanded !== undefined ? 'aria-header' : undefined}
-    aria-hidden={isHFExpanded !==undefined ? !isHFExpanded :undefined}
-    inert={isHFExpanded !=undefined ? !isHFExpanded :undefined}
-    ref={ref}
+    aria-hidden={isHFExpanded !== undefined ? !isHFExpanded : undefined}
+    inert={isHFExpanded != undefined ? !isHFExpanded : undefined}
+    ref={headerRef}
   >
     <div className={style.l_h__inner}>
       <div className={style.l_h_i}>

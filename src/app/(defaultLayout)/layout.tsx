@@ -1,12 +1,12 @@
 'use client'
 // import type { Metadata } from "next";
 import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton, AdsenseBlock } from '@components/all';
-import { PopupContext } from '@components/context';
+import { PopupContext, HeaderFooterContext } from '@components/context';
 import { useState, useRef, type ReactNode, useEffect, Suspense } from 'react';
 import Script from 'next/script';
 import { userSpecificData } from '@/../my-site.config';
 
-const {googleAnalyticsId} = userSpecificData
+const { googleAnalyticsId } = userSpecificData
 
 export default function LayoutDefault({
   children,
@@ -18,7 +18,7 @@ export default function LayoutDefault({
   const [ popupMessage, setPopupMessage ] = useState<ReactNode>('')
   const [ isNotifiedRedirect, setIsNotifiedRedirect] = useState<boolean>(false)
 
-  const offsetElmRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLElement|null>(null);
 
   useEffect(()=>{
     if(isNotifiedRedirect === false && location.href.endsWith('?ref=sinkingseawheat')){
@@ -29,33 +29,41 @@ export default function LayoutDefault({
 
   return (<L.innerBody>
         <PopupContext.Provider value={[popupMessage,setPopupMessage]}>
-          <L.vb className='header'>
-            <SkipNav idToMove="main-content" ref={offsetElmRef}/>
-            <Header isHFExpanded={isHFExpanded} ref={offsetElmRef}/>
-          </L.vb>
-          <L.vb className='content'>
-            <noscript>
-              JavaScriptの実行が許可されていません。ページの機能に不具合が出る可能性があります
-            </noscript>
-            <main id="main-content">
-              {children}
-            </main>
-            <aside>
-              <L.column styleValue={{'--margin-top': '4rem'}}>
-                <Suspense>
-                  <ShareButton/>
-                </Suspense>
-              </L.column>
-              <AdsenseBlock id='bottomPage' />
-            </aside>
-          </L.vb>
-          <L.vb className='footer'>
-            <BottomPopup />
-            <Footer isHFExpanded={isHFExpanded} setIsHFExpanded={setIsHFExpanded}/>
-          </L.vb>
+          <HeaderFooterContext.Provider value={{
+            headerRef, isHFExpanded, setIsHFExpanded
+          }}>
+            <L.vb className='header'>
+              <SkipNav idToMove="main-content"/>
+              <Header headerRef={headerRef}/>
+            </L.vb>
+            <L.vb className='content'>
+              <noscript>
+                JavaScriptの実行が許可されていません。ページの機能に不具合が出る可能性があります
+              </noscript>
+              <main id="main-content">
+                {children}
+              </main>
+              <aside>
+                <L.column styleValue={{'--margin-top': '4rem'}}>
+                  <Suspense>
+                    <ShareButton/>
+                  </Suspense>
+                </L.column>
+                <AdsenseBlock id='bottomPage' />
+              </aside>
+            </L.vb>
+            <L.vb className='footer'>
+              <BottomPopup />
+              <Footer/>
+            </L.vb>
+          </HeaderFooterContext.Provider>
         </PopupContext.Provider>
-        {googleAnalyticsId === undefined ? <></> : <><Script strategy="beforeInteractive" async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`} />
-        <Script strategy="beforeInteractive" id="gtagInitialize">{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${googleAnalyticsId}');`}</Script></>}
+        {
+        googleAnalyticsId !== undefined && process.env.NODE_ENV === 'production' ?
+        (<><Script strategy="beforeInteractive" async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`} />
+          <Script strategy="beforeInteractive" id="gtagInitialize">{`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${googleAnalyticsId}');`}</Script>
+        </>)
+        : <></>}
         <SVGIcon.hiddenData />
       </L.innerBody>);
 }
