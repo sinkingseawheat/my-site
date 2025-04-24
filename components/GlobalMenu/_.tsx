@@ -14,13 +14,13 @@ export default function GlobalMenu(){
     handleCloseDialog()
   },[_pathname, _searchParams])
 
-  const dialogRef = useRef<HTMLDialogElement>(null)
+  const refDialog = useRef<HTMLDialogElement>(null)
 
   const handleShowDialog = ()=>{
-    if(dialogRef.current){
-      dialogRef.current?.showModal()
+    if(refDialog.current){
+      refDialog.current?.showModal()
       if(window.matchMedia(`(prefers-reduced-motion: no-preference)`).matches){
-        dialogRef.current.animate([
+        refDialog.current.animate([
         {transform:`scale(0)`},
         {transform:`scale(1)`},
       ],{
@@ -32,9 +32,9 @@ export default function GlobalMenu(){
   }
 
   const handleCloseDialog = ()=>{
-    if(dialogRef.current){
+    if(refDialog.current){
       if(window.matchMedia(`(prefers-reduced-motion: no-preference)`).matches){
-        const animation =dialogRef.current.animate([
+        const animation =refDialog.current.animate([
           {transform:`scale(1)`},
           {transform:`scale(0)`},
         ],{
@@ -42,10 +42,10 @@ export default function GlobalMenu(){
           easing:'ease-out'
         })
         animation.onfinish = (()=>{
-          dialogRef?.current?.close();
+          refDialog?.current?.close();
         })
       }else{
-        dialogRef.current.close();
+        refDialog.current.close();
       }
     }
   }
@@ -85,9 +85,9 @@ export default function GlobalMenu(){
     </button>
     <dialog
       className={style.wrapModal}
-      ref={dialogRef}
+      ref={refDialog}
       onClick={e=>{
-        if(e.target === dialogRef.current){
+        if(e.target === refDialog.current){
           handleCloseDialog()
         }
       }}

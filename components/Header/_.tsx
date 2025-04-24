@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { Suspense, useContext } from 'react';
 
 export default function Header({
-  headerRef
+  refHeader
 }:{
-  headerRef:React.RefObject<HTMLElement|null>
+  refHeader:React.RefObject<HTMLElement|null>
 }){
 
   const { isHFExpanded } = useContext(HeaderFooterContext)
@@ -19,7 +19,7 @@ export default function Header({
     id={isHFExpanded !== undefined ? 'aria-header' : undefined}
     aria-hidden={isHFExpanded !== undefined ? !isHFExpanded : undefined}
     inert={isHFExpanded != undefined ? !isHFExpanded : undefined}
-    ref={headerRef}
+    ref={refHeader}
   >
     <div className={style.l_h__inner}>
       <div className={style.l_h_i}>

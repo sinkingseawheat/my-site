@@ -6,12 +6,12 @@ export const PopupContext = createContext<
 
 export const HeaderFooterContext = createContext<
   {
-    headerRef?: React.RefObject<HTMLElement|null>,
+    refHeader?: React.RefObject<HTMLElement|null>,
     isHFExpanded: boolean,
     setIsHFExpanded: Dispatch<SetStateAction<boolean>>,
   }
 >({
-  headerRef:undefined,
+  refHeader:undefined,
   isHFExpanded:true,
   setIsHFExpanded:()=>{}
 })

@@ -18,7 +18,7 @@ export default function LinkText({
     children: React.ReactNode,
     styleValue?: StyleValue<'--fz-link-text'>
 }){
-  const { headerRef } = useContext(HeaderFooterContext)
+  const { refHeader } = useContext(HeaderFooterContext)
   const hrefHash = URL.canParse(href, 'https://example.com') && (new URL(href, 'https://example.com')).hash
   if(href === usePathname()){
     // pathnameが同じ場合はリンクのスタイルをつけない
@@ -40,8 +40,8 @@ export default function LinkText({
       href={href}
       style={styleValue}
       onClick={()=>{
-        if(headerRef && headerRef.current !== null){
-          document.documentElement.style.setProperty('--scroll-padding-top', `calc(20vh + ${headerRef.current.clientHeight}px)`)
+        if(refHeader && refHeader.current !== null){
+          document.documentElement.style.setProperty('--scroll-padding-top', `calc(20vh + ${refHeader.current.clientHeight}px)`)
         }
         return true
       }}

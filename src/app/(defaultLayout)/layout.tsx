@@ -18,7 +18,7 @@ export default function LayoutDefault({
   const [ popupMessage, setPopupMessage ] = useState<ReactNode>('')
   const [ isNotifiedRedirect, setIsNotifiedRedirect] = useState<boolean>(false)
 
-  const headerRef = useRef<HTMLElement|null>(null);
+  const refHeader = useRef<HTMLElement|null>(null);
 
   useEffect(()=>{
     if(isNotifiedRedirect === false && location.href.endsWith('?ref=sinkingseawheat')){
@@ -30,11 +30,11 @@ export default function LayoutDefault({
   return (<L.innerBody>
         <PopupContext.Provider value={[popupMessage,setPopupMessage]}>
           <HeaderFooterContext.Provider value={{
-            headerRef, isHFExpanded, setIsHFExpanded
+            refHeader, isHFExpanded, setIsHFExpanded
           }}>
             <L.vb className='header'>
               <SkipNav idToMove="main-content"/>
-              <Header headerRef={headerRef}/>
+              <Header refHeader={refHeader}/>
             </L.vb>
             <L.vb className='content'>
               <noscript>
