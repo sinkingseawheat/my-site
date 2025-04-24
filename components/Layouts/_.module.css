@@ -7,12 +7,12 @@
   grid-template-rows: auto 1fr auto;
   z-index: 1;
   background-color: rgb(var(--color-bg));
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
 }
 
 /* vb */
 .veryBack {
-  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
-    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
   position: relative;
   & + &{
     padding-bottom: 0;
