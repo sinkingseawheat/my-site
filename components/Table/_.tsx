@@ -72,7 +72,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
                   }
                 }}
               >
-                <SVGIcon.copy styleVariable={{'--color-stroke':'var(--color-bg)'}}/>
+                <SVGIcon.copy styleValue={{'--color-stroke':'var(--color-bg)'}}/>
               </Button>
             </span>
           </span>

@@ -65,8 +65,8 @@ export default function LinkText({
         }
         <span className={style.linkIcon}>
           {isOpenAnotherTab ?
-            <SVGIcon.linkAnotherTab styleVariable={{'--color-stroke':'var(--color-primary)'}} />
-            : <SVGIcon.link styleVariable={{'--color-stroke':'var(--color-primary)'}} />
+            <SVGIcon.linkAnotherTab styleValue={{'--color-stroke':'var(--color-primary)'}} />
+            : <SVGIcon.link styleValue={{'--color-stroke':'var(--color-primary)'}} />
           }
       </span>
       </Link>
