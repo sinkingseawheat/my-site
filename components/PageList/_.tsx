@@ -1,22 +1,16 @@
-"use client"
-import { type schemaPageList } from '@preprocess/getPageList';
+import { schemaPageListItem } from '@preprocess/getPageListItem';
 import z from 'zod'
 import { S, List, LinkText } from '@components/all';
-import { useState, useEffect } from 'react';
+import json from '@/../public/pagelist.json'
 
-export default function PageList(){
+export default async function PageList(){
 
-  const [list, setList] = useState<z.infer<typeof schemaPageList>[]>([])
+  const schemaPageList = z.array(schemaPageListItem)
+  const list = schemaPageList.safeParse(json).data
 
-  useEffect(()=>{
-    (async ()=>{
-      const response = await fetch(`/pagelist.json`)
-      if(response.ok){
-        const json = await response.json()
-        setList(json)
-      }
-    })();
-  },[]);
+  if(list === undefined){
+    return <></>
+  }
 
   return (
     <S.lv2 title='リンク一覧'>
