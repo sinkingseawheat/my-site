@@ -1,12 +1,12 @@
 "use client"
-import { type schemaPageList } from '@preprocess/getPageList';
+import { schemaPageListItem } from '@preprocess/getPageListItem';
 import z from 'zod'
-import { S, List, LinkText } from '@components/all';
+import { S, List, LinkElm } from '@components/all';
 import { useState, useEffect } from 'react';
 
 export default function PageList(){
 
-  const [list, setList] = useState<z.infer<typeof schemaPageList>[]>([])
+  const [list, setList] = useState<z.infer<typeof schemaPageListItem>[]>([])
 
   useEffect(()=>{
     (async ()=>{
