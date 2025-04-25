@@ -24,7 +24,6 @@ import ShareButton from "./ShareButton/_";
 import SkipNav from "./SkipNav/_";
 import Picture from "./Picture/_";
 import LinkElm from "./LinkElm/_";
-import Button from "./Button/_";
 import ToggleHeaderFooter from "./ToggleHeaderFooter/_";
 import PageList from "./PageList/_";
 import BottomPopup from "./BottomPopup/_";
@@ -39,7 +38,6 @@ export {
   SkipNav,
   Picture,
   LinkElm,
-  Button,
   ToggleHeaderFooter,
   PageList,
   BottomPopup,
@@ -59,11 +57,13 @@ export {Header, Footer}
 import InputText from "./Form/InputText/_";
 import InputCheckboxes from "./Form/InputCheckboxes/_";
 import Textarea from "./Form/Textarea/_";
+import Button from "./Form/Button/_";
 
 const F = {
   InputText,
   InputCheckboxes,
   Textarea,
+  Button,
 }
 
 export { F }

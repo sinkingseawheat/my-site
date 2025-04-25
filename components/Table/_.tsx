@@ -1,7 +1,7 @@
 'use client'
 import style from './_.module.css'
 import { useState, useDeferredValue, useContext, useEffect } from 'react'
-import { Button, SVGIcon } from "@components/all"
+import { F, SVGIcon } from "@components/all"
 import { StyleValue } from '@components/utility'
 import { copyTextData } from './sub/copy'
 import { PopupContext } from '@components/context'
@@ -64,7 +64,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
               {caption}
             </span>
             <span className={style.captionButton}>
-              <Button type="button"
+              <F.Button type="button"
                 onClick={async ()=>{
                   await copyTextData(data)
                   if (setPopupMessage !== undefined) {
@@ -73,7 +73,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
                 }}
               >
                 <SVGIcon.copy styleValue={{'--color-stroke':'var(--color-bg)'}}/>
-              </Button>
+              </F.Button>
             </span>
           </span>
         </caption>

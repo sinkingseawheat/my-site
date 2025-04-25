@@ -2,7 +2,7 @@
 import style from './Form.module.css'
 import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Button, S, L, F } from '@components/all'
+import { S, L, F } from '@components/all'
 import { PopupContext } from '@components/context';
 
 
@@ -159,20 +159,20 @@ export function Form(){
             </L.grid>
           </fieldset>
           <div>
-            <Button isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>
+            <F.Button isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</F.Button>
           </div>
         </form>
       </S.lv2>
       <S.lv2 title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
         {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><L.grid styleValue={{'--min-width': length, '--column-gap':'1em'}}>
-          {output.map((randomString)=><Button type='button' className={style.outputItem} key={randomString} onClick={()=>{
+          {output.map((randomString)=><F.Button type='button' className={style.outputItem} key={randomString} onClick={()=>{
             navigator.clipboard.writeText(randomString).then(()=>{
               if(setPopupMessage!==undefined){
                 setPopupMessage(`${randomString}がコピーされました`)
               }
             })
-          }}>{randomString}</Button>)}
+          }}>{randomString}</F.Button>)}
         </L.grid></>)}
       </S.lv2>
     </>

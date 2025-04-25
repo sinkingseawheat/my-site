@@ -4,7 +4,7 @@ import z from 'zod'
 import { useState, useDeferredValue } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, S, L, F, Loader, Table } from '@components/all'
+import { S, L, F, Loader, Table } from '@components/all'
 
 const schemaInput = z.object({
   writing: z.string().refine(
@@ -70,7 +70,7 @@ export function Form(){
             </L.grid>
           </fieldset>
           <div>
-            <Button isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>
+            <F.Button isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</F.Button>
           </div>
         </form>
       </S.lv2>
