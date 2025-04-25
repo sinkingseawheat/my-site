@@ -159,7 +159,7 @@ export function Form(){
             </L.grid>
           </fieldset>
           <div>
-            <Button type='button' isSubmit={true} isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>
+            <Button isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>
           </div>
         </form>
       </S.lv2>
