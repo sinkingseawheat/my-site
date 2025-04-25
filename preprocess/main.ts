@@ -90,7 +90,7 @@ const storePageData = ()=>{
 await Promise.all([
   writeSitemap(),
   writePageList(),
-  [...storePageData()],
+  ...storePageData(),
 ])
 
 console.log(`prebuild process completed`)
