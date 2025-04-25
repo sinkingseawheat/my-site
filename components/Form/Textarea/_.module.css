@@ -11,7 +11,7 @@
   justify-content: flex-start;
   column-gap: 0.5em;
   max-width: 100%;
-  &:has(input:focus) .innerLabel{
+  &:has(textarea:focus) .innerLabel{
     font-weight: bold;
   }
 }
@@ -20,8 +20,8 @@
 .textarea{
   font-size: var(--fz);
   width: 100%;
-  min-height: var(--area-min-height, 3em);
-  padding: 0.1em 0.3em;
+  min-height: var(--area-min-height, 7em);
+  padding: min(0.75rem, 12px);
   appearance: none;
   border: 1px solid rgb(var(--color-fg));
   border-radius: 4px;
