@@ -7,7 +7,7 @@ import { SVGIcon } from '@components/all';
 import { useContext } from 'react';
 import { HeaderFooterContext } from '@components/context';
 
-export default function LinkText({
+export default function LinkElm({
   href,
   isOpenAnotherTab,
   children,

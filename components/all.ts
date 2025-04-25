@@ -23,7 +23,7 @@ import List from "./List/_";
 import ShareButton from "./ShareButton/_";
 import SkipNav from "./SkipNav/_";
 import Picture from "./Picture/_";
-import LinkText from "./LinkText/_";
+import LinkElm from "./LinkElm/_";
 import Button from "./Button/_";
 import ToggleHeaderFooter from "./ToggleHeaderFooter/_";
 import PageList from "./PageList/_";
@@ -38,7 +38,7 @@ export {
   ShareButton,
   SkipNav,
   Picture,
-  LinkText,
+  LinkElm,
   Button,
   ToggleHeaderFooter,
   PageList,

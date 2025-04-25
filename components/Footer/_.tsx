@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import style from './_.module.css';
 
-import { ToggleHeaderFooter, LinkText, L } from '@components/all';
+import { ToggleHeaderFooter, LinkElm, L } from '@components/all';
 import { HeaderFooterContext } from '@components/context';
 
 export default function Footer() {
@@ -24,8 +24,8 @@ export default function Footer() {
         <div className={style.l_f__inner}>
           <div className={`${style.l_f_i} ${style['-nav']}`}>
             <L.flex styleValue={{'--row-gap':'0'}}>
-              <LinkText href='/privacypolicy/' isOpenAnotherTab={false} styleValue={{'--fz-link-text':'0.75rem'}}>プライバシーポリシー</LinkText>
-              <LinkText href='/accessibility/' isOpenAnotherTab={false} styleValue={{'--fz-link-text':'0.75rem'}}>ウェブアクセシビリティ方針</LinkText>
+              <LinkElm href='/privacypolicy/' isOpenAnotherTab={false} styleValue={{'--fz-link-text':'0.75rem'}}>プライバシーポリシー</LinkElm>
+              <LinkElm href='/accessibility/' isOpenAnotherTab={false} styleValue={{'--fz-link-text':'0.75rem'}}>ウェブアクセシビリティ方針</LinkElm>
             </L.flex>
           </div>
         </div>

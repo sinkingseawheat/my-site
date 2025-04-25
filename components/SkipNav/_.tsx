@@ -1,6 +1,6 @@
 'use client'
 import style from './_.module.css'
-import { LinkText } from '@components/all';
+import { LinkElm } from '@components/all';
 
 /**
  *
@@ -13,11 +13,11 @@ export default function SkipNav({
   idToMove:string,
 }){
   return (<div className={style.wrap}>
-    <LinkText
+    <LinkElm
       href={`#${idToMove}`}
       isOpenAnotherTab={false}
     >
       コンテンツへ移動する
-    </LinkText>
+    </LinkElm>
   </div>);
 }
