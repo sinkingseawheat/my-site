@@ -62,13 +62,18 @@
     font-size: inherit;
     font-weight: normal;
   }
+  textarea, input, label{
+    font-size: 1rem;
+  }
   button {
+    font-size: 1rem;
     appearance: none;
     border: none;
     margin: 0;
     padding: 0;
     background-color: transparent;
     display: flex; /* for mystery padding-bottom */
+    align-items: center;
     flex-wrap: wrap;
     border-radius: 8px;
     border: 2px solid transparent;
@@ -229,68 +234,6 @@
   margin-left: 4px!important;
 }
 
-/* svgアイコンとアニメーション - ハンバーガーメニュー */
-.c_svgHumberger {
-  width: 44px;
-  height: 44px;
-}
-.c_svgHumberger__fg {
-  fill: rgb(var(--color-bg));
-  stroke: rgb(var(--color-bg));
-}
-.c_svgHumberger__bg {
-  fill: rgb(var(--color-primary));
-  stroke: rgb(var(--color-primary));
-}
-.c_svgHumberger
-  use:is(
-    [href='#c_svgHumberger__line1'],
-    [href='#c_svgHumberger__line2'],
-    [href='#c_svgHumberger__line3']
-  ) {
-  transition:
-    transform var(--animation-changing),
-    opacity var(--animation-changing);
-  opacity: 1;
-}
-
-.c_headerMenu .c_svgHumberger {
-  use[href='#c_svgHumberger__line1'] {
-    transform: translateY(0) rotate(0);
-    transform-origin: 22px 15px;
-  }
-  use[href='#c_svgHumberger__line3'] {
-    transform: translateY(0) rotate(0);
-    transform-origin: 22px 29px;
-  }
-}
-.c_headerMenu[aria-expanded='true'] .c_svgHumberger {
-  use[href='#c_svgHumberger__line1'] {
-    transform: translateY(7px) rotate(45deg);
-  }
-  use[href='#c_svgHumberger__line2'] {
-    opacity: 0;
-  }
-  use[href='#c_svgHumberger__line3'] {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-}
-
-/* svgアイコンとアニメーション - モーダルの閉じるボタン */
-.c_svgIconShrinkModal__bg {
-  fill: rgb(var(--color-primary));
-  stroke: rgb(var(--color-primary));
-}
-.c_svgIconShrinkModal__fg {
-  fill: rgb(var(--color-bg));
-  stroke: rgb(var(--color-bg));
-}
-.c_svgHumberger line {
-  transition:
-    transform var(--animation-changing),
-    opacity var(--animation-changing);
-  opacity: 1;
-}
 /* svgアイコンとアニメーション - ヘッダーとフッターのトグルボタン */
 
 .c_svgToggleHFVisible {
