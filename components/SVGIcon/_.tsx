@@ -47,37 +47,37 @@ const hiddenData= ()=>{
   }
 
 const copy:SVGIcon<'--color-stroke'> = ({styleValue})=>(
-  <svg width="1.5em" height="1.5em" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+  <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
     <use href='#svgCopy' />
   </svg>
 )
 
 const link:SVGIcon<'--color-stroke'> = ({styleValue})=>(
-  <svg width="1em" height="1em" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+  <svg width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
     <use href='#svgLink' />
   </svg>
 )
 
 const linkAnotherTab:SVGIcon<'--color-stroke'> = ({styleValue})=>(
-  <svg width="1em" height="1em" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+  <svg width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
     <use href='#svgLinkAnotherTab' />
   </svg>
 )
 
 const checkbox:SVGIcon<'--color-stroke'|'--color-fill'> = ({styleValue})=>(
-  <svg width="1.3125em" height="1em" viewBox="0 0 21 16" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+  <svg width="1.3125em" height="1em" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
     <use href='#svgFormCheckbox' />
   </svg>
 )
 
 const  hamburgerMenu:SVGIcon<'--color-fg-svg'|'--color-bg-svg'> = ({styleValue})=>(
-  <svg width="3em" height="3em" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+  <svg width="3em" height="3em" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
     <use href='#svgHamburgerMenu' />
   </svg>
 )
 
 const  btnClose:SVGIcon<'--color-fg-svg'|'--color-bg-svg'> = ({styleValue})=>(
-  <svg width="3em" height="3em" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+  <svg width="3em" height="3em" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
     <use href='#svgCloseBtn' />
   </svg>
 )
