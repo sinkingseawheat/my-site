@@ -4,12 +4,12 @@ import z from 'zod'
 import { userSpecificData } from '@/../my-site.config'
 import { explorerFilesRecursively } from './explorerFilesRecursively'
 import { getSitemap, schemaSitemap } from './getSitemap'
-import { getPageList, schemaPageList } from './getPageList'
+import { getPageListItem, schemaPageListItem } from './getPageListItem'
 
 (async ()=>{
 const [sitemapResults, pageList] = await explorerFilesRecursively(
   path.join(process.cwd(),'./src/app'),
-  [getSitemap, getPageList],
+  [getSitemap, getPageListItem],
 )?? [];
 
 if(sitemapResults === undefined || pageList === undefined){
@@ -47,9 +47,9 @@ const writePageList = async ()=>{
     // Next.jsで制御していないページのURLの場合はfullPathを数値のみにする
     _pageList.set(index.toString(), elm)
   })
-  const pageListJSON:(z.infer<typeof schemaPageList>)[] = []
+  const pageListJSON:(z.infer<typeof schemaPageListItem>)[] = []
   for(const [fullPath,result] of _pageList){
-    const parsed = schemaPageList.safeParse(result).data
+    const parsed = schemaPageListItem.safeParse(result).data
     if(parsed === undefined){continue}
     pageListJSON.push(parsed)
   }
