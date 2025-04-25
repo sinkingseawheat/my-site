@@ -26,6 +26,19 @@ const hiddenData= ()=>{
       <symbol id="svgFormCheckbox" width="21" height="16" viewBox="0 0 21 16" fill="none">
         <path d="M6.30559 14.7197C6.88308 15.2629 7.78358 15.2629 8.36108 14.7197L19.5682 4.17769C20.1979 3.58539 20.1979 2.58483 19.5682 1.99252L18.8111 1.2803C18.2336 0.737084 17.3331 0.737084 16.7556 1.2803L7.67591 9.8211C7.48342 10.0022 7.18325 10.0022 6.99075 9.82109L4.24441 7.23775C3.66692 6.69453 2.76642 6.69453 2.18893 7.23775L1.43177 7.94997C0.802091 8.54227 0.802092 9.54284 1.43177 10.1351L6.30559 14.7197Z" fill="rgb(var(--color-fill))" stroke="rgb(var(--color-stroke)" />
       </symbol>
+      <symbol id="svgHamburgerMenu" viewBox="0 0 44 44">
+        <circle fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' cx="22" cy="22" r="21"/>
+        <circle fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-bg-svg))' cx="22" cy="22" r="19"/>
+        <line stroke='rgb(var(--color-fg-svg))' x1="11" y1="15" x2="33" y2="15" strokeLinecap="round" strokeWidth="2"/>
+        <line stroke='rgb(var(--color-fg-svg))' x1="11" y1="22" x2="33" y2="22" strokeLinecap="round" strokeWidth="2"/>
+        <line stroke='rgb(var(--color-fg-svg))' x1="11" y1="29" x2="33" y2="29" strokeLinecap="round" strokeWidth="2"/>
+      </symbol>
+      <symbol id="svgCloseBtn" viewBox="0 0 44 44">
+        <circle fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' cx="22" cy="22" r="21"/>
+        <circle fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-bg-svg))' cx="22" cy="22" r="19"/>
+        <line fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' x1="14" y1="14" x2="29.4" y2="29.4" strokeLinecap="round" strokeWidth="2"/>
+        <line fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' x1="14.2" y1="29.8" x2="29.8" y2="14.2" strokeLinecap="round" strokeWidth="2"/>
+      </symbol>
     </svg>
   )
   }
@@ -70,12 +83,26 @@ const checkbox = ({
   </svg>
 )
 
+const  hamburgerMenu:SVGIcon<'--color-fg-svg'|'--color-bg-svg'> = ({styleValue})=>(
+  <svg width="3em" height="3em" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+    <use href='#svgHamburgerMenu' />
+  </svg>
+)
+
+const  btnClose:SVGIcon<'--color-fg-svg'|'--color-bg-svg'> = ({styleValue})=>(
+  <svg width="3em" height="3em" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" style={styleValue}>
+    <use href='#svgCloseBtn' />
+  </svg>
+)
+
 const SVGIcon = {
   hiddenData,
   copy,
   link,
   linkAnotherTab,
   checkbox,
+  hamburgerMenu,
+  btnClose,
 }
 
 export default SVGIcon
