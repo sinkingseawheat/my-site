@@ -1,6 +1,6 @@
 'use client'
 import style from './_.module.css'
-import { Picture, GlobalMenu } from '@components/all';
+import { Picture, L, PageList, SVGIcon } from '@components/all';
 import { HeaderFooterContext } from '@components/context';
 import Link from 'next/link';
 import { Suspense, useContext } from 'react';
@@ -31,7 +31,11 @@ export default function Header({
       {isHFExpanded !== undefined && 
         <div className={style.l_h_i}>
           <Suspense>
-            <GlobalMenu />
+            <L.modal btnElm={<SVGIcon.hamburgerMenu styleValue={{'--color-bg-svg':'var(--color-primary)','--color-fg-svg':'var(--color-bg)'}} />}>
+              <nav>
+                <PageList />
+              </nav>
+            </L.modal>
           </Suspense>
         </div>
       }
