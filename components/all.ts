@@ -7,18 +7,19 @@ export {S}
 import _L from './Layouts/_';
 import column from "./Layouts/column/_";
 import flex from "./Layouts/flex/_";
+import modal from "./Layouts/modal/_";
 
 const L = {
   ..._L,
   column,
   flex,
+  modal,
 }
 
 export {L}
 
 /* Component */
 import List from "./List/_";
-import GlobalMenu from "./GlobalMenu/_";
 import ShareButton from "./ShareButton/_";
 import SkipNav from "./SkipNav/_";
 import Picture from "./Picture/_";
@@ -34,7 +35,6 @@ import AdsenseBlock from "./AdsenseBlock/_";
 
 export {
   List,
-  GlobalMenu,
   ShareButton,
   SkipNav,
   Picture,
