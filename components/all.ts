@@ -5,13 +5,13 @@ export {S}
 
 /* Layout */
 import _L from './Layouts/_';
-import column from "./Layouts/column/_";
+import grid from "./Layouts/grid/_";
 import flex from "./Layouts/flex/_";
 import modal from "./Layouts/modal/_";
 
 const L = {
   ..._L,
-  column,
+  grid,
   flex,
   modal,
 }

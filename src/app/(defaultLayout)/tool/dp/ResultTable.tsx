@@ -69,7 +69,7 @@ export function ResultTable() {
   }),[])
 
   return (
-      <L.column styleValue={{'--min-width':'35em','--column-gap':'2em'}}>
+      <L.grid styleValue={{'--min-width':'35em','--column-gap':'2em'}}>
     <Table
       styleValue={{'--max-height':'60vh'}}
       styleValueArray={{'--min-column-width':['6em','6em']}}
@@ -86,5 +86,5 @@ export function ResultTable() {
     >
       {filledData2}
     </Table>
-    </L.column>)
+    </L.grid>)
 }

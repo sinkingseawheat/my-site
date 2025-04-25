@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { FOCUSABLE_ELEMENTS_SELECTOR } from '@components/utility'
 import { SVGIcon } from '@components/all';
 
-export default function modal({
+export default function Modal({
   btnElm,
   children,
 }:{

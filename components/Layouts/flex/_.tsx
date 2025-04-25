@@ -8,7 +8,7 @@ type Children = React.ReactNode & {
   } & React.ReactElement['props']
 };
 
-export default function Flex({
+export default function flex({
   children,
   styleValue,
 }:{

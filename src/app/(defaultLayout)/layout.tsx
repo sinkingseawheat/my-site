@@ -44,11 +44,11 @@ export default function LayoutDefault({
                 {children}
               </main>
               <aside>
-                <L.column styleValue={{'--margin-top': '4rem'}}>
+                <L.grid styleValue={{'--margin-top': '4rem'}}>
                   <Suspense>
                     <ShareButton/>
                   </Suspense>
-                </L.column>
+                </L.grid>
                 <AdsenseBlock id='bottomPage' />
               </aside>
             </L.vb>

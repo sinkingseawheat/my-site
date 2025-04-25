@@ -59,7 +59,7 @@ export function Form(){
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
-            <L.column styleValue={{'--min-width':'100%','--row-gap':'.3em','--margin-top':'.4em'}}>
+            <L.grid styleValue={{'--min-width':'100%','--row-gap':'.3em','--margin-top':'.4em'}}>
                 <F.Textarea
                   elms={{
                     label:`調べるテキスト`,
@@ -67,7 +67,7 @@ export function Form(){
                   }}
                   message={errors?.['writing']?.message}
                 />
-            </L.column>
+            </L.grid>
           </fieldset>
           <div>
             <Button type='button' isSubmit={true} isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</Button>
@@ -75,7 +75,7 @@ export function Form(){
         </form>
       </S.lv2>
       <S.lv2 title={`出力`}>
-        <L.column styleValue={{'--min-width':'10em'}}>
+        <L.grid styleValue={{'--min-width':'10em'}}>
           <div className={style.outputLoading} aria-busy={output !== deferredOutput}>
             {output !== deferredOutput && <Loader/>}
             {
@@ -96,7 +96,7 @@ export function Form(){
                 </Table>)
             }
           </div>
-        </L.column>
+        </L.grid>
       </S.lv2>
     </>
   )

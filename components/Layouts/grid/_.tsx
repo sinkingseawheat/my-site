@@ -8,7 +8,7 @@ type Children = React.ReactNode & {
   } & React.ReactElement['props']
 };
 
-export default function ColumnLayout({
+export default function grid({
   children,
   styleValue,
 }:{
