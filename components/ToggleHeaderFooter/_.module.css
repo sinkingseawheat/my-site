@@ -1,40 +1,32 @@
-.c_toggleHeaderFooterVisible {
+.wrap {
   position: absolute;
   top: -60px;
   right: calc(var(--pd-outermost-both-sides) + env(safe-area-inset-right, 0));
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   overflow: hidden;
   display: flex;
 }
-.c_svgToggleHFVisible {
+.svgIcon {
   position: absolute;
   top: 0;
   left: 0;
 }
-.c_svgToggleHFVisible__bg {
-  fill: rgb(var(--color-primary));
-  stroke: rgb(var(--color-bg));
-}
-.c_svgToggleHFVisible__fg {
-  fill: rgb(var(--color-bg));
-  stroke: rgb(var(--color-bg));
-}
 @media (prefers-reduced-motion: no-preference){
-  .c_toggleHeaderFooterVisible[aria-expanded='false'] {
-    .c_svgToggleHFVisible.-to_expand {
-      animation: shrink__fadeIn var(--animation-changing) 1 forwards;
-    }
-    .c_svgToggleHFVisible.-to_shrink {
+  .wrap[aria-expanded='false'] {
+    .svgIcon:nth-of-type(1) {
       animation: shrink__fadeOut var(--animation-changing) 1 forwards;
+    }
+    .svgIcon:nth-of-type(2) {
+      animation: shrink__fadeIn var(--animation-changing) 1 forwards;
     }
   }
-  .c_toggleHeaderFooterVisible[aria-expanded='true'] {
-    .c_svgToggleHFVisible.-to_expand {
-      animation: shrink__fadeOut var(--animation-changing) 1 forwards;
-    }
-    .c_svgToggleHFVisible.-to_shrink {
+  .wrap[aria-expanded='true'] {
+    .svgIcon:nth-of-type(1) {
       animation: shrink__fadeIn var(--animation-changing) 1 forwards;
+    }
+    .svgIcon:nth-of-type(2) {
+      animation: shrink__fadeOut var(--animation-changing) 1 forwards;
     }
   }
 }
