@@ -22,20 +22,20 @@ export default function PageList(){
     <S.lv2 title='リンク一覧'>
       <List bullet=''>
         {list.filter((linkElm)=>linkElm.label==='other').map((linkElm)=>{
-          return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false}>{linkElm.title}</LinkElm>)
+          return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false} isNeedAriaCurrent={true}>{linkElm.title}</LinkElm>)
         })}
       </List>
       <S.lv3 title='開発した・しているツール'>
         <List bullet=''>
           {list.filter((linkElm)=>linkElm.label==='tool').map((linkElm)=>{
-            return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false}>{linkElm.title}</LinkElm>)
+            return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false} isNeedAriaCurrent={true}>{linkElm.title}</LinkElm>)
           })}
         </List>
       </S.lv3>
       <S.lv3 title='外部サイトにあるもの'>
         <List bullet=''>
           {list.filter((linkElm)=>linkElm.label==='outside').map((linkElm)=>{
-            return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={true}>{linkElm.title}</LinkElm>)
+            return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={true} isNeedAriaCurrent={true}>{linkElm.title}</LinkElm>)
           })}
         </List>
       </S.lv3>

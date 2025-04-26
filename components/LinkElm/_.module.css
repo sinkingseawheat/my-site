@@ -1,7 +1,7 @@
 .link {
   color: rgb(var(--color-primary));
   font-size: var(--fz-link-text, inherit);
-  &[aria-current]{
+  &:is([aria-current],[data-disabled="true"]){
     text-decoration: none;
     color: rgb(var(--color-fg));
     &:hover{
@@ -18,4 +18,7 @@
   width: 1em;
   height: auto;
   vertical-align: middle;
+}
+.viewing{
+  font-feature-settings:"palt"
 }

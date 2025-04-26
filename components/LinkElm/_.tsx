@@ -11,29 +11,32 @@ export default function LinkElm({
   href,
   isOpenAnotherTab,
   children,
-  styleValue
+  styleValue,
+  isNeedAriaCurrent,
 }:{
     href: string,
     isOpenAnotherTab: boolean,
     children: React.ReactNode,
-    styleValue?: StyleValue<'--fz-link-text'>
+    styleValue?: StyleValue<'--fz-link-text'>,
+    isNeedAriaCurrent?: boolean,
 }){
   const { refHeader } = useContext(HeaderFooterContext)
   const hrefHash = URL.canParse(href, 'https://example.com') && (new URL(href, 'https://example.com')).hash
   if(href === usePathname()){
     // pathnameが同じ場合はリンクのスタイルをつけない
     return (
-      <Link
+      <span
         className={style.link}
-        href={href}
         style={styleValue}
-        aria-current='page'
+        aria-current={isNeedAriaCurrent ? 'page' : undefined}
+        data-disabled={true}
       >
         {typeof children === 'string' ?
           (<span className={style.text}>{children}</span>)
           : children
         }
-      </Link>);
+        <span className={style.viewing}>（現在のページ）</span>
+      </span>);
   }else if(hrefHash){
     return (<Link
       className={style.link}
@@ -68,7 +71,7 @@ export default function LinkElm({
             <SVGIcon.linkAnotherTab styleValue={{'--color-stroke':'var(--color-primary)'}} />
             : <SVGIcon.link styleValue={{'--color-stroke':'var(--color-primary)'}} />
           }
-      </span>
+        </span>
       </Link>
     );
   }
