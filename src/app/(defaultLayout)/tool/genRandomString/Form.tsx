@@ -73,7 +73,7 @@ export function Form(){
       }
       _all.push(_output)
     }
-    setLength(`${data.length}em`)
+    setLength(`${parseInt(data.length) * 1.25}em`) // ボタンのfont-sizeに依存するので注意。CSS変数にすればOKのはず。
     setOutput(_all)
   }
 
@@ -166,7 +166,7 @@ export function Form(){
       <S.lv2 title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
         {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><L.grid styleValue={{'--min-width': length, '--column-gap':'1em'}}>
-          {output.map((randomString)=><F.Button type='button' className={style.outputItem} key={randomString} onClick={()=>{
+          {output.map((randomString)=><F.Button type='button' key={randomString} onClick={()=>{
             navigator.clipboard.writeText(randomString).then(()=>{
               if(setPopupMessage!==undefined){
                 setPopupMessage(`${randomString}がコピーされました`)
