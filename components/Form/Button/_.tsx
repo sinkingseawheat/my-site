@@ -8,8 +8,9 @@ type ButtonElm = {
 export default function Button({
   children, onClick, type, isDisabled, className
 }:ButtonElm){
+  const mergedClassName = className ? `${style.button} ${className}` : style.button
     return (
-    <button className={style.button} type={type ?? 'submit'} onClick={onClick} disabled={isDisabled}>
+    <button className={mergedClassName} type={type ?? 'submit'} onClick={onClick} disabled={isDisabled}>
       {
         typeof children === 'string' ?
         <span className={style.button_i}>{children}</span>
