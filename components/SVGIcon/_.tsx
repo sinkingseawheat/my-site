@@ -29,22 +29,22 @@ const hiddenData= ()=>{
       <symbol id="svgFormCheckbox" width="21" height="16" viewBox="0 0 21 16" fill="none">
         <path d="M6.30559 14.7197C6.88308 15.2629 7.78358 15.2629 8.36108 14.7197L19.5682 4.17769C20.1979 3.58539 20.1979 2.58483 19.5682 1.99252L18.8111 1.2803C18.2336 0.737084 17.3331 0.737084 16.7556 1.2803L7.67591 9.8211C7.48342 10.0022 7.18325 10.0022 6.99075 9.82109L4.24441 7.23775C3.66692 6.69453 2.76642 6.69453 2.18893 7.23775L1.43177 7.94997C0.802091 8.54227 0.802092 9.54284 1.43177 10.1351L6.30559 14.7197Z" fill="rgb(var(--color-fill))" stroke="rgb(var(--color-stroke)" />
       </symbol>
-      <symbol id="svgHamburgerMenu" viewBox="0 0 44 44">
-        <circle fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' cx="22" cy="22" r="21"/>
-        <circle fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-bg-svg))' cx="22" cy="22" r="19"/>
+      <symbol id="svgHamburgerMenu" viewBox="0 0 45 45">
+        <circle fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' cx="22.5" cy="22.5" r="22"/>
+        <circle fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-bg-svg))' cx="22.5" cy="22.5" r="19"/>
         <line stroke='rgb(var(--color-fg-svg))' x1="11" y1="15" x2="33" y2="15" strokeLinecap="round" strokeWidth="2"/>
         <line stroke='rgb(var(--color-fg-svg))' x1="11" y1="22" x2="33" y2="22" strokeLinecap="round" strokeWidth="2"/>
         <line stroke='rgb(var(--color-fg-svg))' x1="11" y1="29" x2="33" y2="29" strokeLinecap="round" strokeWidth="2"/>
       </symbol>
-      <symbol id="svgCloseBtn" viewBox="0 0 44 44">
-        <circle fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' cx="22" cy="22" r="21"/>
-        <circle fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-bg-svg))' cx="22" cy="22" r="19"/>
+      <symbol id="svgCloseBtn" viewBox="0 0 45 45">
+        <circle fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' cx="22.5" cy="22.5" r="22"/>
+        <circle fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-bg-svg))' cx="22.5" cy="22.5" r="19"/>
         <line fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' x1="14" y1="14" x2="29.4" y2="29.4" strokeLinecap="round" strokeWidth="2"/>
         <line fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))' x1="14.2" y1="29.8" x2="29.8" y2="14.2" strokeLinecap="round" strokeWidth="2"/>
       </symbol>
-      <symbol id="svgHFToggleToShrink" viewBox="0 0 44 44">
+      <symbol id="svgHFToggleToShrink" viewBox="0 0 45 45">
         <g fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-fg-svg))'>
-          <circle cx="22" cy="22" r="22" strokeWidth="2"></circle>
+          <circle cx="22.5" cy="22.5" r="22" strokeWidth="2"></circle>
         </g>
         <g fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))'>
           <line x1="33.5" y1="40" x2="33.5" y2="37" strokeDasharray="2 2"></line>
@@ -63,9 +63,9 @@ const hiddenData= ()=>{
           <path d="M22.3536 8.64645C22.1583 8.45118 21.8417 8.45118 21.6464 8.64645L18.4645 11.8284C18.2692 12.0237 18.2692 12.3403 18.4645 12.5355C18.6597 12.7308 18.9763 12.7308 19.1716 12.5355L22 9.70711L24.8284 12.5355C25.0237 12.7308 25.3403 12.7308 25.5355 12.5355C25.7308 12.3403 25.7308 12.0237 25.5355 11.8284L22.3536 8.64645ZM22.5 15.5V9H21.5V15.5H22.5Z" strokeWidth="0"></path>
         </g>
       </symbol>
-      <symbol id="svgHFToggleToExpanded" viewBox="0 0 44 44">
+      <symbol id="svgHFToggleToExpanded" viewBox="0 0 45 45">
         <g fill='rgb(var(--color-bg-svg))' stroke='rgb(var(--color-fg-svg))'>
-          <circle cx="22" cy="22" r="22" strokeWidth="2"></circle>
+          <circle cx="22.5" cy="22.5" r="22" strokeWidth="2"></circle>
         </g>
         <g fill='rgb(var(--color-fg-svg))' stroke='rgb(var(--color-fg-svg))'>
           <line x1="33.5" y1="40" x2="33.5" y2="37"></line>
