@@ -1,3 +1,12 @@
+.wrap{
+  padding: 2px;
+  border: 2px solid transparent;
+  display: inline-block;
+  border-radius: 12px;
+  &:focus-within, &:has(button:hover){
+    border-color: rgb(var(--color-fg));
+  }
+}
 .button{
   background-color: rgb(var(--color-primary));
   padding: .2em .5em;
@@ -5,33 +14,10 @@
   font-weight: bold;
   position: relative;
   overflow: hidden;
-  font-size: inherit;
+  font-size: 1.25rem;
+  border: none;
 }
 .button:disabled{
   color: rgb(var(--color-disabled-text));
   background-color: rgb(var(--color-disabled-background));
-}
-.button::after{
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background-color: rgba(0,0,0,0);
-  z-index: 100;
-  pointer-events: none;
-  backdrop-filter: invert(1);
-  transition: width var(--animation-changing);
-}
-/* .button_i{} */
-
-.button:focus-visible::after {
-  width: 100%
-}
-@media(hover: hover) {
-  .button:not([disabled]):hover::after {
-      width:100%
-  }
 }
