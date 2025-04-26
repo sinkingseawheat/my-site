@@ -8,10 +8,10 @@
   width: 20rem;
   background-color: rgb(var(--color-bg));
   padding:0;
-  &:has(a:focus) {
+  &:focus-within {
     z-index: 100;
   }
-  &:has(a:not(:focus)){
+  &:not(:focus-within){
     position: absolute;
     width: 1px;
     height: 1px;

@@ -82,7 +82,7 @@
       flex:1 1 auto; /* for safari */
     }
   }
-  button:focus {
+  button:focus-visible {
     outline: none;
     border-color: rgb(var(--color-fg));
   }

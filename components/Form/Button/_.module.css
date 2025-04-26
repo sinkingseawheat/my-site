@@ -27,7 +27,7 @@
 }
 /* .button_i{} */
 
-.button:focus::after {
+.button:focus-visible::after {
   width: 100%
 }
 @media(hover: hover) {
@@ -62,7 +62,7 @@
 .buttonLinkIcon{} */
 
 
-.buttonLink:focus::after {
+.buttonLink:focus-visible::after {
   width: 100%
 }
 @media(hover: hover) {

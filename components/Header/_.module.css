@@ -41,7 +41,7 @@
   position: relative;
 }
 a.c_headerLogo {
-  &:hover, &:focus {
+  &:hover, &:focus-visible {
     outline: none; /* 独自でスタイルを入れるため */
     &::after {
       --border-width: 2px;

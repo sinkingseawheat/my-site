@@ -25,4 +25,4 @@ export type FormTextareaItemExtended = {
   message?: string,
 }
 
-export const FOCUSABLE_ELEMENTS_SELECTOR = 'a[href],button,[tabindex]:not([tabindex="-1"]),[role="button"],input,textarea'
+export const FOCUSABLE_ELEMENTS_SELECTOR = 'a[href],button,[tabindex]:not([tabindex="-1"]),[role="button"],input:not([type="hidden"]),textarea,select,iframe'

@@ -11,7 +11,7 @@
   justify-content: flex-start;
   column-gap: 0.5em;
   max-width: 100%;
-  &:has(textarea:focus) .innerLabel{
+  &:focus-within .innerLabel{
     font-weight: bold;
   }
 }
