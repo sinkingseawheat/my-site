@@ -1,6 +1,13 @@
-.list{}
-.item {
+.uList{}
+.uItem {
   padding: 0;
   list-style-type: none;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(1em, auto) 1fr;
+  column-gap: .5em;
 }
+.uBullet{
+  display: flex;
+  justify-content: flex-end;
+}
+.uItem_i{}

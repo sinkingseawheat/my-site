@@ -20,20 +20,20 @@ export default function PageList(){
 
   return (
     <S.lv2 title='リンク一覧'>
-      <List>
+      <List bullet=''>
         {list.filter((linkElm)=>linkElm.label==='other').map((linkElm)=>{
           return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false}>{linkElm.title}</LinkElm>)
         })}
       </List>
       <S.lv3 title='開発した・しているツール'>
-        <List>
+        <List bullet=''>
           {list.filter((linkElm)=>linkElm.label==='tool').map((linkElm)=>{
             return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false}>{linkElm.title}</LinkElm>)
           })}
         </List>
       </S.lv3>
       <S.lv3 title='外部サイトにあるもの'>
-        <List>
+        <List bullet=''>
           {list.filter((linkElm)=>linkElm.label==='outside').map((linkElm)=>{
             return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={true}>{linkElm.title}</LinkElm>)
           })}
