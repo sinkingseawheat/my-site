@@ -60,17 +60,17 @@ const writePageList = async ()=>{
 }
 
 // page.tsxを別ディレクトリにバックアップ
-const storePageData = ()=>{
+const storeFileIgonoredInGit = ()=>{
   const {pageBackupPath} = userSpecificData
   if(typeof pageBackupPath !== 'string'){
-    console.log(`page.tsxのバックアップ：無し`)
+    console.log(`page.tsxとmy-site.config.tsのバックアップ無し`)
     return [];
   }
   const fullPathArray:string[] = []
   for(const [fullPath,] of pageList){
     fullPathArray.push(fullPath)
   }
-  return fullPathArray.map((fullPath)=>{
+  return [...fullPathArray.map((fullPath)=>{
     return (async ()=>{
       const destPath = path.join(
         pageBackupPath,
@@ -84,13 +84,19 @@ const storePageData = ()=>{
         await fs.copyFile(fullPath, destPath)
       }
     })()
-  })
+  }), (async ()=>{
+    await fs.copyFile(
+      path.join(process.cwd(), './my-site.config.ts'),
+      path.join(pageBackupPath, './my-site.config.ts')
+    )
+    return
+  })()]
 }
 
 await Promise.all([
   writeSitemap(),
   writePageList(),
-  ...storePageData(),
+  ...storeFileIgonoredInGit(),
 ])
 
 console.log(`prebuild process completed`)
