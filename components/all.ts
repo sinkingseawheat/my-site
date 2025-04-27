@@ -1,5 +1,5 @@
 /* Section */
-import Section from "./Sections/_";
+import Section from "./Section/_";
 
 export {Section}
 
