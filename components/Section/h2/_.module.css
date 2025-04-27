@@ -1,6 +1,5 @@
 .wrap {}
 .wrap + .wrap {
-  /* h2セクションは1カラム固定 */
   margin-top: 4rem;
 }
 .hdng {
@@ -25,12 +24,4 @@ position: relative;
   }
 }
 .hdng_i {}
-.cnt {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 100%;
-  row-gap: 1.7rem;
-  &.-center {
-    justify-content: center;
-  }
-}
+.cnt {}

@@ -1,4 +1,5 @@
 import style from './_.module.css'
+import { L } from '@components/all'
 
 export function Dl({
   children,
@@ -18,7 +19,9 @@ export function Dl({
           }
         </dt>
         <dd className={style.cnt}>
-          {children}
+          <L.grid styleValue={{'--margin-top':'0','--row-gap':'1em','--min-width':'100%'}}>
+            {children}
+          </L.grid>
         </dd>
       {/* </div> */}
     </dl>

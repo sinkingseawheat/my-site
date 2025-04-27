@@ -1,4 +1,5 @@
 import style from './_.module.css'
+import { L } from '@components/all'
 
 export function H2({
   children,
@@ -7,7 +8,7 @@ export function H2({
   children: React.ReactNode,
   title: React.ReactNode,
 }){
-  return (
+  return ( children === undefined ? <></> :
     <div className={style.wrap}>
       <h2 className={style.hdng}>
         {
@@ -17,7 +18,9 @@ export function H2({
         }
       </h2>
       <div className={style.cnt}>
-        {children}
+        <L.grid styleValue={{'--margin-top':'2em','--row-gap':'.8em','--min-width':'100%'}}>
+          {children}
+        </L.grid>
       </div>
     </div>
   )

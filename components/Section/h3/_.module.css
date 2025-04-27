@@ -1,4 +1,6 @@
-.wrap {}
+.wrap {
+  margin-top: 2em;
+}
 .hdng {
   --line-width: 0.25rem;
   padding-left: calc(var(--line-width) * 2);
@@ -10,12 +12,4 @@
   font-size: var(--fz-headingLv3);
 }
 .hdng_i {}
-.cnt {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 100%;
-  row-gap: 1.7rem;
-  &.-center {
-    justify-content: center;
-  }
-}
+.cnt {}

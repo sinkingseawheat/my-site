@@ -1,4 +1,5 @@
 import style from './_.module.css'
+import { L } from '@components/all'
 
 export function H3({
   children,
@@ -17,7 +18,9 @@ export function H3({
         }
       </h3>
       <div className={style.cnt}>
-        {children}
+        <L.grid styleValue={{'--margin-top':'2em','--row-gap':'.8em','--min-width':'100%'}}>
+          {children}
+        </L.grid>
       </div>
     </div>
   )
