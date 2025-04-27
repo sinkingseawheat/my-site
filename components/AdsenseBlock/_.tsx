@@ -38,7 +38,7 @@ export default function AdsenseBlock({
     return <></>
   }
 
-  return (<>
+  return (<div className={style.wrap}>
     {process.env.NODE_ENV === 'production' && <Script
       id={`adsense-script-${id}`}
       async
@@ -75,5 +75,5 @@ export default function AdsenseBlock({
           }
       </dd>
     </dl>}
-    </>)
+    </div>)
 }
