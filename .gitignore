@@ -35,6 +35,8 @@ yarn-error.log*
 
 # user-specific configuration file
 my-site.config.ts
+public
+rawImage
 
 # vercel
 .vercel
@@ -42,10 +44,6 @@ my-site.config.ts
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# track empty directory
-!public
-public/*
 
 # ignore page.tsx
 **/page.tsx
