@@ -1,30 +1,29 @@
 import style from './_.module.css'
+import React from 'react'
 
 import { type StyleValue } from '@components/utility'
 
-type Children = React.ReactNode & {
-  props: {
-    keyId?:string,
-  } & React.ReactElement['props']
-};
-
+/**
+ * React.Childrenは壊れやすいので注意。カスタマイズしない。
+ */
 export default function grid({
   children,
   styleValue,
 }:{
-  children: Children | Children[],
+  children: React.ReactNode,
 } & {styleValue?: StyleValue<'--min-width'|'--column-gap'|'--row-gap'|'--margin-top'>})
 {
-  const items = Array.isArray(children) ? children : [children];
   return (
     <div className={style.wrap} style={styleValue}>
-      {items.map((item,index)=>{
-        return (
-        <div className={style.item} key={item.props.keyId ?? index}>
-          {item}
-        </div>
-        )
-      })}
+      {
+        React.Children.map(
+          children, (item, index)=>
+        (
+          <div className={style.item} key={index}>
+            {item}
+          </div>
+        ))
+      }
     </div>
   )
 }
