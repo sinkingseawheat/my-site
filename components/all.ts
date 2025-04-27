@@ -1,7 +1,7 @@
 /* Section */
-import S from "./Sections/_";
+import Section from "./Sections/_";
 
-export {S}
+export {Section}
 
 /* Layout */
 import _L from './Layouts/_';

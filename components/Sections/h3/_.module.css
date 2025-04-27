@@ -1,0 +1,21 @@
+.wrap {}
+.hdng {
+  --line-width: 0.25rem;
+  padding-left: calc(var(--line-width) * 2);
+  background: linear-gradient(
+    to right,
+    rgb(var(--color-secondary)) 0 var(--line-width),
+    transparent var(--line-width) 100%
+  );
+  font-size: var(--fz-headingLv3);
+}
+.hdng_i {}
+.cnt {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 100%;
+  row-gap: 1.7rem;
+  &.-center {
+    justify-content: center;
+  }
+}

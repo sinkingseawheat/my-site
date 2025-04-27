@@ -2,7 +2,7 @@
 import style from './Form.module.css'
 import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { S, L, F } from '@components/all'
+import { Section, L, F } from '@components/all'
 import { PopupContext } from '@components/context';
 
 
@@ -79,7 +79,7 @@ export function Form(){
 
   return (
     <>
-      <S.lv2 title={`入力`}>
+      <Section type='2' title={`入力`}>
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
@@ -162,8 +162,8 @@ export function Form(){
             <F.Button isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</F.Button>
           </div>
         </form>
-      </S.lv2>
-      <S.lv2 title={`出力`}>
+      </Section>
+      <Section type='2' title={`出力`}>
         {/* Button押下の度にFormごと書き換えられるが、一旦そのままにする */}
         {output.length === 0 ? <>まだ1回も実行されていません</> : (<><p>クリックorタッチでコピーされます</p><L.grid styleValue={{'--min-width': length, '--column-gap':'1em'}}>
           {output.map((randomString)=><F.Button type='button' key={randomString} onClick={()=>{
@@ -174,7 +174,7 @@ export function Form(){
             })
           }}>{randomString}</F.Button>)}
         </L.grid></>)}
-      </S.lv2>
+      </Section>
     </>
   )
 }

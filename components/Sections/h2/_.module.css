@@ -1,0 +1,36 @@
+.wrap {}
+.wrap + .wrap {
+  /* h2セクションは1カラム固定 */
+  margin-top: 4rem;
+}
+.hdng {
+--rectangle-height: 0.18rem;
+--colored-rectangle-width: 10em;
+padding-bottom: var(--rectangle-height);
+font-size: var(--fz-headingLv2);
+position: relative;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--rectangle-height);
+    background: linear-gradient(
+      to right,
+      rgb(var(--color-secondary)) 0 var(--colored-rectangle-width),
+      rgb(var(--color-fg) / 20%) var(--colored-rectangle-width) 100%
+    );
+  }
+}
+.hdng_i {}
+.cnt {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 100%;
+  row-gap: 1.7rem;
+  &.-center {
+    justify-content: center;
+  }
+}

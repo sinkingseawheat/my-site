@@ -1,7 +1,7 @@
 "use client"
 import { schemaPageListItem } from '@preprocess/getPageListItem';
 import z from 'zod'
-import { S, List, LinkElm } from '@components/all';
+import { Section, List, LinkElm } from '@components/all';
 import { useState, useEffect } from 'react';
 
 export default function PageList(){
@@ -19,26 +19,26 @@ export default function PageList(){
   },[]);
 
   return (
-    <S.lv2 title='リンク一覧'>
+    <Section type='2' title='リンク一覧'>
       <List bullet=''>
         {list.filter((linkElm)=>linkElm.label==='other').map((linkElm)=>{
           return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false} isNeedAriaCurrent={true}>{linkElm.title}</LinkElm>)
         })}
       </List>
-      <S.lv3 title='開発した・しているツール'>
+      <Section type='3' title='開発した・しているツール'>
         <List bullet=''>
           {list.filter((linkElm)=>linkElm.label==='tool').map((linkElm)=>{
             return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={false} isNeedAriaCurrent={true}>{linkElm.title}</LinkElm>)
           })}
         </List>
-      </S.lv3>
-      <S.lv3 title='外部サイトにあるもの'>
+      </Section>
+      <Section type='3' title='外部サイトにあるもの'>
         <List bullet=''>
           {list.filter((linkElm)=>linkElm.label==='outside').map((linkElm)=>{
             return (<LinkElm href={linkElm.url} key={linkElm.url} isOpenAnotherTab={true} isNeedAriaCurrent={true}>{linkElm.title}</LinkElm>)
           })}
         </List>
-      </S.lv3>
-    </S.lv2>
+      </Section>
+    </Section>
   )
 }

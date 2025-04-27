@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { usePathname, useSearchParams  } from 'next/navigation';
-import { S } from '@components/all';
+import { Section } from '@components/all';
 
 import style from './_.module.css';
 
@@ -19,7 +19,7 @@ export default function ShareButton(){
   },[_pathname, _searchParams])
 
   return currentHref !== null && (
-    <S.dl title="記事を共有する">
+    <Section type='dl' title="記事を共有する">
       <ul className={style.wrap}>
             <li className={style.item}>
               <a
@@ -86,6 +86,6 @@ export default function ShareButton(){
               </a>
             </li>
           </ul>
-    </S.dl>
+    </Section>
   );
 }

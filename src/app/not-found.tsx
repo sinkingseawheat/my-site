@@ -1,7 +1,5 @@
 import { type Metadata } from 'next';
-import { L, SVGIcon, } from '@components/all';
-
-import {S, PageList} from '@components/all'
+import { L, Section, SVGIcon, PageList } from '@components/all';
 
 export const metadata: Metadata = {
   title:`not found`,
@@ -21,7 +19,7 @@ export default function Page() {
             JavaScriptの実行が許可されていません。ページの機能に不具合が出る可能性があります
           </noscript>
           <main id="main-content">
-            <S.lv1 isSrOnly={false} h1Elm={`お探しのページは見つかりませんでした`} />
+            <Section type='1' isSROnly={false} title="お探しのページは見つかりませんでした"></Section>
               <PageList />
           </main>
         </L.vb>

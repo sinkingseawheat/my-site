@@ -34,12 +34,12 @@ export default function AdsenseBlock({
     }
   },[pathname, isLoadedAdsbyGoogle, isDisplay])
 
-  if(!publisherId || process.env.NODE_ENV !== 'production'){
+  if(!publisherId){
     return <></>
   }
 
   return (<>
-    <Script
+    {process.env.NODE_ENV === 'production' && <Script
       id={`adsense-script-${id}`}
       async
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`}
@@ -48,7 +48,7 @@ export default function AdsenseBlock({
       onLoad={()=>{
         setIsLoadedAdsbyGoogle(true)
       }}
-    />
+    />}
     {isDisplay && <dl className={style.dl}>
       <dt className={style.dt}>広告</dt>
       <dd className={style.dd}>

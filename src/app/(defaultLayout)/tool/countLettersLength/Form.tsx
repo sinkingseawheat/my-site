@@ -4,7 +4,7 @@ import z from 'zod'
 import { useState, useDeferredValue } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { S, L, F, Loader, Table } from '@components/all'
+import { Section, L, F, Loader, Table } from '@components/all'
 
 const schemaInput = z.object({
   writing: z.string().refine(
@@ -55,7 +55,7 @@ export function Form(){
 
   return (
 <>
-      <S.lv2 title={`入力`}>
+      <Section type='2' title={`入力`}>
         <form onSubmit={handleSubmit(onSubmit)} className={style.wrap}>
           <fieldset className={style.fieldset}>
             <legend className={style.legend}>出力形式</legend>
@@ -73,8 +73,8 @@ export function Form(){
             <F.Button isDisabled={!isValid}>{isValid ? '実行' : '実行できません'}</F.Button>
           </div>
         </form>
-      </S.lv2>
-      <S.lv2 title={`出力`}>
+      </Section>
+      <Section type='2' title={`出力`}>
         <L.grid styleValue={{'--min-width':'10em'}}>
           <div className={style.outputLoading} aria-busy={output !== deferredOutput}>
             {output !== deferredOutput && <Loader/>}
@@ -97,7 +97,7 @@ export function Form(){
             }
           </div>
         </L.grid>
-      </S.lv2>
+      </Section>
     </>
   )
 }

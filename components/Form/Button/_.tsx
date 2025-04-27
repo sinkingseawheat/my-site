@@ -6,7 +6,7 @@ type ButtonElm = {
 } & ButtonHTMLAttributes<Element>;
 
 export default function Button({
-  children, onClick, type, isDisabled, className
+  children, onClick, type, isDisabled,
 }:ButtonElm){
   return (
     <div className={style.wrap}>

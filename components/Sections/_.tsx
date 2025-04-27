@@ -1,99 +1,39 @@
-import style from './_.module.css';
+import { H1 } from './h1/_'
+import { H2 } from './h2/_'
+import { H3 } from './h3/_'
+import { Dl } from './dl/_'
 
-function lv1({
-  isSrOnly,
-  h1Elm,
-  children,
-}:{
-  isSrOnly: boolean,
-  h1Elm: React.ReactNode | React.ReactNode[],
-  children?: React.ReactNode | React.ReactNode[],
-}){
-  const headingElm = typeof h1Elm === 'string' ?
-    (<h1 className={`${style.c_headLv1}${isSrOnly ? ` u_sr_only` : ` ${style['-mb']}`}`}><span className={style.c_headLv1_i}>{h1Elm}</span></h1>)
-    : h1Elm
-  return (<div className={`${style.wrap_h1}${(!isSrOnly || children) ? ` ${style['-mb']}` : ''}`}>
-    {headingElm}
-    {children}
-  </div>);
-}
-
-function lv2({
-  title,
-  children,
-}: {
-  title: React.ReactNode
-  children: React.ReactNode | React.ReactNode[] | null
-}) {
-  return children!==null ? (
-    <section className={style.l_secLv2}>
-      <h2 className={style.c_headLv2}>
-        {typeof title === 'string'
-          ? <span className={style.c_headLv2_i}>{title}</span>
-          : title}
-      </h2>
-      <div className={style.c_headLv2__cnt}>
-        {children}
-      </div>
-    </section>
-  ) : null
-}
-
-function lv3({
-  title,
-  children,
-}: {
-  title: React.ReactNode
-  children: React.ReactNode | React.ReactNode[] | null
-}) {
-  return children !== null ? (
-    <section className={style.l_secLv3}>
-      <h3 className={style.c_headLv3}>
-        {typeof title === 'string'
-          ? <span className={style.c_headLv3_i}>{title}</span>
-          : title}
-      </h3>
-      <div className={style.c_headLv3__cnt}>
-        {children}
-      </div>
-    </section>
-  ) : null
-}
-
-function dl(props: {
-  title: React.ReactNode
-  children: React.ReactNode | React.ReactNode[] | null
+type Arags = {
+  type: '1',
+  title: React.ReactNode,
+  children?: React.ReactNode,
+  isSROnly: boolean,
 } | {
-  title: React.ReactNode
-  children: React.ReactNode | React.ReactNode[] | null
-}[]) {
-  const array = [props].flat()
-  // 小要素がすべてない場合はdlを作らない
-  if(array.every(({children})=>children===null)){
-    return <></>
-  }
-  return (
-    <dl className={style.dl}>
-      {
-        array.map(({title, children}, index)=>{
-          return children !== null ? (
-            <div className={style.dlInner} key={index}>
-              <dt className={style.dt}>
-                {typeof title === 'string'
-                  ? <span className={style.dt_i}>{title}</span>
-                  : title}
-              </dt>
-              <dd className={style.dd}>
-                {children}
-              </dd>
-            </div>
-          ) : null
-        }).filter(item=>item!==null)
-      }
-    </dl>
-  )
+  type: '2'|'3'|'dl',
+  title: React.ReactNode,
+  children: React.ReactNode,
 }
 
-const aggregation = {lv1, lv2, lv3, dl}
-
-export default aggregation
+export default function Section(args:Arags){
+  if(args.type === '1'){
+    const {children, title, isSROnly} = args
+    return (
+      <H1 title={title} isSROnly={isSROnly}>
+        {children}
+      </H1>
+    )
+  }else{
+    const {type, children, title} = args
+    switch (type) {
+      // returnしているのでbreakは不要
+      case '2' :
+        return (<H2 title={title}>{children}</H2>)
+      case '3' :
+        return (<H3 title={title}>{children}</H3>)
+      case 'dl' :
+        return (<Dl title={title}>{children}</Dl>)
+      default:
+        return (<></>)
+    }
+  }
+}

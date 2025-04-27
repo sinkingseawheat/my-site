@@ -1,23 +1,14 @@
 
 /* h1 */
-.wrap_h1{
-  & p + p{
-    margin-top: 1.7rem;
-  }
-  &.-mb{
-    margin-bottom: 4rem;
-  }
-}
-.c_headLv1 {
+.wrap_h1{}
+.h1 {
   font-size: var(--fz-headingLv1);
   line-height: 1.2;
-  &.-mb{
-    margin-bottom: 2rem;
-  }
 }
-.c_headLv1_i {}
-.c_headLv1__lead {
-margin-top: 1.2rem;
+.h1Inner{}
+.wrap_h1:has(.h1:not(.u_sr_only)),
+.h1.u_sr_only + .h1Lead{
+  margin-bottom: 3rem;
 }
 
 /* h2 */
