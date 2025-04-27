@@ -24,8 +24,8 @@ export default function Header({
     <div className={style.l_h__inner}>
       <div className={style.l_h_i}>
         <Link href='/' className={style.c_headerLogo}>
-          <Picture imgSrc='/c/image/icon_ssw_logo_penguin@2x.png' width={45} height={39} alt=''/>
-          <Picture imgSrc='/c/image/icon_ssw_logo_text@2x.png' width={45} height={32} alt='sinkingseawheat'/>
+          <Picture src='/c/image/icon_ssw_logo_penguin@2x.png' width={45} height={39} alt=''/>
+          <Picture src='/c/image/icon_ssw_logo_text@2x.png' width={45} height={32} alt='sinkingseawheat'/>
         </Link>
       </div>
       {isHFExpanded !== undefined && 
