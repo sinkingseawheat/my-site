@@ -3,15 +3,14 @@ import { H2 } from './h2/_'
 import { H3 } from './h3/_'
 import { Dl } from './dl/_'
 
-type Arags = {
+type Arags = ({
   type: '1',
-  title: React.ReactNode,
-  children?: React.ReactNode,
   isSROnly: boolean,
 } | {
   type: '2'|'3'|'dl',
+}) & {
   title: React.ReactNode,
-  children: React.ReactNode,
+  children?: React.ReactNode,
 }
 
 export default function Section(args:Arags){
@@ -27,11 +26,11 @@ export default function Section(args:Arags){
     switch (type) {
       // returnしているのでbreakは不要
       case '2' :
-        return (<H2 title={title}>{children}</H2>)
+        return (children && <H2 title={title}>{children}</H2>)
       case '3' :
-        return (<H3 title={title}>{children}</H3>)
+        return (children && <H3 title={title}>{children}</H3>)
       case 'dl' :
-        return (<Dl title={title}>{children}</Dl>)
+        return (children && <Dl title={title}>{children}</Dl>)
       default:
         return (<></>)
     }
