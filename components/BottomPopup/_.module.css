@@ -1,7 +1,7 @@
 .wrap{
   height: 0;
   width: 100%;
-  position: relative;
+  position: fixed;
   bottom: 2rem;
   left: 0;
   overflow: visible;
