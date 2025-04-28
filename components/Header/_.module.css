@@ -64,12 +64,12 @@ a.c_headerLogo {
   max-height: calc(1em * var(--value-line-height-default) * 2);
   overflow-y: auto;
 }
-.l_h[aria-hidden='true'] {
+.l_h[data-ishidden="true"]:not(:focus-within) {
   /* on shrink animation ends*/
   grid-template-rows: 0fr;
   padding-top: 0;
   padding-bottom: 0;
-  & :is(a[href],button,[tabindex]:not([tabindex="-1"]),[role="button"],input,textarea){
+  /* & :is(a[href],button,[tabindex]:not([tabindex="-1"]),[role="button"],input,textarea){
     visibility: hidden;
-  }
+  } */
 }

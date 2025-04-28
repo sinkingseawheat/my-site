@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SVGIcon } from '@components/all';
 import { useContext } from 'react';
-import { HeaderFooterContext } from '@components/context';
+import { RefFixedAtTopContext } from '@components/context';
 
 export default function LinkElm({
   href,
@@ -20,7 +20,7 @@ export default function LinkElm({
     styleValue?: StyleValue<'--fz-link-text'>,
     isNeedAriaCurrent?: boolean,
 }){
-  const { refHeader } = useContext(HeaderFooterContext)
+  const refElements = useContext(RefFixedAtTopContext)
   const hrefHash = URL.canParse(href, 'https://example.com') && (new URL(href, 'https://example.com')).hash
   if(href === usePathname()){
     // pathnameが同じ場合はリンクのスタイルをつけない
@@ -43,8 +43,12 @@ export default function LinkElm({
       href={href}
       style={styleValue}
       onClick={()=>{
-        if(refHeader && refHeader.current !== null){
-          document.documentElement.style.setProperty('--scroll-padding-top', `calc(20vh + ${refHeader.current.clientHeight}px)`)
+        const offsetTop = refElements.reduce((accumulator, currentValue)=>{
+          const clientHeight = currentValue?.current?.clientHeight ?? 0
+          return accumulator + clientHeight
+        }, 0)
+        if(refElements.every((ref)=>ref.current!==null)){
+          document.documentElement.style.setProperty('--scroll-padding-top', `calc(20vh + ${offsetTop}px)`)
         }
         return true
       }}
