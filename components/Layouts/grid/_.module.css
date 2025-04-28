@@ -8,4 +8,5 @@
 }
 .item{
   height: 100%;
+  overflow-x: auto;
 }
