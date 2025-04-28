@@ -7,6 +7,8 @@
 .table {
   table-layout: fixed;
   width: 100%;
+  position: relative;
+  z-index: 10;
 }
 .captionInner{
   padding: 0 0.3em .3em;
@@ -22,6 +24,15 @@
   flex: auto 0 0;
   font-size: 1rem;
 }
+.thead{
+}
 .th{
+  
+}
+.th[scope="column"]{
   min-width: var(--min-column-width, auto);
+  position: sticky;
+  top: -2px; /* border-width */
+  left: 0;
+  z-index: 20;
 }

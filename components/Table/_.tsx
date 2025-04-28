@@ -97,7 +97,7 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
                 {row.toSpliced(0,1).map((cell, cellIndex) => {
                   return (
                     <td
-                      className={style.th}
+                      className={style.td}
                       key={`cell-${data[rowIndex+2][0]}-${data[0][cellIndex+1]}`}>
                         {cell}
                     </td>
