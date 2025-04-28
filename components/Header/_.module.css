@@ -9,14 +9,6 @@
   padding: var(--pd-outermost-top) var(--pd-outermost-both-sides);
   background-color: rgb(var(--color-bg));
 }
-@media (prefers-reduced-motion: no-preference){
-  .l_h {
-    transition:
-      grid-template-rows var(--animation-duration),
-      padding-top var(--animation-duration),
-      padding-bottom var(--animation-duration);
-  }
-}
 .l_h__inner {
   display: grid;
   grid-template-columns: auto auto;
@@ -63,13 +55,4 @@ a.c_headerLogo {
   justify-content: center;
   max-height: calc(1em * var(--value-line-height-default) * 2);
   overflow-y: auto;
-}
-.l_h[data-ishidden="true"]:not(:focus-within) {
-  /* on shrink animation ends*/
-  grid-template-rows: 0fr;
-  padding-top: 0;
-  padding-bottom: 0;
-  /* & :is(a[href],button,[tabindex]:not([tabindex="-1"]),[role="button"],input,textarea){
-    visibility: hidden;
-  } */
 }

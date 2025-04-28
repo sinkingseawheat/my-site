@@ -22,6 +22,15 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    @media (prefers-reduced-motion: no-preference){
+      transition: var(--animation-duration),
+      visivility var(--animation-duration);
+      transition-behavior: allow-discrete;
+      &:has([data-ishidden="true"]:not(:focus-within)){
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
   }
   &.content{
     padding: 2.5rem var(--pd-outermost-both-sides) calc(2.5rem + 60px);
