@@ -20,17 +20,21 @@ export default function Header({
   const handleScroll = useCallback(()=>{
     const now = Date.now()
     const currentScrollY = window.scrollY
-    if(now - lastExecution.current >= THROTTOLE_INTERVAL){
+    if(
+      currentScrollY < IGNORE_BOTH_END
+    ){
+      setIsHidden(false)
+      // prevScrollY.current = currentScrollY
+    }else if(
+      currentScrollY + window.innerHeight > document.documentElement.scrollHeight - IGNORE_BOTH_END
+    ){
+      setIsHidden(true)
+      // prevScrollY.current = currentScrollY
+    }else if(now - lastExecution.current >= THROTTOLE_INTERVAL){
       lastExecution.current = now
-      if(
-        currentScrollY > prevScrollY.current + IGNORE_OFFSET
-        || currentScrollY + window.innerHeight > document.documentElement.scrollHeight - IGNORE_BOTH_END
-      ){
+      if( currentScrollY > prevScrollY.current + IGNORE_OFFSET ){
         setIsHidden(true)
-      }else if(
-        currentScrollY < prevScrollY.current - IGNORE_OFFSET
-        || currentScrollY < IGNORE_BOTH_END
-      ){
+      }else if( currentScrollY < prevScrollY.current - IGNORE_OFFSET ){
         setIsHidden(false)
       }
       prevScrollY.current = currentScrollY
