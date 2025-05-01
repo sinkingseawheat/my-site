@@ -19,6 +19,8 @@ export default function LayoutDefault({
 
   const refHeader = useRef<HTMLElement|null>(null);
 
+  const pathname = usePathname()
+
   useEffect(()=>{
     if(isNotifiedRedirect === false && location.href.endsWith('?ref=sinkingseawheat')){
       setPopupMessage(`旧ドメインのsinkingseawheat.comからリダイレクトされました`)
@@ -28,7 +30,7 @@ export default function LayoutDefault({
 
   useEffect(()=>{
     document.querySelector('link[rel="canonical"]')?.setAttribute('href',`${location.protocol}//${location.host}${location.pathname}`)
-  },[usePathname()])
+  },[pathname])
 
   return (
     <L.innerBody>
