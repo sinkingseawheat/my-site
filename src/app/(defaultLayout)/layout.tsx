@@ -4,6 +4,7 @@ import { PopupContext, RefFixedAtTopContext } from '@components/context';
 import { useState, useRef, type ReactNode, useEffect, Suspense } from 'react';
 import Script from 'next/script';
 import { userSpecificData } from '@/../my-site.config';
+import { usePathname } from 'next/navigation';
 
 const { googleAnalyticsId } = userSpecificData
 
@@ -24,6 +25,10 @@ export default function LayoutDefault({
       setIsNotifiedRedirect((_prev)=>!_prev)
     }
   },[isNotifiedRedirect])
+
+  useEffect(()=>{
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href',`${location.protocol}//${location.host}${location.pathname}`)
+  },[usePathname()])
 
   return (
     <L.innerBody>
