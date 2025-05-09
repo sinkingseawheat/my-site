@@ -24,7 +24,6 @@ $smtp_password = '${$smtp_password}';
 ?>`
 
   const srcRoot = path.join(process.cwd(), './preprocess/server_side/public')
-  console.log(srcRoot)
 
   const [result] = await explorerFilesRecursively(
     srcRoot,
