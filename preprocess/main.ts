@@ -95,10 +95,13 @@ const storeFileIgonoredInGit = ()=>{
   })()]
 }
 
+const promiseWriteServerSideScript = await setServerSideScript(userSpecificData.serverAction.send_mail)
+
 await Promise.all([
   writeSitemap(),
   writePageList(),
   ...storeFileIgonoredInGit(),
+  ...promiseWriteServerSideScript,
 ])
 
 console.log(`prebuild process completed`)
