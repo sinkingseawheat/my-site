@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+/out
 
 # production
 /build
@@ -35,8 +36,9 @@ yarn-error.log*
 
 # user-specific configuration file
 my-site.config.ts
-public
+/public
 rawImage
+/preprocess/server_side/private
 
 # vercel
 .vercel
