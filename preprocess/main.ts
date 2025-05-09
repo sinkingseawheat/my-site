@@ -5,11 +5,13 @@ import { userSpecificData } from '@/../my-site.config'
 import { explorerFilesRecursively } from './explorerFilesRecursively'
 import { getSitemap, schemaSitemap } from './getSitemap'
 import { getPageListItem, schemaPageListItem } from './getPageListItem'
+import { setServerSideScript } from './server_side/setServerSideScript'
 
 (async ()=>{
 const [sitemapResults, pageList] = await explorerFilesRecursively(
   path.join(process.cwd(),'./src/app'),
   [getSitemap, getPageListItem],
+  (fullPath, entry) => entry.name === 'page.tsx',
 )?? [];
 
 if(sitemapResults === undefined || pageList === undefined){
