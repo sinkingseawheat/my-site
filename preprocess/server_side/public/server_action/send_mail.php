@@ -118,8 +118,8 @@ try {
   $mail->CharSet    = 'UTF-8';                           // 文字エンコード
 
   // 送信元・宛先
-  $mail->setFrom($smtp_username, ''); // 差出人
-  $mail->addAddress($smtp_username, '緑ノ企鵝'); // 宛先
+  $mail->setFrom($smtp_username, $smtp_sendername); // 差出人
+  $mail->addAddress($smtp_username, $smtp_sendername); // 宛先
   $mail->addReplyTo("{$body_email}", ''); // 返信先
   // $mail->addCC('cc@example.com');                   // CC
   // $mail->addBCC('bcc@example.com');                  // BCC
