@@ -73,11 +73,9 @@ try {
   $stmt_update_date->execute();
   $stmt_update_date->close();
 
-  exit();
-
-  /* if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+  if($_SERVER['REQUEST_METHOD'] !== 'POST'){
     throw new Exception('We only support the POST method.');
-  } */
+  }
 
   // csrfトークン検証
   if(
