@@ -1,0 +1,8 @@
+.wrap{
+  border-radius: 1rem;
+  border:1px solid rgb(var(--color-secondary));
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 2em;
+}
