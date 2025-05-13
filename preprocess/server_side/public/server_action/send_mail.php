@@ -92,8 +92,9 @@ try {
   unset($_SESSION['csrf_token']);
 
   $body_subject = $_POST['subject'] ?? '';
+  $body_email = $_POST['reply_addr'] ?? '';
+  $body_page_url = $_POST['page_url'] ?? '';
   $body_content = $_POST['content'] ?? '';
-  $body_email = $_POST['replay_addr'] ?? '';
 
   if(empty(trim($body_email))) {
     throw new Exception('mail address is empty.');
@@ -124,7 +125,7 @@ try {
   // 件名・本文
   $mail->isHTML(true);                                  // HTML形式のメールを送信
   $mail->Subject = '【システムメッセージ】相談が入りました';
-  $mail->Body    = "以下の相談が入りました\n\n{$body_content}";
+  $mail->Body    = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}";
   $mail->AltBody = "{$body_content}"; // HTMLに対応していないメーラー用
 
   $mail->send();
