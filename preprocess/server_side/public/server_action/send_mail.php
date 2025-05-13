@@ -79,8 +79,6 @@ try {
   } */
 
   // csrfトークン検証
-  var_dump($_POST['csrf_token']);
-  var_dump($_SESSION['csrf_token']);
   if(
     !isset($_POST['csrf_token'])
     || !isset($_SESSION['csrf_token'])
