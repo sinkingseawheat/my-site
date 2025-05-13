@@ -47,13 +47,14 @@ try {
   $stmt_get_last_accessed->bindValue(':ip_addr_client', $ip_addr_client);
   $result = $stmt_get_last_accessed->execute();
   $row = $result->fetchArray(SQLITE3_ASSOC);
+  $is_row_date_set = is_array($row) && isset($row['date']);
   if(
-    $row === true
+    $is_row_date_set === true
     && $current_time - $row['date'] < 60 * LIMIT_CONTINUOUS_POSTING
   ){
     throw new Exception('Consecutive posts from the same IP address are restricted. Please wait for ' . LIMIT_CONTINUOUS_POSTING . ' minutes to pass from the last post.');
   }
-  if($row === false){
+  if($is_row_date_set === false){
     $stmt_update_date = $db->prepare("
       INSERT INTO {$table_name}
       (ip_addr, date)
