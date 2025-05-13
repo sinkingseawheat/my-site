@@ -3,21 +3,25 @@
   border: 2px solid transparent;
   display: inline-block;
   border-radius: 12px;
+  --color-button-bdr: var(--color-primary);
+  --color-button-fg: var(--color-bg);
+  --color-button-bg: var(--color-primary);
   &:focus-within, &:has(button:hover){
     border-color: rgb(var(--color-fg));
   }
 }
 .button{
-  background-color: rgb(var(--color-primary));
+  background-color: rgb(var(--color-button-bg));
   padding: .2em .5em;
-  color: rgb(var(--color-bg));
+  color: rgb(var(--color-button-fg));
   font-weight: bold;
   position: relative;
   overflow: hidden;
   font-size: 1.25rem;
-  border: none;
+  border: 2px solid rgb(var(--color-button-bdr));
 }
 .button:disabled{
   color: rgb(var(--color-disabled-text));
   background-color: rgb(var(--color-disabled-background));
+  border-color: rgb(var(--color-disabled-background));
 }
