@@ -133,6 +133,15 @@ try {
   $response_data['isOK'] = true;
   $response_data['message'] = 'succeed';
 
+} catch (Exception $e) {
+  // echo "メール送信に失敗しました。エラー: {$mail->ErrorInfo}";
+  $response_data['isOK'] = false;
+  $response_data['message'] = $e->getMessage();
+} finally {
+  // レスポンス返却
+  header('Content-Type: application/json');
+  echo json_encode($response_data ?? '', JSON_UNESCAPED_UNICODE);
+
   // session情報をserverとclient両方から取り除く
   $_SESSION = array();
   if (ini_get("session.use_cookies")) {
@@ -142,14 +151,9 @@ try {
         $params["secure"], $params["httponly"]
     );
   }
-} catch (Exception $e) {
-  // echo "メール送信に失敗しました。エラー: {$mail->ErrorInfo}";
-  $response_data['isOK'] = false;
-  $response_data['message'] = $e->getMessage();
-} finally {
-  header('Content-Type: application/json');
-  echo json_encode($response_data ?? '', JSON_UNESCAPED_UNICODE);
   session_destroy();
+
+  // db周りのクリーンアップ
   $result->finalize();
   $stmt_get_last_accessed->close();
   $db->close();
