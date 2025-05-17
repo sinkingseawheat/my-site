@@ -1,7 +1,7 @@
 'use client'
 import style from './Form.module.css'
 import { F, L, Section } from "@components/all"
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import z from 'zod'
 
@@ -81,16 +81,27 @@ export function Form(){
       try{
         const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:''}
         const {isOK, message} = json
-        console.log(isOK)
-        console.log(message)
+        if(isOK === true){
+          setStep('complete')
+        }else{
+          setStep('error')
+          setResponseMessage(message)
+        }
       }catch(e){
         console.error(`can't parse JSON,${e}`)
-        console.log(await response.text())
+        setStep('error')
+        setResponseMessage(`can't parse JSON`)
       }
     }else{
+      setStep('error')
+      setResponseMessage(`response is not ok. status is ${response.status}`)
+    }
   }
 
   // JSX
+  if(isLoading === true){
+    return <p>フォームをロード中です。</p>
+  }
   return (
     <form className={style.wrap} onSubmit={handleSubmit(onSubmit)}>
       <fieldset className={style.fieldset}>
@@ -160,49 +171,69 @@ export function Form(){
             </Section>)
           }
           <input type="hidden" {...register('csrf_token', {
-            required: true,
-            validate: (v)=>typeof v === 'string' || `csfr_tokenの取得に失敗しました`
+            required: {
+              value: true,
+              message: 'csrf_tokenの取得に失敗しました。システムエラーが発生したと思われます。解決までしばらくお待ちください。',
+            },
+            validate: (v)=> v !== '' || 'csrf_tokenの取得に失敗しました。システムエラーが発生したと思われます。解決までしばらくお待ちください。'
           })} />
+          <div aria-live='polite' role='alert'>
+            {errors.csrf_token?.message !==undefined && (
+              <p className={style.errorMessage}>{errors.csrf_token?.message}</p>
+            )}
+          </div>
         </L.grid>
       </fieldset>
-        {step === 'input' ?
-          (<L.flex>
-            <F.Button
-              type='button'
-              styleValue={{
-                '--color-button-fg':'var(--color-fixed-black)',
-                '--color-button-bg':'var(--color-fixed-white)',
-                '--color-button-bdr':'var(--color-fg)',
-              }}
-              onClick={()=>{
-                const response = window.confirm(`フォームの内容を空にしますか？`)
-                if(response)reset()
-              }}>リセットする
-            </F.Button>
-            <F.Button type='button' isDisabled={!isValid || isSubmitting} onClick={()=>{setStep('confirm')}}>
-              {!isValid ?
-              '確認画面に進めません'
-              : '確認する'}
-            </F.Button>
-          </L.flex>)
-        : step === 'confirm' ?
-          (<L.flex>
-            <F.Button
-              type='button'
-              styleValue={{
-                '--color-button-fg':'var(--color-fixed-black)',
-                '--color-button-bg':'var(--color-fixed-white)',
-                '--color-button-bdr':'var(--color-fg)',
-              }}
-              onClick={()=>{setStep('input')}}>
-                修正する
-            </F.Button>
-            <F.Button isDisabled={isSubmitting}>
-            {isSubmitting ? '送信中...' : '送信する'}
-            </F.Button>
-          </L.flex>)
-        : <></>
-        }
+      {step === 'input' ?
+        (<L.flex>
+          <F.Button
+            type='button'
+            styleValue={{
+              '--color-button-fg':'var(--color-fixed-black)',
+              '--color-button-bg':'var(--color-fixed-white)',
+              '--color-button-bdr':'var(--color-fg)',
+            }}
+            onClick={async ()=>{
+              const response = window.confirm(`フォームの内容を空にしますか？`)
+              if(response){
+                reset(await getDefaultValue())
+              }
+            }}>リセットする
+          </F.Button>
+          <F.Button type='button' isDisabled={!isValid || isSubmitting} onClick={()=>{setStep('confirm')}}>
+            {!isValid ?
+            '確認画面に進めません'
+            : '確認する'}
+          </F.Button>
+        </L.flex>)
+      : step === 'confirm' ?
+        (<L.flex>
+          <F.Button
+            type='button'
+            styleValue={{
+              '--color-button-fg':'var(--color-fixed-black)',
+              '--color-button-bg':'var(--color-fixed-white)',
+              '--color-button-bdr':'var(--color-fg)',
+            }}
+            onClick={()=>{setStep('input')}}>
+              修正する
+          </F.Button>
+          <F.Button isDisabled={isSubmitting}>
+          {isSubmitting ? '送信中...' : '送信する'}
+          </F.Button>
+        </L.flex>)
+      : step === 'complete' ?
+        (<p>送信完了しました</p>)
+      : (<>
+        <p>エラーが発生しました。</p>
+        <p>システムからのメッセージ：<span>{responseMessage}</span></p>
+        <F.Button type='button'
+          onClick={async ()=>{
+            reset(await getDefaultValue())
+            setStep('input')
+          }}>入力画面に戻る</F.Button>
+      </>)
+      }
     </form>
   )
 }
