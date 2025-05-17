@@ -39,8 +39,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
+    "out/public_html/types/**/*.ts",
     "src/__tests__/a/page.test.jsx",
-    "out/public_html/types/**/*.ts"
+    "out_dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
