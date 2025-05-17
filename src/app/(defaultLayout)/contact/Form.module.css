@@ -6,3 +6,6 @@
   grid-template-columns: 1fr;
   row-gap: 2em;
 }
+.errorMessage{
+  color: rgb(var(--color-error));
+}
