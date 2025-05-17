@@ -10,7 +10,7 @@ type Inputs = {
   reply_addr: string,
   page_url: string,
   content: string,
-  csrf_token: string|undefined|null,
+  csrf_token: string,
 }
 
 const schemaResponse = z.object({
@@ -18,29 +18,54 @@ const schemaResponse = z.object({
   message: z.string(),
 })
 
+const getDefaultValue = async ()=>{
+  let csrf_token:string = ''
+  try{
+    const response = await fetch('/server_action/get_csrf_token.php')
+    if(response.ok){
+      const json = await response.json()
+      if('csrf_token' in json && typeof json.csrf_token === 'string'){
+        csrf_token = json.csrf_token
+      }
+    }
+  }catch(e){
+    console.error(e)
+    // do nothing
+  }
+  return {
+    subject: '',
+    reply_addr: '',
+    page_url: '',
+    content: '',
+    csrf_token,
+  } satisfies Inputs
+}
+
 export function Form(){
 
   // 画面切り替え
-  const [step, setStep] = useState<'input'|'confirm'|'complete'>('input')
+  const [step, setStep] = useState<'input'|'confirm'|'complete'|'error'>('input')
+  const [responseMessage, setResponseMessage] = useState<string>('')
 
   // react-hook-form
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
+    trigger,
     getValues,
-    formState,
+    formState: {errors, isValid, isSubmitting, isLoading},
   } = useForm<Inputs>({
-    defaultValues:{
-      subject: '',
-      reply_addr: '',
-      page_url: '',
-      content: '',
-      csrf_token: undefined,
-    } satisfies Inputs,
-    mode:'onChange',
+    defaultValues: getDefaultValue,
+    mode:'onBlur',
   })
+
+  // フォームの初期値を設定した後
+  useEffect(()=>{
+    if(isLoading === false){
+      trigger('csrf_token')
+    }
+  },[ trigger, isLoading ])
 
   // サブミットボタン押下時
   const onSubmit:SubmitHandler<Inputs> = async (data)=>{
@@ -63,25 +88,7 @@ export function Form(){
         console.log(await response.text())
       }
     }else{
-      console.log('NG')
-    }
   }
-
-  // csrfトークンの取得
-  useEffect(()=>{
-    (async ()=>{
-      const response = await fetch('/server_action/get_csrf_token.php')
-      if(response.ok){
-        const json = await response.json();
-        if('csrf_token' in json && typeof json.csrf_token === 'string'){
-          setValue('csrf_token', json.csrf_token)
-          return
-        }
-      }
-    })()
-  }, [])
-
-  const {errors, isValid, isSubmitting} = formState
 
   // JSX
   return (
