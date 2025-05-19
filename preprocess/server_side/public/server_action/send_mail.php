@@ -20,11 +20,15 @@ const LIMIT_CONTINUOUS_POSTING = 15;
 
 try {
 
+  if($_SERVER['REQUEST_METHOD'] !== 'POST'){
+    throw new Exception('データはPOSTで送信してください');
+  }
+
   $ip_addr_client = $_SERVER['REMOTE_ADDR'];
   $db_file = '../../server_action_private/memo.sqlite';
 
   if(filter_var($ip_addr_client, FILTER_VALIDATE_IP) === false){
-    throw new Exception('Invalid ip address.');
+    throw new Exception('無効なIPアドレスからのリクエストです');
   }
 
   $current_time = time();
@@ -52,29 +56,7 @@ try {
     $is_row_date_set === true
     && $current_time - $row['date'] < 60 * LIMIT_CONTINUOUS_POSTING
   ){
-    throw new Exception('Consecutive posts from the same IP address are restricted. Please wait for ' . LIMIT_CONTINUOUS_POSTING . ' minutes to pass from the last post.');
-  }
-  if($is_row_date_set === false){
-    $stmt_update_date = $db->prepare("
-      INSERT INTO {$table_name}
-      (ip_addr, date)
-      VALUES
-      (:ip_addr_client, {$current_time})
-    ");
-  }else{
-    $stmt_update_date = $db->prepare("
-      UPDATE {$table_name}
-      SET date = {$current_time}
-      WHERE
-        ip_addr = :ip_addr_client
-    ");
-  }
-  $stmt_update_date->bindValue(':ip_addr_client', $ip_addr_client);
-  $stmt_update_date->execute();
-  $stmt_update_date->close();
-
-  if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-    throw new Exception('We only support the POST method.');
+    throw new Exception('同じIPアドレスからの連続投稿は無効化しています. お手数ですが前回の送信から約' . LIMIT_CONTINUOUS_POSTING . '分ほど経ってから送信お願いします。');
   }
 
   // csrfトークン検証
@@ -82,12 +64,12 @@ try {
     !isset($_POST['csrf_token'])
     || !isset($_SESSION['csrf_token'])
   ){
-    throw new Exception('no token.');
+    throw new Exception('トークンが設定されていません');
   }
   $token_from_client = $_POST['csrf_token'];
   $token_in_server = $_SESSION['csrf_token'];
   if(!hash_equals($token_in_server, $token_from_client)){
-    throw new Exception('different value.');
+    throw new Exception('ブラウザとサーバーのトークンが一致しません');
   }
   unset($_SESSION['csrf_token']);
 
@@ -97,9 +79,9 @@ try {
   $body_content = $_POST['content'] ?? '';
 
   if(empty(trim($body_email))) {
-    throw new Exception('mail address is empty.');
+    throw new Exception('メールアドレスが空です');
   } elseif (!filter_var($body_email, FILTER_VALIDATE_EMAIL)) {
-    throw new Exception('invalid address.');
+    throw new Exception('メールアドレスが無効です');
   }
 
   // SMTPの設定
@@ -131,7 +113,27 @@ try {
   $mail->send();
 
   $response_data['isOK'] = true;
-  $response_data['message'] = 'succeed';
+  $response_data['message'] = ['送信を完了しました。改めてこちらから返信いたしますので今しばらくお待ちください。', "別件を送信する場合は恐縮ですが、約{$LIMIT_CONTINUOUS_POSTING}分ほど経ってからお願いします。", "同じIPアドレスからの投稿は{$LIMIT_CONTINUOUS_POSTING}分に1回に制限しております。"];
+
+  // メールを送信したらIPアドレスを記録して連続投稿を無効化する
+  if($is_row_date_set === false){
+    $stmt_update_date = $db->prepare("
+      INSERT INTO {$table_name}
+      (ip_addr, date)
+      VALUES
+      (:ip_addr_client, {$current_time})
+    ");
+  }else{
+    $stmt_update_date = $db->prepare("
+      UPDATE {$table_name}
+      SET date = {$current_time}
+      WHERE
+        ip_addr = :ip_addr_client
+    ");
+  }
+  $stmt_update_date->bindValue(':ip_addr_client', $ip_addr_client);
+  $stmt_update_date->execute();
+  $stmt_update_date->close();
 
 } catch (Exception $e) {
   // echo "メール送信に失敗しました。エラー: {$mail->ErrorInfo}";
