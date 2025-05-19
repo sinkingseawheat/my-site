@@ -1,7 +1,7 @@
 'use client'
 import style from './Form.module.css'
-import { F, L, Section } from "@components/all"
-import { useState, useEffect } from "react"
+import { F, L, Loader, Section } from "@components/all"
+import { useState, useEffect, useTransition, Fragment } from "react"
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import z from 'zod'
 
@@ -15,10 +15,10 @@ type Inputs = {
 
 const schemaResponse = z.object({
   isOK: z.boolean(),
-  message: z.string(),
+  message: z.string().or(z.array(z.string())),
 })
 
-const getDefaultValue = async ()=>{
+const resolverDefaultValues = (isIgnoreSessionStorage: boolean) => (async ()=>{
   let csrf_token:string = ''
   try{
     const response = await fetch('/server_action/get_csrf_token.php')
@@ -33,19 +33,20 @@ const getDefaultValue = async ()=>{
     // do nothing
   }
   return {
-    subject: '',
-    reply_addr: '',
-    page_url: '',
-    content: '',
+    subject: isIgnoreSessionStorage ? '' : window.sessionStorage.getItem('subject') ?? '',
+    reply_addr: isIgnoreSessionStorage ? '' : window.sessionStorage.getItem('reply_addr') ?? '',
+    page_url: isIgnoreSessionStorage ? '' : window.sessionStorage.getItem('page_url') ?? '',
+    content: isIgnoreSessionStorage ? '' : window.sessionStorage.getItem('content') ?? '',
     csrf_token,
   } satisfies Inputs
-}
+})
 
 export function Form(){
 
   // 画面切り替え
   const [step, setStep] = useState<'input'|'confirm'|'complete'|'error'>('input')
-  const [responseMessage, setResponseMessage] = useState<string>('')
+  const [responseMessage, setResponseMessage] = useState<string|string[]>('')
+  const [isChangingFormState, startTransition] = useTransition()
 
   // react-hook-form
   const {
@@ -56,8 +57,8 @@ export function Form(){
     getValues,
     formState: {errors, isValid, isSubmitting, isLoading},
   } = useForm<Inputs>({
-    defaultValues: getDefaultValue,
-    mode:'onBlur',
+    defaultValues: resolverDefaultValues(false),
+    mode:'onChange',
   })
 
   // フォームの初期値を設定した後
@@ -79,31 +80,45 @@ export function Form(){
     });
     if(response.ok){
       try{
-        const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:''}
+        const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'データが存在しないか、予期していないデータを受信しました'}
         const {isOK, message} = json
         if(isOK === true){
-          setStep('complete')
+          startTransition(()=>{setStep('complete')})
+          // 正常に完了したらsessionStorageは空にする
+          window.sessionStorage.clear()
         }else{
-          setStep('error')
-          setResponseMessage(message)
+          startTransition(()=>{setStep('error')})
         }
+        setResponseMessage(message)
       }catch(e){
         console.error(`can't parse JSON,${e}`)
-        setStep('error')
+        startTransition(()=>{setStep('error')})
         setResponseMessage(`can't parse JSON`)
       }
     }else{
-      setStep('error')
+      startTransition(()=>{setStep('error')})
       setResponseMessage(`response is not ok. status is ${response.status}`)
     }
   }
 
+  const isFormDisabled: boolean = (
+    isLoading === true
+    || isChangingFormState === true
+    || isSubmitting === true
+  )
+
   // JSX
-  if(isLoading === true){
-    return <p>フォームをロード中です。</p>
-  }
   return (
-    <form className={style.wrap} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={style.wrap}
+      data-is-disabled={isFormDisabled}
+      onSubmit={
+        isFormDisabled === false ?
+          handleSubmit(onSubmit)
+          : undefined
+      }
+    >
+      {isFormDisabled && <Loader />}
       <fieldset className={style.fieldset}>
         <L.grid styleValue={{
           '--min-width':'100%',
@@ -117,6 +132,7 @@ export function Form(){
                   value: true,
                   message: `メールの件名を入力してください`
                 },
+                onChange: ()=>{window.sessionStorage.setItem('subject', getValues('subject'))},
               })
             }} message={errors?.subject?.message} />)
             : (<Section type='dl' title='返信時の件名'>
@@ -134,7 +150,8 @@ export function Form(){
                 required: {
                   value: true,
                   message: `返信先のアドレスを入力してください`
-                }
+                },
+                onChange: ()=>{window.sessionStorage.setItem('reply_addr', getValues('reply_addr'))},
               })
             }} message={errors?.reply_addr?.message} />)
             : (<Section type='dl' title='送信先のアドレス'>
@@ -149,7 +166,8 @@ export function Form(){
                   value: true,
                   message: `確認して欲しいページのURLを記入してください`
                 },
-                validate: (v)=>URL.canParse(v) || `有効なURLを入力してください`
+                validate: (v)=>URL.canParse(v) || `有効なURLを入力してください`,
+                onChange: ()=>{window.sessionStorage.setItem('page_url', getValues('page_url'))},
               }),
             }} message={errors?.page_url?.message} />)
             : (<Section type='dl' title='ページのURL'>
@@ -164,6 +182,7 @@ export function Form(){
                   value: true,
                   message: `確認する内容を記入してください`
                 },
+                onChange: ()=>{window.sessionStorage.setItem('content', getValues('content'))},
               })
             }} message={errors?.content?.message} />)
             : (<Section type='dl' title='確認する内容'>
@@ -196,14 +215,21 @@ export function Form(){
             onClick={async ()=>{
               const response = window.confirm(`フォームの内容を空にしますか？`)
               if(response){
-                reset(await getDefaultValue())
+                reset(await (resolverDefaultValues(true))() )
               }
             }}>リセットする
           </F.Button>
-          <F.Button type='button' isDisabled={!isValid || isSubmitting} onClick={()=>{setStep('confirm')}}>
-            {!isValid ?
-            '確認画面に進めません'
-            : '確認する'}
+          <F.Button
+            type='button'
+            isDisabled={!isValid}
+            onClick={()=>{
+              startTransition(()=>{
+                setStep('confirm')
+              })
+            }}>
+              {!isValid ?
+              '確認画面に進めません'
+              : '確認する'}
           </F.Button>
         </L.flex>)
       : step === 'confirm' ?
@@ -215,22 +241,39 @@ export function Form(){
               '--color-button-bg':'var(--color-fixed-white)',
               '--color-button-bdr':'var(--color-fg)',
             }}
-            onClick={()=>{setStep('input')}}>
+            onClick={()=>{
+              startTransition(()=>{
+                setStep('input')
+              })
+            }}>
               修正する
           </F.Button>
           <F.Button isDisabled={isSubmitting}>
           {isSubmitting ? '送信中...' : '送信する'}
           </F.Button>
         </L.flex>)
-      : step === 'complete' ?
-        (<p>送信完了しました</p>)
       : (<>
-        <p>エラーが発生しました。</p>
-        <p>システムからのメッセージ：<span>{responseMessage}</span></p>
+        <p>{
+          step === 'complete' ?
+          '送信完了しました'
+          : 'エラーが発生しました。'
+        }</p>
+        <p>システムからのメッセージ：{
+          [responseMessage].flat().map((str, index, strs)=>{
+            return (
+              <Fragment key={index}>
+              {str}
+              {index < strs.length - 1 && <br />}
+            </Fragment>
+            )
+          })
+        }</p>
         <F.Button type='button'
           onClick={async ()=>{
-            reset(await getDefaultValue())
-            setStep('input')
+            reset(await (resolverDefaultValues(false))() )
+            startTransition(()=>{
+              setStep('input')
+            })
           }}>入力画面に戻る</F.Button>
       </>)
       }
