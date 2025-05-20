@@ -10,9 +10,10 @@ export default function grid({
   children,
   styleValue,
 }:{
-  children: React.ReactNode,
+  children?: React.ReactNode,
 } & {styleValue?: StyleValue<'--min-width'|'--column-gap'|'--row-gap'|'--margin-top'>})
 {
+  if(children === undefined || children === null){return <></>}
   return (
     <div className={style.wrap} style={styleValue}>
       {
