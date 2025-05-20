@@ -3,22 +3,22 @@
   font-size: var(--fz);
 }
 .label{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  column-gap: 0.5em;
+  display: inline-block;
   max-width: 100%;
   &:focus-within .innerLabel{
     font-weight: bold;
   }
 }
 .innerLabel{
-  flex:0 1 var(--label-min-width, auto);
+  display: inline-block;
+  box-sizing: content-box;
+  min-width: var(--label-min-width, auto);
+  padding-right: .5em;
 }
 .input{
   font-size: var(--fz);
   padding: 0.1em 0.3em;
-  flex:0 1 auto;
+  display: inline-block;
   appearance: none;
   border: 1px solid rgb(var(--color-fg));
   border-radius: 4px;
