@@ -78,7 +78,6 @@ export default function Modal({
   return (<>
     <button
       type='button'
-      className={style.openHamburgerBtn}
       onClick={handleShowDialog}
       aria-label='モーダルを開く'
     >
