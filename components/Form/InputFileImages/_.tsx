@@ -1,7 +1,7 @@
 'use client'
 import style from './_.module.css'
 import { type StyleValue, type FormInputItemExtended } from '@components/utility'
-import { type ChangeEventHandler, type MouseEventHandler } from 'react'
+import { type ChangeEventHandler, type MouseEventHandler, useId } from 'react'
 import { L } from '@components/all'
 
 export default function InputFileImages({
@@ -18,12 +18,14 @@ export default function InputFileImages({
     baseAttributes
   } = elms
 
+  const inputFileDescriptionId = useId()
+
   return  (
     <div className={style.wrap}>
-      <div className="label">{label}</div>
-      <label>
-        <span className={style.innerLabel}>アップロードする画像を選択する（ドラッグ&ドロップでも可能）</span>
-        <input type='file' className={style.input} accept='image/*' multiple onChange={handleOnChangeImages} {...baseAttributes} />
+      <p className={style.title}>{label}</p>
+      <label className={style.label}>
+        <span id={inputFileDescriptionId} className={style.innerLabel}>アップロードする画像を選択する（ドラッグ&ドロップでも可能）</span>
+        <input aria-describedby={inputFileDescriptionId} type='file' className={style.input} accept='image/*' multiple onChange={handleOnChangeImages} {...baseAttributes} />
       </label>
       <input type='hidden' {...registerReturn} />
       <div className={style.preview}>
