@@ -76,6 +76,7 @@
     align-items: center;
     flex-wrap: wrap;
     border-radius: 8px;
+    overflow: hidden;
     border: 2px solid transparent;
     color: currentColor;
     & > * {
