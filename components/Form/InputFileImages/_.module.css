@@ -1,0 +1,32 @@
+.wrap{
+  --fz:1rem;
+  font-size: var(--fz);
+}
+.label{
+  display: inline-block;
+  max-width: 100%;
+  &:focus-within .innerLabel{
+    font-weight: bold;
+  }
+}
+.innerLabel{
+  display: inline-block;
+  box-sizing: content-box;
+  min-width: var(--label-min-width, auto);
+  padding-right: .5em;
+}
+.input{
+  /* sr-only */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.errorMessage{
+  color: rgb(var(--color-error));
+}

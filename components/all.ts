@@ -8,12 +8,14 @@ import _L from './Layouts/_';
 import grid from "./Layouts/grid/_";
 import flex from "./Layouts/flex/_";
 import modal from "./Layouts/modal/_";
+import item from "./Layouts/item/_";
 
 const L = {
   ..._L,
   grid,
   flex,
   modal,
+  item,
 }
 
 export {L}
@@ -56,12 +58,14 @@ export {Header, Footer}
 /* Form Component */
 import InputText from "./Form/InputText/_";
 import InputCheckboxes from "./Form/InputCheckboxes/_";
+import InputFileImages from "./Form/InputFileImages/_";
 import Textarea from "./Form/Textarea/_";
 import Button from "./Form/Button/_";
 
 const F = {
   InputText,
   InputCheckboxes,
+  InputFileImages,
   Textarea,
   Button,
 }
