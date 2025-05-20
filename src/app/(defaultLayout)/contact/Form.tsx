@@ -134,7 +134,7 @@ export function Form(){
                 },
                 onChange: ()=>{window.sessionStorage.setItem('subject', getValues('subject'))},
               })
-            }} message={errors?.subject?.message} />)
+            }} message={errors?.subject?.message} styleValue={{'--label-min-width':'8em'}} />)
             : (<Section type='dl' title='返信時の件名'>
               {getValues('subject')}
             </Section>)
@@ -153,7 +153,7 @@ export function Form(){
                 },
                 onChange: ()=>{window.sessionStorage.setItem('reply_addr', getValues('reply_addr'))},
               })
-            }} message={errors?.reply_addr?.message} />)
+            }} message={errors?.reply_addr?.message} styleValue={{'--label-min-width':'8em'}} />)
             : (<Section type='dl' title='送信先のアドレス'>
               {getValues('reply_addr')}
             </Section>)
@@ -169,7 +169,7 @@ export function Form(){
                 validate: (v)=>URL.canParse(v) || `有効なURLを入力してください`,
                 onChange: ()=>{window.sessionStorage.setItem('page_url', getValues('page_url'))},
               }),
-            }} message={errors?.page_url?.message} />)
+            }} message={errors?.page_url?.message} styleValue={{'--label-min-width':'8em'}} />)
             : (<Section type='dl' title='ページのURL'>
               {getValues('page_url')}
             </Section>)
