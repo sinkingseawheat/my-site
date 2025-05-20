@@ -2,18 +2,24 @@
   --fz:1rem;
   font-size: var(--fz);
 }
-.label{
-  display: inline-block;
+.title{
+  display: block;
   max-width: 100%;
+}
+.label{
   &:focus-within .innerLabel{
     font-weight: bold;
+    border-style: solid;
   }
 }
 .innerLabel{
   display: inline-block;
-  box-sizing: content-box;
-  min-width: var(--label-min-width, auto);
-  padding-right: .5em;
+  padding: .5em 5em;
+  border: 1px dashed rgb(var(--color-fg));
+  border-radius: .5em;
+  &:hover{
+    cursor: pointer;
+  }
 }
 .input{
   /* sr-only */
