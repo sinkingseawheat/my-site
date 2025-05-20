@@ -33,6 +33,9 @@
   white-space: nowrap;
   border-width: 0;
 }
+.preview{
+  margin-top: 1em;
+}
 .errorMessage{
   color: rgb(var(--color-error));
 }

@@ -48,7 +48,6 @@ export function Form(){
   const [step, setStep] = useState<'input'|'confirm'|'complete'|'error'>('input')
   const [responseMessage, setResponseMessage] = useState<string|string[]>('')
   const [isChangingFormState, startTransition] = useTransition()
-  const [imageFiles, setImageFiles] = useState<File[]>([])
 
   // react-hook-form
   const {
@@ -210,41 +209,10 @@ export function Form(){
                 }
               }),
             }}
-            handleOnChangeImages={(e)=>{
-              const files = e.currentTarget.files
-              if(files !== null){
-                // 重複はまだ考慮しない。
-                const dataTransfer = new DataTransfer()
-                const prevFiles = Array.from(getValues('images') ?? [])
-                for(const file of prevFiles){
-                  dataTransfer.items.add(file)
-                }
-                const newFiles = Array.from(files)
-                for(const file of newFiles){
-                  dataTransfer.items.add(file)
-                }
-                setValue('images', dataTransfer.files)
-                setImageFiles(Array.from(dataTransfer.files))
-                trigger('images')
-              }
-            }}
-            resolveHandleOnClickButton={
-              (imageIndex)=>{
-                return ()=>{
-                  const dataTransfer = new DataTransfer()
-                  const removedData = Array.from(getValues('images') ?? []).filter((_, indexOfThisImage) => imageIndex !== indexOfThisImage )
-                  for(const file of removedData){
-                    dataTransfer.items.add(file)
-                  }
-                  setValue('images', dataTransfer.files)
-                  setImageFiles(Array.from(dataTransfer.files))
-                  trigger('images')
-                  // todo:削除したらモーダルを閉じる
-                }
-              }
-            }
-            files={imageFiles}
             styleValue={{'--preview-min-width':'20em'}}
+            getValues={getValues}
+            setValue={setValue}
+            trigger={trigger}
             message={errors?.images?.message}
           />
           <input type="hidden" {...register('csrf_token', {
