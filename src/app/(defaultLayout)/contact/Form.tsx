@@ -10,6 +10,7 @@ type Inputs = {
   reply_addr: string,
   page_url: string,
   content: string,
+  images?: FileList,
   csrf_token: string,
 }
 
@@ -47,6 +48,7 @@ export function Form(){
   const [step, setStep] = useState<'input'|'confirm'|'complete'|'error'>('input')
   const [responseMessage, setResponseMessage] = useState<string|string[]>('')
   const [isChangingFormState, startTransition] = useTransition()
+  const [imageFiles, setImageFiles] = useState<File[]>([])
 
   // react-hook-form
   const {
@@ -55,6 +57,7 @@ export function Form(){
     reset,
     trigger,
     getValues,
+    setValue,
     formState: {errors, isValid, isSubmitting, isLoading},
   } = useForm<Inputs>({
     defaultValues: resolverDefaultValues(false),
@@ -64,6 +67,7 @@ export function Form(){
   // フォームの初期値を設定した後
   useEffect(()=>{
     if(isLoading === false){
+      // scrf_tokenのバリデートを行う
       trigger('csrf_token')
     }
   },[ trigger, isLoading ])
@@ -72,7 +76,15 @@ export function Form(){
   const onSubmit:SubmitHandler<Inputs> = async (data)=>{
     const formData = new FormData()
     for(const [n,v] of Object.entries(data)){
-      formData.append(n, (v ?? ''))
+      if(typeof v === 'string'){
+        formData.append(n, v)
+      }else if(v instanceof FileList){
+        for(const file of v){
+          formData.append(n, file)
+        }
+      }else{
+        console.error(`not expected data ${n}`)
+      }
     }
     const response = await fetch('/server_action/send_mail.php', {
       method: 'POST',
@@ -189,6 +201,52 @@ export function Form(){
               {getValues('content')}
             </Section>)
           }
+          <F.InputFileImages
+            elms={{
+              label:'キャプチャ等の補足画像（任意）',
+              registerReturn: register('images', {
+                validate:(v)=>{
+                  return (v?.length ?? 0) <= 4 || `現在${v?.length}枚の画像が添付されています。4枚以下にしてください。`
+                }
+              }),
+            }}
+            handleOnChangeImages={(e)=>{
+              const files = e.currentTarget.files
+              if(files !== null){
+                // 重複はまだ考慮しない。
+                const dataTransfer = new DataTransfer()
+                const prevFiles = Array.from(getValues('images') ?? [])
+                for(const file of prevFiles){
+                  dataTransfer.items.add(file)
+                }
+                const newFiles = Array.from(files)
+                for(const file of newFiles){
+                  dataTransfer.items.add(file)
+                }
+                setValue('images', dataTransfer.files)
+                setImageFiles(Array.from(dataTransfer.files))
+                trigger('images')
+              }
+            }}
+            resolveHandleOnClickButton={
+              (imageIndex)=>{
+                return ()=>{
+                  const dataTransfer = new DataTransfer()
+                  const removedData = Array.from(getValues('images') ?? []).filter((_, indexOfThisImage) => imageIndex !== indexOfThisImage )
+                  for(const file of removedData){
+                    dataTransfer.items.add(file)
+                  }
+                  setValue('images', dataTransfer.files)
+                  setImageFiles(Array.from(dataTransfer.files))
+                  trigger('images')
+                  // todo:削除したらモーダルを閉じる
+                }
+              }
+            }
+            files={imageFiles}
+            styleValue={{'--preview-min-width':'20em'}}
+            message={errors?.images?.message}
+          />
           <input type="hidden" {...register('csrf_token', {
             required: {
               value: true,
