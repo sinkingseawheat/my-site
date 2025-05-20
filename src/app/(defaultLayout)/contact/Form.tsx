@@ -249,7 +249,7 @@ export function Form(){
               修正する
           </F.Button>
           <F.Button isDisabled={isSubmitting}>
-          {isSubmitting ? '送信中...' : '送信する'}
+            {isSubmitting ? '送信中...' : '送信する'}
           </F.Button>
         </L.flex>)
       : (<>
