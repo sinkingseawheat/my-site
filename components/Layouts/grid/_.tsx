@@ -11,7 +11,7 @@ export default function grid({
   styleValue,
 }:{
   children?: React.ReactNode,
-} & {styleValue?: StyleValue<'--min-width'|'--column-gap'|'--row-gap'|'--margin-top'>})
+} & {styleValue?: StyleValue<'--min-width'|'--column-gap'|'--row-gap'|'--margin-top'|'--fill-or-fit'>})
 {
   if(children === undefined || children === null){return <></>}
   return (
