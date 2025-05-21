@@ -36,6 +36,9 @@
 .preview{
   margin-top: 1em;
 }
+.removeBtn{
+  margin-top: .5em;
+}
 .errorMessage{
   color: rgb(var(--color-error));
 }

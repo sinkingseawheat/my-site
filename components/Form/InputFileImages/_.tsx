@@ -28,29 +28,41 @@ export default function InputFileImages({
     <div className={style.wrap}>
       <p className={style.title}>{label}</p>
       <label className={style.label}>
-        <span id={inputFileDescriptionId} className={style.innerLabel}>アップロードする画像を選択する（ドラッグ&ドロップでも可能）</span>
-        <input aria-describedby={inputFileDescriptionId} type='file' className={style.input} accept='image/*' multiple {...baseAttributes} onChange={(e)=>{
-              const files = e.currentTarget.files
-              if(files !== null){
-                // 重複はまだ考慮しない。
-                const dataTransfer = new DataTransfer()
-                const prevFiles = Array.from(getValues(name) ?? [])
-                for(const file of prevFiles){
-                  dataTransfer.items.add(file)
-                }
-                const newFiles = Array.from(files)
-                for(const file of newFiles){
-                  dataTransfer.items.add(file)
-                }
-                setValue(name, dataTransfer.files)
-                setImageFiles(Array.from(dataTransfer.files))
-                trigger(name)
+        <span
+          id={inputFileDescriptionId}
+          className={style.innerLabel}>
+          アップロードする画像を選択する（ドラッグ&ドロップでも可能）
+        </span>
+        <input
+          aria-describedby={inputFileDescriptionId}
+          type='file'
+          className={style.input}
+          accept='image/*'
+          multiple
+          {...baseAttributes}
+          onClick={(e)=>{ e.currentTarget.value='' }}
+          onChange={(e)=>{
+            const files = e.currentTarget.files
+            if(files !== null){
+              // 重複はまだ考慮しない。
+              const dataTransfer = new DataTransfer()
+              const prevFiles = Array.from(getValues(name) ?? [])
+              for(const file of prevFiles){
+                dataTransfer.items.add(file)
               }
-            }} />
+              const newFiles = Array.from(files)
+              for(const file of newFiles){
+                dataTransfer.items.add(file)
+              }
+              setValue(name, dataTransfer.files)
+              setImageFiles(Array.from(dataTransfer.files))
+              trigger(name)
+          }}}
+        />
       </label>
       <input type='hidden' {...registerReturn} />
       <div className={style.preview}>
-        <L.grid styleValue={{'--min-width':styleValue?.['--preview-min-width'] ?? '20em'}}>
+        <L.grid styleValue={{'--min-width':styleValue?.['--preview-min-width'] ?? '20em','--fill-or-fit':'auto-fill'}}>
           {imageFiles.map((file, index)=>{
             return (
               <L.modal
@@ -59,17 +71,20 @@ export default function InputFileImages({
               >
                 <L.item>
                   <img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />
-                  <button onClick={()=>{
-                  const dataTransfer = new DataTransfer()
-                  const removedData = Array.from(getValues('images') ?? []).filter((_, indexOfThisImage) => index !== indexOfThisImage )
-                  for(const file of removedData){
-                    dataTransfer.items.add(file)
-                  }
-                  setValue('images', dataTransfer.files)
-                  setImageFiles(Array.from(dataTransfer.files))
-                  trigger('images')
-                  // todo:削除したらモーダルを閉じる
-                }}>この画像を削除する</button>
+                  <button
+                    className={style.removeBtn}
+                    onClick={()=>{
+                      const dataTransfer = new DataTransfer()
+                      const removedData = Array.from(getValues(name) ?? []).filter((_, indexOfThisImage) => index !== indexOfThisImage )
+                      for(const file of removedData){
+                        dataTransfer.items.add(file)
+                      }
+                      setValue(name, dataTransfer.files)
+                      setImageFiles(Array.from(dataTransfer.files))
+                      trigger(name)
+                      // todo:削除したらモーダルを閉じる
+                    }}>この画像を削除する
+                  </button>
                 </L.item>
               </L.modal>
             )
