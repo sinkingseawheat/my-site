@@ -31,7 +31,7 @@ export default function InputFileImages({
         <span
           id={inputFileDescriptionId}
           className={style.innerLabel}>
-          アップロードする画像を選択する（ドラッグ&ドロップでも可能）
+          アップロードする画像を選択する
         </span>
         <input
           aria-describedby={inputFileDescriptionId}
