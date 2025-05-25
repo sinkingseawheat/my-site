@@ -65,28 +65,23 @@ export default function InputFileImages({
         <L.grid styleValue={{'--min-width':styleValue?.['--preview-min-width'] ?? '20em','--fill-or-fit':'auto-fill'}}>
           {imageFiles.map((file, index)=>{
             return (
-              <L.modal
-                key={index}
-                btnElm={<img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />}
-              >
-                <L.item>
-                  <img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />
-                  <button
-                    className={style.removeBtn}
-                    onClick={()=>{
-                      const dataTransfer = new DataTransfer()
-                      const removedData = Array.from(getValues(name) ?? []).filter((_, indexOfThisImage) => index !== indexOfThisImage )
-                      for(const file of removedData){
-                        dataTransfer.items.add(file)
-                      }
-                      setValue(name, dataTransfer.files)
-                      setImageFiles(Array.from(dataTransfer.files))
-                      trigger(name)
-                      // todo:削除したらモーダルを閉じる
-                    }}>この画像を削除する
-                  </button>
-                </L.item>
-              </L.modal>
+              <>
+              <img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />
+              <button
+                type='button'
+                className={style.removeBtn}
+                onClick={()=>{
+                  const dataTransfer = new DataTransfer()
+                  const removedData = Array.from(getValues(name) ?? []).filter((_, indexOfThisImage) => index !== indexOfThisImage )
+                  for(const file of removedData){
+                    dataTransfer.items.add(file)
+                  }
+                  setValue(name, dataTransfer.files)
+                  setImageFiles(Array.from(dataTransfer.files))
+                  trigger(name)
+                }}>この画像を削除する
+              </button>
+              </>
             )
           })}
         </L.grid>
