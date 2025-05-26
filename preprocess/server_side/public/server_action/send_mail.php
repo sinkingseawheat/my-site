@@ -132,7 +132,7 @@ try {
   $mail->send();
 
   $response_data['isOK'] = true;
-  $response_data['message'] = ['送信を完了しました。改めてこちらから返信いたしますので今しばらくお待ちください。', "別件を送信する場合は恐縮ですが、約{$LIMIT_CONTINUOUS_POSTING}分ほど経ってからお願いします。", "同じIPアドレスからの投稿は{$LIMIT_CONTINUOUS_POSTING}分に1回に制限しております。"];
+  $response_data['message'] = ['送信を完了しました。', '改めてこちらから返信いたしますので今しばらくお待ちください。', '別件を送信する場合は恐縮ですが、約' . LIMIT_CONTINUOUS_POSTING . '分ほど経ってからお願いします。', '同じIPアドレスからの投稿は' . LIMIT_CONTINUOUS_POSTING . '分に1回に制限しております。'];
 
   // メールを送信したらIPアドレスを記録して連続投稿を無効化する
   if($is_row_date_set === false){
