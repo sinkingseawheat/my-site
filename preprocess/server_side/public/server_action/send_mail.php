@@ -103,11 +103,11 @@ try {
   $mail->addReplyTo("{$body_email}", ''); // 返信先
   // $mail->addCC('cc@example.com');                   // CC
   // $mail->addBCC('bcc@example.com');                  // BCC
-
   // 件名・本文
   $accepted_time = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
   $str_accepted_time = $accepted_time->format('Ymd_Hi');
   $mail->isHTML(true);                                  // HTML形式のメールを送信
+  $mail->Subject = "{$body_subject}-{$str_accepted_time}(日本標準時)";
   $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}";
   // 画像の処理と埋め込み
   if(!is_array($_FILES['images']['tmp_name'])){
