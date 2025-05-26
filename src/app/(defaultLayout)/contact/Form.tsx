@@ -79,7 +79,7 @@ export function Form(){
         formData.append(n, v)
       }else if(v instanceof FileList){
         for(const file of v){
-          formData.append(n, file)
+          formData.append(n+'[]', file)
         }
       }else{
         console.error(`not expected data ${n}`)
