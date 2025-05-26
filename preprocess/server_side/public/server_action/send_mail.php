@@ -108,8 +108,25 @@ try {
   $accepted_time = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
   $str_accepted_time = $accepted_time->format('Ymd_Hi');
   $mail->isHTML(true);                                  // HTML形式のメールを送信
-  $mail->Subject = "{$body_subject}-{$str_accepted_time}(JST/UTC+0900)";
-  $mail->Body    = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}";
+  $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}";
+  // 画像の処理と埋め込み
+  if(!is_array($_FILES['images']['tmp_name'])){
+    throw new Exception('このPHPスクリプトのinput[type="file"]のフィールドは配列のみを受け付けています。HTMLのname属性に"[]"は付与されていますか？');
+  }
+  if (isset($_FILES['images']) && is_array($_FILES['images']['tmp_name'])){
+    foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name){
+      if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
+        $file_name = $_FILES['images']['name'][$key];
+        $file_type = $_FILES['images']['type'][$key];
+        $cid = 'image_' . md5($file_name . time() . $key);
+        $mail->addEmbeddedImage($tmp_name, $cid, $file_name, 'base64', $file_type);
+        $html_body .= '<p><img src="cid:' . $cid . '" alt="' . htmlspecialchars($file_name) . '" style="max-width:20%; height:auto;"></p>';
+      } else {
+        throw new Exception("ファイルのアップロードエラーが発生しました: " . $_FILES['images']['error'][$key]);
+      }
+    }
+  }
+  $mail->Body = $html_body;
   $mail->AltBody = "{$body_content}"; // HTMLに対応していないメーラー用
 
   $mail->send();
