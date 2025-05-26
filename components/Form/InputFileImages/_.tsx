@@ -8,8 +8,11 @@ export default function InputFileImages({
   elms, message, styleValue, getValues, setValue, trigger,
 }:FormInputItemExtended<false> & {
   styleValue?: StyleValue<'--preview-min-width'>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getValues: (name:any)=>FileList|undefined, // 一旦anyでごまかす
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setValue: (name:any, fileList:FileList)=>void, // 一旦anyでごまかす
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   trigger: (name:any)=>void, // 一旦anyでごまかす
 }){
   const {
