@@ -2,7 +2,7 @@
 import style from './_.module.css'
 import { type StyleValue, type FormInputItemExtended } from '@components/utility'
 import { useId, useState } from 'react'
-import { L } from '@components/all'
+import { L, F } from '@components/all'
 
 export default function InputFileImages({
   elms, message, styleValue, getValues, setValue, trigger, isEditable,
@@ -30,12 +30,13 @@ export default function InputFileImages({
 
   return  (
     <div className={style.wrap}>
+      {isEditable || <hr />}
       <p className={style.title}>{label}</p>
       {isEditable && <label className={style.label}>
         <span
           id={inputFileDescriptionId}
           className={style.innerLabel}>
-          アップロードする画像を選択する
+          送信する画像を選択する（約3MBまで添付可能）
         </span>
         <input
           aria-describedby={inputFileDescriptionId}
@@ -70,10 +71,14 @@ export default function InputFileImages({
           {imageFiles.length === 0 ? <p>画像が選択されていません</p> : imageFiles.map((file, index)=>{
             return (
               <>
-              <img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />
-              {isEditable && <button
+              <figure>
+                <img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />
+                <figcaption>{file.name}<br />サイズ: {file.size.toString().replace(/(\d+?)(?=(\d{3})+(?!\d))/g, '$1,')} Byte</figcaption>
+              </figure>
+              {isEditable && <F.Button
                 type='button'
                 className={style.removeBtn}
+                styleValue={{'--color-button-bdr':'var(--color-fg)','--color-button-bg':'var(--color-bg)','--color-button-fg':'var(--color-fg)'}}
                 onClick={()=>{
                   const dataTransfer = new DataTransfer()
                   const removedData = Array.from(getValues(name) ?? []).filter((_, indexOfThisImage) => index !== indexOfThisImage )
@@ -84,7 +89,7 @@ export default function InputFileImages({
                   setImageFiles(Array.from(dataTransfer.files))
                   trigger(name)
                 }}>この画像を削除する
-              </button>}
+              </F.Button>}
               </>
             )
           })}

@@ -1,6 +1,6 @@
 'use client'
 import style from './Form.module.css'
-import { F, L, Loader, Section } from "@components/all"
+import { F, L, Loader, Section, List } from "@components/all"
 import { useState, useEffect, useTransition, Fragment } from "react"
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import z from 'zod'
@@ -202,10 +202,25 @@ export function Form(){
           }
           <F.InputFileImages
             elms={{
-              label:`キャプチャ等の補足画像（任意）${getValues('images')?.length || '0'}枚選択されています`,
+              label:`キャプチャ等の補足画像（任意）${getValues('images')?.length || '0'}枚選択されています（最大4枚）`,
               registerReturn: register('images', {
-                validate:(v)=>{
-                  return (v?.length ?? 0) <= 4 || `現在${v?.length}枚の画像が添付されています。4枚以下にしてください。`
+                validate:{
+                  maxNumber: (v)=>{
+                    return (v?.length ?? 0) <= 4 || `現在${v?.length}枚の画像が添付されています。4枚以下にしてください。`
+                  },
+                  maxSize: (v)=>{
+                    if(v === undefined) { return true }
+                    const filesSizeOver = Array.from(v).map<[boolean, string, string]>(
+                      (file, index)=>[file.size>3*1024*1024, (index+1).toString(), file.name]
+                    ).filter(
+                      ([isOver])=>isOver
+                    )
+                    if(filesSizeOver.length === 0){
+                      return true
+                    }else{
+                      return `${filesSizeOver.map(([, indexPlusOne, filename])=>`${indexPlusOne}枚目の「${filename}」`).join(', ')}のファイルサイズが約3MB以上あります。リサイズや圧縮を行なってください。`
+                    }
+                  }
                 }
               }),
             }}
@@ -216,6 +231,10 @@ export function Form(){
             isEditable={step === 'input'}
             message={errors?.images?.message}
           />
+          {step === 'input' && <List bullet='※'>
+            <span>画像はページのリロードや送信失敗で選択が解除されます。その際は改めて選択をお願いします。</span>
+            <span>画像は幅600pxより大きい場合は文字や細い線を使用しないようにお願いします。幅600pxにリサイズされて私の元に送信されます。</span>
+          </List>}
           <input type="hidden" {...register('csrf_token', {
             required: {
               value: true,
