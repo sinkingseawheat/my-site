@@ -17,6 +17,7 @@ use PHPMailer\PHPMailer\Exception;
 $mail = new PHPMailer(true);
 
 const LIMIT_CONTINUOUS_POSTING = 15;
+const MAX_IMAGE_BOUNDARY_WIDTH = 601;
 
 try {
 
@@ -107,8 +108,9 @@ try {
   $accepted_time = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
   $str_accepted_time = $accepted_time->format('Ymd_Hi');
   $mail->isHTML(true);                                  // HTML形式のメールを送信
-  $mail->Subject = "{$body_subject}-{$str_accepted_time}(日本標準時)";
-  $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}";
+  $mail->Subject = "{$body_subject}-初回送信日時:{$str_accepted_time}(日本標準時)";
+  $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}<br><br>";
+  $html_body_image = '<p>';
   // 画像の処理と埋め込み
   if(!is_array($_FILES['images']['tmp_name'])){
     throw new Exception('このPHPスクリプトのinput[type="file"]のフィールドは配列のみを受け付けています。HTMLのname属性に"[]"は付与されていますか？');
@@ -118,21 +120,75 @@ try {
       if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
         $file_name = $_FILES['images']['name'][$key];
         $file_type = $_FILES['images']['type'][$key];
-        $cid = 'image_' . md5($file_name . time() . $key);
-        $mail->addEmbeddedImage($tmp_name, $cid, $file_name, 'base64', $file_type);
-        $html_body .= '<p><img src="cid:' . $cid . '" alt="' . htmlspecialchars($file_name) . '" style="max-width:20%; height:auto;"></p>';
+        // 画像を圧縮
+        try{
+          $source_image = null;
+          switch ($file_type) {
+            case 'image/jpeg':
+              $source_image = imagecreatefromjpeg($tmp_name);
+              break;
+            case 'image/png':
+              $source_image = imagecreatefrompng($tmp_name);
+              break;
+            default:
+              throw new Exception("サポートされていない画像形式です: " . $file_type);
+          }
+          if (!$source_image) {
+            throw new Exception("画像リソースの作成に失敗しました。");
+          }
+          $original_width = imagesx($source_image);
+          $original_height = imagesy($source_image);
+          if($original_width < MAX_IMAGE_BOUNDARY_WIDTH){
+            throw new Exception("リサイズは不要です");
+          }
+          $aspect_ratio = $original_width / $original_height;
+          $new_width = MAX_IMAGE_BOUNDARY_WIDTH;
+          $new_height = (int)($new_width / $aspect_ratio);
+          $resized_image = imagecreatetruecolor($new_width, $new_height);
+          if ($file_type == 'image/png'){
+            imagealphablending($resized_image, false);
+            imagesavealpha($resized_image, true);
+            $transparent = imagecolorallocatealpha($resized_image, 255, 255, 255, 127);
+            imagefilledrectangle($resized_image, 0, 0, $new_width, $new_height, $transparent);
+          }
+          imagecopyresampled($resized_image, $source_image,
+            0, 0, 0, 0,
+            $new_width, $new_height, $original_width, $original_height);
+          // 画像の生データを取得
+          ob_start();
+          switch ($file_type) {
+            case 'image/jpeg':
+              imagejpeg($resized_image, null, 90);
+              break;
+            case 'image/png':
+              imagepng($resized_image);
+              break;
+            default:
+              throw new Exception("サポートされていない画像形式です: " . $file_type);
+          }
+          $image_data = ob_get_clean();
+          $cid = 'image_' . md5($file_name . time() . $key);
+          $mail->addStringEmbeddedImage($image_data, $cid, $file_name, 'base64', $file_type);
+        }catch(e){
+          // 圧縮せずに挿入する
+          $cid = 'image_' . md5($file_name . time() . $key);
+          $mail->addEmbeddedImage($tmp_name, $cid, $file_name, 'base64', $file_type);
+        }finally{
+          $html_body_image .= '<img src="cid:' . $cid . '" alt="' . htmlspecialchars($file_name) . '" style="max-width:600px; height:auto;">';
+        }
       } else {
         throw new Exception("ファイルのアップロードエラーが発生しました: " . $_FILES['images']['error'][$key]);
       }
     }
+    $html_body_image .= '</p>';
   }
-  $mail->Body = $html_body;
+  $mail->Body = $html_body + $html_body_image;
   $mail->AltBody = "{$body_content}"; // HTMLに対応していないメーラー用
 
   $mail->send();
 
   $response_data['isOK'] = true;
-  $response_data['message'] = ['送信を完了しました。', '改めてこちらから返信いたしますので今しばらくお待ちください。', '別件を送信する場合は恐縮ですが、約' . LIMIT_CONTINUOUS_POSTING . '分ほど経ってからお願いします。', '同じIPアドレスからの投稿は' . LIMIT_CONTINUOUS_POSTING . '分に1回に制限しております。'];
+  $response_data['message'] = ['送信を完了しました。', '改めてこちらから返信いたしますので今しばらくお待ちください。'];
 
   // メールを送信したらIPアドレスを記録して連続投稿を無効化する
   if($is_row_date_set === false){
