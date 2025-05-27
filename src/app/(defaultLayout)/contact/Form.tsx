@@ -202,7 +202,7 @@ export function Form(){
           }
           <F.InputFileImages
             elms={{
-              label:'キャプチャ等の補足画像（任意）',
+              label:`キャプチャ等の補足画像（任意）${getValues('images')?.length || '0'}枚選択されています`,
               registerReturn: register('images', {
                 validate:(v)=>{
                   return (v?.length ?? 0) <= 4 || `現在${v?.length}枚の画像が添付されています。4枚以下にしてください。`
