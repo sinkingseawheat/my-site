@@ -5,7 +5,7 @@ import { useId, useState } from 'react'
 import { L } from '@components/all'
 
 export default function InputFileImages({
-  elms, message, styleValue, getValues, setValue, trigger,
+  elms, message, styleValue, getValues, setValue, trigger, isEditable,
 }:FormInputItemExtended<false> & {
   styleValue?: StyleValue<'--preview-min-width'>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,6 +14,7 @@ export default function InputFileImages({
   setValue: (name:any, fileList:FileList)=>void, // 一旦anyでごまかす
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   trigger: (name:any)=>void, // 一旦anyでごまかす
+  isEditable: boolean,
 }){
   const {
     label,
@@ -30,7 +31,7 @@ export default function InputFileImages({
   return  (
     <div className={style.wrap}>
       <p className={style.title}>{label}</p>
-      <label className={style.label}>
+      {isEditable && <label className={style.label}>
         <span
           id={inputFileDescriptionId}
           className={style.innerLabel}>
@@ -62,15 +63,15 @@ export default function InputFileImages({
               trigger(name)
           }}}
         />
-      </label>
+      </label>}
       <input type='hidden' {...registerReturn} />
       <div className={style.preview}>
         <L.grid styleValue={{'--min-width':styleValue?.['--preview-min-width'] ?? '20em','--fill-or-fit':'auto-fill'}}>
-          {imageFiles.map((file, index)=>{
+          {imageFiles.length === 0 ? <p>画像が選択されていません</p> : imageFiles.map((file, index)=>{
             return (
               <>
               <img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />
-              <button
+              {isEditable && <button
                 type='button'
                 className={style.removeBtn}
                 onClick={()=>{
@@ -83,7 +84,7 @@ export default function InputFileImages({
                   setImageFiles(Array.from(dataTransfer.files))
                   trigger(name)
                 }}>この画像を削除する
-              </button>
+              </button>}
               </>
             )
           })}

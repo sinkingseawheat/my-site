@@ -213,6 +213,7 @@ export function Form(){
             getValues={getValues}
             setValue={setValue}
             trigger={trigger}
+            isEditable={step === 'input'}
             message={errors?.images?.message}
           />
           <input type="hidden" {...register('csrf_token', {
