@@ -107,9 +107,11 @@ try {
   // 件名・本文
   $accepted_time = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
   $str_accepted_time = $accepted_time->format('Ymd_Hi');
-  $mail->isHTML(true);                                  // HTML形式のメールを送信
-  $mail->Subject = "{$body_subject}-初回送信日時:{$str_accepted_time}(日本標準時)";
-  $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}<br><br>";
+  $mail->isHTML(true);
+  $replaced_body_subject = htmlspecialchars($body_subject);
+  $mail->Subject = "{$replaced_body_subject}-初回送信日時:{$str_accepted_time}(日本標準時)";
+  $replaced_body_content = str_replace("\r\n", '<br>', htmlspecialchars($body_content));
+  $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$replaced_body_content}<br><br>";
   $html_body_image = '<p>';
   // 画像の処理と埋め込み
   if(isset($_FILES['images']) && !is_array($_FILES['images']['tmp_name'])){
