@@ -3,11 +3,11 @@ if(session_status() === PHP_SESSION_NONE){
   session_start();
 }
 // secret.phpの読み込み
-require_once dirname(__FILE__, 3) . '/server_action_private/secret.php';
+require_once 'secret.php';
 
-require '../../server_action_private/PHPMailer/src/Exception.php';
-require '../../server_action_private/PHPMailer/src/PHPMailer.php';
-require '../../server_action_private/PHPMailer/src/SMTP.php';
+require 'vendor/PHPMailer/src/Exception.php';
+require 'vendor/PHPMailer/src/PHPMailer.php';
+require 'vendor/PHPMailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
