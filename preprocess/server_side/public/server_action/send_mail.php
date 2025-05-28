@@ -112,7 +112,7 @@ try {
   $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$body_content}<br><br>";
   $html_body_image = '<p>';
   // 画像の処理と埋め込み
-  if(!is_array($_FILES['images']['tmp_name'])){
+  if(isset($_FILES['images']) && !is_array($_FILES['images']['tmp_name'])){
     throw new Exception('このPHPスクリプトのinput[type="file"]のフィールドは配列のみを受け付けています。HTMLのname属性に"[]"は付与されていますか？');
   }
   if (isset($_FILES['images']) && is_array($_FILES['images']['tmp_name'])){
