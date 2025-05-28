@@ -184,7 +184,7 @@ try {
     }
     $html_body_image .= '</p>';
   }
-  $mail->Body = $html_body + $html_body_image;
+  $mail->Body = $html_body . $html_body_image;
   $mail->AltBody = "{$body_content}"; // HTMLに対応していないメーラー用
 
   $mail->send();
