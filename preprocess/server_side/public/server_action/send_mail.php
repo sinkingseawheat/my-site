@@ -175,9 +175,8 @@ try {
           // 圧縮せずに挿入する
           $cid = 'image_' . md5($file_name . time() . $key);
           $mail->addEmbeddedImage($tmp_name, $cid, $file_name, 'base64', $file_type);
-        }finally{
-          $html_body_image .= '<img src="cid:' . $cid . '" alt="' . htmlspecialchars($file_name) . '" style="max-width:600px; height:auto;">';
         }
+        $html_body_image .= '<img src="cid:' . $cid . '" alt="' . htmlspecialchars($file_name) . '" style="max-width:600px; height:auto;">';
       } else {
         throw new Exception("ファイルのアップロードエラーが発生しました: " . $_FILES['images']['error'][$key]);
       }
