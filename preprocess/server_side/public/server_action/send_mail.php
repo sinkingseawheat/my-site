@@ -19,6 +19,8 @@ $mail = new PHPMailer(true);
 const LIMIT_CONTINUOUS_POSTING = 15;
 const MAX_IMAGE_BOUNDARY_WIDTH = 600;
 
+header('Content-Type: application/json');
+
 try {
 
   if($_SERVER['REQUEST_METHOD'] !== 'POST'){
@@ -53,12 +55,12 @@ try {
   $result = $stmt_get_last_accessed->execute();
   $row = $result->fetchArray(SQLITE3_ASSOC);
   $is_row_date_set = is_array($row) && isset($row['date']);
-  /* if(
+  if(
     $is_row_date_set === true
     && $current_time - $row['date'] < 60 * LIMIT_CONTINUOUS_POSTING
   ){
     throw new Exception('同じIPアドレスからの連続投稿は無効化しています. お手数ですが前回の送信から約' . LIMIT_CONTINUOUS_POSTING . '分ほど経ってから送信お願いします。');
-  } */
+  }
 
   // csrfトークン検証
   if(
@@ -221,7 +223,6 @@ try {
   $response_data['message'] = $e->getMessage();
 } finally {
   // レスポンス返却
-  header('Content-Type: application/json');
   echo json_encode($response_data ?? '', JSON_UNESCAPED_UNICODE);
 
   // session情報をserverとclient両方から取り除く
