@@ -91,12 +91,21 @@ export function Form(){
     });
     if(response.ok){
       try{
+        if(/192\.168\.\d+\.\d+$/.test(location.hostname)){
+          console.log(`ローカルのIPアドレス環境のため、responseはJSONパースに失敗した場合にエラーをconsoleに表示`)
+          const clonedResponse = response.clone()
+          console.log(await clonedResponse.text())
+        }
         const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'データが存在しないか、予期していないデータを受信しました'}
         const {isOK, message} = json
         if(isOK === true){
           startTransition(()=>{setStep('complete')})
           // 正常に完了したらsessionStorageは空にする
+        if(!/192\.168\.\d+\.\d+$/.test(location.hostname)){
           window.sessionStorage.clear()
+        }else{
+          console.log(`ローカルのIPアドレス環境のためlocalstorageは未削除です。`)
+        }
         }else{
           startTransition(()=>{setStep('error')})
         }
@@ -145,7 +154,7 @@ export function Form(){
                 },
                 onChange: ()=>{window.sessionStorage.setItem('subject', getValues('subject'))},
               })
-            }} message={errors?.subject?.message} styleValue={{'--label-min-width':'8em'}} />)
+            }} type='email' message={errors?.subject?.message} styleValue={{'--label-min-width':'8em'}} />)
             : (<Section type='dl' title='返信時の件名'>
               {getValues('subject')}
             </Section>)
@@ -155,7 +164,8 @@ export function Form(){
             (<F.InputText elms={{
               label:'返信先のアドレス',
               baseAttributes:{
-                autoComplete: 'email'
+                autoComplete: 'email',
+                inputMode: 'email',
               },
               registerReturn: register('reply_addr', {
                 required: {
@@ -172,6 +182,9 @@ export function Form(){
           {step === 'input' ? 
             (<F.InputText elms={{
               label: 'ページのURL',
+              baseAttributes: {
+                inputMode: 'url',
+              },
               registerReturn: register('page_url', {
                 required: {
                   value: true,
@@ -197,7 +210,14 @@ export function Form(){
               })
             }} message={errors?.content?.message} />)
             : (<Section type='dl' title='確認する内容'>
-              {getValues('content')}
+              <>{getValues('content').split('\n').map((str, index, strs)=>{
+                return (
+                  <Fragment key={index}>
+                  {str}
+                  {index < strs.length - 1 && <br />}
+                </Fragment>
+                )
+              })}</>
             </Section>)
           }
           <F.InputFileImages
@@ -211,7 +231,7 @@ export function Form(){
                   maxSize: (v)=>{
                     if(v === undefined) { return true }
                     const filesSizeOver = Array.from(v).map<[boolean, string, string]>(
-                      (file, index)=>[file.size>3*1024*1024, (index+1).toString(), file.name]
+                      (file, index)=>[file.size>10*1024*1024, (index+1).toString(), file.name]
                     ).filter(
                       ([isOver])=>isOver
                     )
@@ -235,7 +255,7 @@ export function Form(){
             <span>画像はページのリロードや送信失敗で選択が解除されます。その際は改めて選択をお願いします。</span>
             <span>画像は幅600pxより大きい場合は文字や細い線を使用しないようにお願いします。幅600pxにリサイズされて私の元に送信されます。</span>
           </List>}
-          <input type="hidden" {...register('csrf_token', {
+          <input type="hidden" autoComplete='off' {...register('csrf_token', {
             required: {
               value: true,
               message: 'csrf_tokenの取得に失敗しました。システムエラーが発生したと思われます。解決までしばらくお待ちください。',
@@ -304,7 +324,7 @@ export function Form(){
           '送信完了しました'
           : 'エラーが発生しました。'
         }</p>
-        <p>システムからのメッセージ：{
+        <p>システムからのメッセージ：<>{
           [responseMessage].flat().map((str, index, strs)=>{
             return (
               <Fragment key={index}>
@@ -313,7 +333,7 @@ export function Form(){
             </Fragment>
             )
           })
-        }</p>
+        }</></p>
         <F.Button type='button'
           onClick={async ()=>{
             reset(await (resolverDefaultValues(false))() )
