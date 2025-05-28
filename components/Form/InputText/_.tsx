@@ -3,9 +3,10 @@ import { type StyleValue, type FormInputItemExtended } from '@components/utility
 
 
 export default function InputText({
-  elms, message, styleValue,
+  elms, message, styleValue, type
 }:FormInputItemExtended<false> & {
-  styleValue?: StyleValue<'--label-min-width'>
+  styleValue?: StyleValue<'--label-min-width'>,
+  type?: 'text'|'email',
 }){
   const {
     label,
@@ -20,7 +21,7 @@ export default function InputText({
           (<span className={style.innerLabel}>{label}</span>)
           : label
         }
-        <input className={style.input} type='text' {...registerReturn} {...baseAttributes}/>
+        <input className={style.input} type={type ?? 'text'} {...registerReturn} {...baseAttributes}/>
       </label>
       <div aria-live='polite' role='alert'>
         {message !==undefined && (
