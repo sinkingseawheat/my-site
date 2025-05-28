@@ -17,7 +17,7 @@ use PHPMailer\PHPMailer\Exception;
 $mail = new PHPMailer(true);
 
 const LIMIT_CONTINUOUS_POSTING = 15;
-const MAX_IMAGE_BOUNDARY_WIDTH = 601;
+const MAX_IMAGE_BOUNDARY_WIDTH = 600;
 
 try {
 
@@ -53,12 +53,12 @@ try {
   $result = $stmt_get_last_accessed->execute();
   $row = $result->fetchArray(SQLITE3_ASSOC);
   $is_row_date_set = is_array($row) && isset($row['date']);
-  if(
+  /* if(
     $is_row_date_set === true
     && $current_time - $row['date'] < 60 * LIMIT_CONTINUOUS_POSTING
   ){
     throw new Exception('同じIPアドレスからの連続投稿は無効化しています. お手数ですが前回の送信から約' . LIMIT_CONTINUOUS_POSTING . '分ほど経ってから送信お願いします。');
-  }
+  } */
 
   // csrfトークン検証
   if(
@@ -121,33 +121,36 @@ try {
     foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name){
       if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
         $file_name = $_FILES['images']['name'][$key];
-        $file_type = $_FILES['images']['type'][$key];
-        // 画像を圧縮
-        try{
-          $source_image = null;
-          switch ($file_type) {
-            case 'image/jpeg':
-              $source_image = imagecreatefromjpeg($tmp_name);
-              break;
-            case 'image/png':
-              $source_image = imagecreatefrompng($tmp_name);
-              break;
-            default:
-              throw new Exception("サポートされていない画像形式です: " . $file_type);
-          }
-          if (!$source_image) {
-            throw new Exception("画像リソースの作成に失敗しました。");
-          }
+        // $file_type = $_FILES['images']['type'][$key];
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        if(!$finfo){
+          throw new Exception($file_name . 'のMIMEタイプが取得できませんでした');
+        }
+        $file_type = $finfo->file($tmp_name);
+        $source_image = null;
+        switch ($file_type) {
+          case 'image/jpeg':
+            $source_image = imagecreatefromjpeg($tmp_name);
+            break;
+          case 'image/png':
+            $source_image = imagecreatefrompng($tmp_name);
+            break;
+          default:
+            throw new Exception("image/pngとimage/jpegのみサポートしています: " . $file_type);
+        }
+        if (!$source_image) {
+          throw new Exception("画像リソースの作成に失敗しました。");
+        }
+        if($original_width > MAX_IMAGE_BOUNDARY_WIDTH){
+          // リサイズ処理
           $original_width = imagesx($source_image);
           $original_height = imagesy($source_image);
-          if($original_width < MAX_IMAGE_BOUNDARY_WIDTH){
-            throw new Exception("リサイズは不要です");
-          }
           $aspect_ratio = $original_width / $original_height;
           $new_width = MAX_IMAGE_BOUNDARY_WIDTH;
           $new_height = (int)($new_width / $aspect_ratio);
           $resized_image = imagecreatetruecolor($new_width, $new_height);
           if ($file_type == 'image/png'){
+            // 透過処理
             imagealphablending($resized_image, false);
             imagesavealpha($resized_image, true);
             $transparent = imagecolorallocatealpha($resized_image, 255, 255, 255, 127);
@@ -156,7 +159,7 @@ try {
           imagecopyresampled($resized_image, $source_image,
             0, 0, 0, 0,
             $new_width, $new_height, $original_width, $original_height);
-          // 画像の生データを取得
+          // 画像の生データを取得 - 開始
           ob_start();
           switch ($file_type) {
             case 'image/jpeg':
@@ -166,13 +169,14 @@ try {
               imagepng($resized_image);
               break;
             default:
-              throw new Exception("サポートされていない画像形式です: " . $file_type);
+              throw new Exception("image/pngとimage/jpegのみサポートしています: " . $file_type);
           }
           $image_data = ob_get_clean();
+          // 画像の生データを取得 - 終了
           $cid = 'image_' . md5($file_name . time() . $key);
           $mail->addStringEmbeddedImage($image_data, $cid, $file_name, 'base64', $file_type);
-        }catch(e){
-          // 圧縮せずに挿入する
+        }else{
+          // リサイズ不要の場合
           $cid = 'image_' . md5($file_name . time() . $key);
           $mail->addEmbeddedImage($tmp_name, $cid, $file_name, 'base64', $file_type);
         }
