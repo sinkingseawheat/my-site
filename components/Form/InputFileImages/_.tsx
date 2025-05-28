@@ -36,13 +36,13 @@ export default function InputFileImages({
         <span
           id={inputFileDescriptionId}
           className={style.innerLabel}>
-          送信する画像を選択する（約3MBまで添付可能）
+          送信する画像を選択する（約10MBまでのjpgまたはpngを選択可能）
         </span>
         <input
           aria-describedby={inputFileDescriptionId}
           type='file'
           className={style.input}
-          accept='image/*'
+          accept='image/png, image/jpeg'
           multiple
           {...baseAttributes}
           onClick={(e)=>{ e.currentTarget.value='' }}
@@ -65,7 +65,7 @@ export default function InputFileImages({
           }}}
         />
       </label>}
-      <input type='hidden' {...registerReturn} />
+      <input type='hidden' autoComplete='off' {...registerReturn} />
       <div className={style.preview}>
         <L.grid styleValue={{'--min-width':styleValue?.['--preview-min-width'] ?? '20em','--fill-or-fit':'auto-fill'}}>
           {imageFiles.length === 0 ? <p>画像が選択されていません</p> : imageFiles.map((file, index)=>{
@@ -80,6 +80,8 @@ export default function InputFileImages({
                 className={style.removeBtn}
                 styleValue={{'--color-button-bdr':'var(--color-fg)','--color-button-bg':'var(--color-bg)','--color-button-fg':'var(--color-fg)'}}
                 onClick={()=>{
+                  const is = window.confirm(`${file.name}を削除しますか？`)
+                  if(!is){ return undefined }
                   const dataTransfer = new DataTransfer()
                   const removedData = Array.from(getValues(name) ?? []).filter((_, indexOfThisImage) => index !== indexOfThisImage )
                   for(const file of removedData){
