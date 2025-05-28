@@ -39,7 +39,7 @@ yarn-error.log*
 my-site.config.ts
 /public
 rawImage
-/preprocess/server_side/private
+/preprocess/server_side/private/vendor
 
 # vercel
 .vercel
