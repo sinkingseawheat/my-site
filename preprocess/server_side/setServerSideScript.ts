@@ -23,16 +23,45 @@ $smtp_password = '${$smtp_password}';
 
 ?>`
 
-  const srcRoot = path.join(process.cwd(), './preprocess/server_side/public')
+  // 公開領域のサーバーサイドスクリプトのパスを取得
+  const srcRootPublic = path.join(process.cwd(), './preprocess/server_side/public')
 
-  const [result] = await explorerFilesRecursively(
-    srcRoot,
+  const [fullPathsPublic] = await explorerFilesRecursively(
+    srcRootPublic,
     [(fullPath)=>fullPath],
   )
 
+
+  // 非公開領域のサーバーサイドスクリプトのパスを取得
+  const srcRootPrivate = path.join(process.cwd(), './preprocess/server_side/private')
+
+  const [fullPathsPrivate] = await explorerFilesRecursively(
+    srcRootPrivate,
+    [(fullPath)=>fullPath],
+  )
+
+  // 前回複製した分は削除
+  try {
+    await fs.rm(path.join(process.cwd(), './public/server_action'),{recursive:true})
+  }catch(e){
+    if(e instanceof Error && 'code' in e){
+      if(e['code'] === 'ENOENT'){
+        console.log(`${path.join(process.cwd(), './public/server_action')}が存在しないため、作成を試みます。`)
+      }
+    }
+  }finally{
+    await fs.mkdir(path.join(process.cwd(), './public/server_action'))
+  }
+
+  // Promiseの配列を返す
   return [
     fs.writeFile(path.join(process.cwd(), './out/server_action_private/secret.php'), phpSrcSecret),
-    ...Array.from(result).map(([fullPath, _])=>fs.copyFile(fullPath, fullPath.replace(srcRoot, path.join(process.cwd(), './public')))),
+    ...Array.from(fullPathsPublic).map(
+      ([fullPath, _])=>fs.copyFile(fullPath, fullPath.replace(srcRootPublic, path.join(process.cwd(), './public')))
+    ),
+    ...Array.from(fullPathsPrivate).map(
+      ([fullPath, _])=>fs.copyFile(fullPath, fullPath.replace(srcRootPrivate, path.join(process.cwd(), './out/server_action_private')))
+    ),
   ]
 
 }
