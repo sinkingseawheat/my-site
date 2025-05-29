@@ -1,7 +1,8 @@
 import { F } from '@components/all'
 import style from '../_.module.css'
-import { type Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction, useState } from 'react'
 import { type UseFormRegisterReturn } from 'react-hook-form'
+import { getNumbersWithDigitSeparators } from '@components/utility'
 
 export function InputFileImages__preview({
   isEditable, file, getValues, setValue, trigger, setImageFiles, index, registerReturn
@@ -18,12 +19,25 @@ export function InputFileImages__preview({
   index: number,
   registerReturn: UseFormRegisterReturn,
 }){
+  const [imageWidth, setImageWidth] = useState<number>(0)
   const name = registerReturn.name
   return (
     <>
     <figure>
-      <img src={URL.createObjectURL(file)} alt='' onLoad={(e)=>{URL.revokeObjectURL(e.currentTarget.src)}} />
-      <figcaption>{file.name}<br />サイズ: {file.size.toString().replace(/(\d+?)(?=(\d{3})+(?!\d))/g, '$1,')} Byte</figcaption>
+      <img
+        src={URL.createObjectURL(file)}
+        alt=''
+        onLoad={(e)=>{
+          URL.revokeObjectURL(e.currentTarget.src)
+          setImageWidth(e.currentTarget.naturalWidth)
+        }}
+        />
+      <figcaption>
+        {file.name}<br />
+        <strong>サイズ</strong>: {getNumbersWithDigitSeparators(file.size)} Byte<br />
+        {imageWidth !== 0 && <><strong>画像の幅</strong>: {getNumbersWithDigitSeparators(imageWidth)}px</>}<br />
+        {imageWidth > 600 && <span>⚠️幅600pxにリサイズされます</span>}
+      </figcaption>
     </figure>
     {isEditable && <F.Button
       type='button'
