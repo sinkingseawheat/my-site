@@ -4,7 +4,6 @@ if(session_status() === PHP_SESSION_NONE){
 }
 // secret.phpの読み込み
 require_once 'secret.php';
-require_once 'get_csrf_token.php';
 
 require 'vendor/PHPMailer/src/Exception.php';
 require 'vendor/PHPMailer/src/PHPMailer.php';
@@ -13,6 +12,9 @@ require 'vendor/PHPMailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+require_once 'get_csrf_token.php';
+require_once 'std_output_to_json.php';
 
 // インスタンスの作成
 $mail = new PHPMailer(true);
