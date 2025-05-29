@@ -100,6 +100,7 @@ export function Form(){
           // Todo:エラーメッセージはサーバーから送信されないようにする
         }
         const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'データが存在しないか、予期していないデータを受信しました'}
+        console.log(json)
         const {isOK, message} = json
         if(isOK === true){
           startTransition(()=>{setStep('complete')})
