@@ -9,15 +9,15 @@ require 'vendor/PHPMailer/src/Exception.php';
 require 'vendor/PHPMailer/src/PHPMailer.php';
 require 'vendor/PHPMailer/src/SMTP.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception;
 
 require_once 'get_csrf_token.php';
 require_once 'std_output_to_json.php';
 
 // インスタンスの作成
-$mail = new PHPMailer(true);
+$mail = new PHPMailer\PHPMailer\PHPMailer(true);
 
 const LIMIT_CONTINUOUS_POSTING = 15;
 const MAX_IMAGE_BOUNDARY_WIDTH = 600;
