@@ -22,7 +22,9 @@ const schemaResponse = z.object({
 const resolverDefaultValues = (isIgnoreSessionStorage: boolean) => (async ()=>{
   let csrf_token:string = ''
   try{
-    const response = await fetch('/server_action/get_csrf_token.php')
+    const response = await fetch('/server_action/send_mail.php',{
+      method:'GET',
+    })
     if(response.ok){
       const json = await response.json()
       if('csrf_token' in json && typeof json.csrf_token === 'string'){
@@ -95,6 +97,7 @@ export function Form(){
           console.log(`ローカルのIPアドレス環境のため、responseはJSONパースに失敗した場合にエラーをconsoleに表示`)
           const clonedResponse = response.clone()
           console.log(await clonedResponse.text())
+          // Todo:エラーメッセージはサーバーから送信されないようにする
         }
         const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'データが存在しないか、予期していないデータを受信しました'}
         const {isOK, message} = json
@@ -154,7 +157,7 @@ export function Form(){
                 },
                 onChange: ()=>{window.sessionStorage.setItem('subject', getValues('subject'))},
               })
-            }} type='email' message={errors?.subject?.message} styleValue={{'--label-min-width':'8em'}} />)
+            }} message={errors?.subject?.message} styleValue={{'--label-min-width':'8em'}} />)
             : (<Section type='dl' title='返信時の件名'>
               {getValues('subject')}
             </Section>)
@@ -174,7 +177,7 @@ export function Form(){
                 },
                 onChange: ()=>{window.sessionStorage.setItem('reply_addr', getValues('reply_addr'))},
               })
-            }} message={errors?.reply_addr?.message} styleValue={{'--label-min-width':'8em'}} />)
+            }} type='email' message={errors?.reply_addr?.message} styleValue={{'--label-min-width':'8em'}} />)
             : (<Section type='dl' title='送信先のアドレス'>
               {getValues('reply_addr')}
             </Section>)
