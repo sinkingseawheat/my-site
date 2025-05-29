@@ -4,6 +4,7 @@ if(session_status() === PHP_SESSION_NONE){
 }
 // secret.phpの読み込み
 require_once 'secret.php';
+require_once 'get_csrf_token.php';
 
 require 'vendor/PHPMailer/src/Exception.php';
 require 'vendor/PHPMailer/src/PHPMailer.php';
@@ -18,9 +19,18 @@ $mail = new PHPMailer(true);
 
 const LIMIT_CONTINUOUS_POSTING = 15;
 const MAX_IMAGE_BOUNDARY_WIDTH = 600;
+const CSRF_TOKEN_NAME = 'csrf_token';
 
 header('Content-Type: application/json');
 
+// CSRFトークン発行
+if($_SERVER['REQUEST_METHOD'] === 'GET'){
+  $csrf_token = generateCSRFToken(CSRF_TOKEN_NAME);
+  echo json_encode([CSRF_TOKEN_NAME => $csrf_token]); // hex値なのでJSON_UNESCAPED_UNICODEは不要
+  exit(0);
+}
+
+// メール送信
 try {
 
   if($_SERVER['REQUEST_METHOD'] !== 'POST'){
@@ -64,13 +74,13 @@ try {
 
   // csrfトークン検証
   if(
-    !isset($_POST['csrf_token'])
-    || !isset($_SESSION['csrf_token'])
+    !isset($_POST[CSRF_TOKEN_NAME])
+    || !isset($_SESSION[CSRF_TOKEN_NAME])
   ){
     throw new Exception('トークンが設定されていません');
   }
-  $token_from_client = $_POST['csrf_token'];
-  $token_in_server = $_SESSION['csrf_token'];
+  $token_from_client = $_POST[CSRF_TOKEN_NAME];
+  $token_in_server = $_SESSION[CSRF_TOKEN_NAME];
   if(!hash_equals($token_in_server, $token_from_client)){
     throw new Exception('ブラウザとサーバーのトークンが一致しません');
   }
