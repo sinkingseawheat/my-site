@@ -1,4 +1,11 @@
 <?php
+
+function get_var_dump($target){
+  ob_start();
+  var_dump($target);
+  return ob_get_clean();
+}
+
 function customErrorHandler($errno, $errstr, $errfile, $errline) {
   // error_reporting() が 0 の場合は、エラー制御演算子（@）によって抑制されているため処理しない
   if (!(error_reporting() & $errno)) {
