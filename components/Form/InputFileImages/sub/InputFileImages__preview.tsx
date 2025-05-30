@@ -1,11 +1,11 @@
 import { F } from '@components/all'
 import style from '../_.module.css'
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { type UseFormRegisterReturn } from 'react-hook-form'
 import { getNumbersWithDigitSeparators } from '@components/utility'
 
 export function InputFileImages__preview({
-  isEditable, file, getValues, setValue, trigger, setImageFiles, index, registerReturn
+  isEditable, file, getValues, setValue, trigger, index, registerReturn
 }:{
   isEditable: boolean,
   file: File,
@@ -15,7 +15,6 @@ export function InputFileImages__preview({
   setValue: (name:any, fileList:FileList)=>void, // 一旦anyでごまかす
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   trigger: (name:any)=>void, // 一旦anyでごまかす
-  setImageFiles: Dispatch<SetStateAction<File[]>>,
   index: number,
   registerReturn: UseFormRegisterReturn,
 }){
@@ -52,7 +51,6 @@ export function InputFileImages__preview({
           dataTransfer.items.add(file)
         }
         setValue(name, dataTransfer.files)
-        setImageFiles(Array.from(dataTransfer.files))
         trigger(name)
       }}>この画像を削除する
     </F.Button>}

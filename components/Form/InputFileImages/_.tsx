@@ -1,7 +1,7 @@
 'use client'
 import style from './_.module.css'
 import { type StyleValue, type FormInputItemExtended } from '@components/utility'
-import { useId, useState } from 'react'
+import { useId, } from 'react'
 import { L, } from '@components/all'
 import { InputFileImages__preview } from './sub/InputFileImages__preview'
 
@@ -24,14 +24,11 @@ export default function InputFileImages({
   } = elms
 
   const name = registerReturn.name
-
-  const [imageFiles, setImageFiles] = useState<File[]>([])
-
   const inputFileDescriptionId = useId()
+  const imageFiles = Array.from(getValues(name) ?? [])
 
   return  (
     <div className={style.wrap}>
-      {isEditable || <hr />}
       <p className={style.title}>{label}</p>
       {isEditable && <label className={style.label}>
         <span
@@ -61,7 +58,6 @@ export default function InputFileImages({
                 dataTransfer.items.add(file)
               }
               setValue(name, dataTransfer.files)
-              setImageFiles(Array.from(dataTransfer.files))
               trigger(name)
           }}}
         />
@@ -70,7 +66,7 @@ export default function InputFileImages({
       <div className={style.preview}>
         <L.grid styleValue={{'--min-width':styleValue?.['--preview-min-width'] ?? '20em','--fill-or-fit':'auto-fill'}}>
           {imageFiles.length === 0 ? <p>画像が選択されていません</p> : imageFiles.map(
-            (file, index)=><InputFileImages__preview key={index} {...{isEditable, file, getValues, setValue, trigger, setImageFiles, index, registerReturn}}/>
+            (file, index)=><InputFileImages__preview key={index} {...{isEditable, file, getValues, setValue, trigger, index, registerReturn}}/>
           )}
         </L.grid>
       </div>
