@@ -37,7 +37,7 @@ export default function InputFileImages({
         <span
           id={inputFileDescriptionId}
           className={style.innerLabel}>
-          送信する画像を選択する（約10MBまでのjpgまたはpngを選択可能）
+          送信する画像を選択する（約6MBまでのjpgまたはpngを選択可能）
         </span>
         <input
           aria-describedby={inputFileDescriptionId}
