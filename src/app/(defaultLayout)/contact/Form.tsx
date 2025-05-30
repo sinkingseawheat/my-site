@@ -11,7 +11,7 @@ type Inputs = {
   page_url: string,
   content: string,
   images?: FileList,
-  csrf_token: string,
+  csrf_token: string, // csrf_tokenでフォーム初期化の成功/失敗の判定も行う。
 }
 
 const schemaResponse = z.object({
@@ -26,8 +26,18 @@ const resolverDefaultValues = (isIgnoreSessionStorage: boolean) => (async ()=>{
       method:'GET',
     })
     if(response.ok){
-      const json = await response.json()
-      if('csrf_token' in json && typeof json.csrf_token === 'string'){
+      const json = z.object({
+        csrf_token: z.string(),
+        is_enable: z.boolean(),
+        limit_minutes: z.number(),
+      }).safeParse(await response.json())?.data
+      if(json === undefined ){
+        csrf_token = `:error_undefined:formの初期化に失敗しました。JSONのデータの型が異なるためサーバー側のエラーと思われます。`
+      }else if(json['is_enable'] === false){
+        // formを無効化する
+        const {limit_minutes} = json ?? { limit_minutes:0 }
+        csrf_token = `:error_throttle:同じIPアドレスからの連続投稿は無効化しています. お手数ですが${limit_minutes ? `前回の送信から約${limit_minutes}分ほど` : 'しばらく'}お待ちいただいてから送信お願いします。`
+      }else{
         csrf_token = json.csrf_token
       }
     }
@@ -262,11 +272,11 @@ export function Form(){
             <span>画像は幅600pxより大きい場合は文字や細い線を使用しないようにお願いします。幅600pxにリサイズされて私の元に送信されます。</span>
           </List>}
           <input type="hidden" autoComplete='off' {...register('csrf_token', {
-            required: {
-              value: true,
-              message: 'csrf_tokenの取得に失敗しました。システムエラーが発生したと思われます。解決までしばらくお待ちください。',
-            },
-            validate: (v)=> v !== '' || 'csrf_tokenの取得に失敗しました。システムエラーが発生したと思われます。解決までしばらくお待ちください。'
+            validate: {
+              empty: (v)=> v !== '' || 'csrf_tokenの取得に失敗しました。システムエラーが発生したと思われます。解決までしばらくお待ちください。',
+              throttle: (v)=> v.indexOf(':error_throttle:') !== 0 || v.replace(':error_throttle:', ''),
+              undefinedJSON: (v)=> v.indexOf(':error_undefined:') !== 0 || v.replace(':error_undefined:', ''),
+            }
           })} />
           <div aria-live='polite' role='alert'>
             {errors.csrf_token?.message !==undefined && (
