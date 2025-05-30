@@ -130,9 +130,7 @@ try {
   ){
     throw new Exception('トークンが設定されていません');
   }
-  $token_from_client = $_POST[CSRF_TOKEN_NAME];
-  $token_in_server = $_SESSION[CSRF_TOKEN_NAME];
-  if(!hash_equals($token_in_server, $token_from_client)){
+  if(!hash_equals($_POST[CSRF_TOKEN_NAME], $_SESSION[CSRF_TOKEN_NAME])){
     throw new Exception('ブラウザとサーバーのトークンが一致しません');
   }
   unset($_SESSION['csrf_token']);
