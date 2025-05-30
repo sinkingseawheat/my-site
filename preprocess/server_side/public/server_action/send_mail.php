@@ -16,14 +16,84 @@ require 'vendor/PHPMailer/src/SMTP.php';
 require_once 'get_csrf_token.php';
 require_once 'std_output_to_json.php';
 
-// インスタンスの作成
-$mail = new PHPMailer\PHPMailer\PHPMailer(true);
-
+// 定数
 const LIMIT_CONTINUOUS_POSTING = 15;
 const MAX_IMAGE_BOUNDARY_WIDTH = 600;
 const CSRF_TOKEN_NAME = 'csrf_token';
 
 header('Content-Type: application/json');
+
+// IPアドレスとアクセス日時
+class AccessLog {
+  private        $db;
+  private string $table_name;
+  private string $ip_addr_client;
+  private        $row_data;
+  private int $limit_minutes;
+  private bool   $is_date_already_set;
+
+  function __construct(string $db_file, string $table_name, int $limit_minutes){
+    $this->db = new SQLite3($db_file);
+    $this->table_name = $table_name;
+    $this->ip_addr_client = $_SERVER['REMOTE_ADDR'];
+    $this->limit_minutes = $limit_minutes;
+    if(filter_var($this->ip_addr_client, FILTER_VALIDATE_IP) === false){
+      throw new Exception('無効なIPアドレスからのリクエストです');
+    }
+    $this->db->exec("
+      CREATE TABLE IF NOT EXISTS {$this->table_name}
+      (
+        ip_addr TEXT PRIMARY KEY,
+        date INTEGER
+      )
+    ;");
+    $stmt_get_last_accessed = $this->db->prepare("
+      SELECT date
+      FROM {$this->table_name}
+      WHERE
+        ip_addr = :ip_addr_client
+    ");
+    $stmt_get_last_accessed->bindValue(':ip_addr_client', $this->ip_addr_client);
+    $result = $stmt_get_last_accessed->execute();
+    $this->row_data = $result->fetchArray(SQLITE3_ASSOC);
+    $this->is_date_already_set = is_array($this->row_data) && isset($this->row_data['date']);
+    $result->finalize();
+    $stmt_get_last_accessed->close();
+  }
+
+  public function get_is_enable_form(){
+    return !($this->is_date_already_set && (time() - $this->row_data['date']) < (60 * $this->limit_minutes));
+  }
+
+  public function update(){
+    $current_time = time();
+    if($this->is_date_already_set === false){
+      $stmt_update_date = $this->db->prepare("
+        INSERT INTO {$this->table_name}
+        (ip_addr, date)
+        VALUES
+        (:ip_addr_client, {$current_time})
+      ");
+    }else{
+      $stmt_update_date = $this->db->prepare("
+        UPDATE {$this->table_name}
+        SET date = {$current_time}
+        WHERE
+          ip_addr = :ip_addr_client
+      ");
+    }
+    $stmt_update_date->bindValue(':ip_addr_client', $this->ip_addr_client);
+    $stmt_update_date->execute();
+    $stmt_update_date->close();
+  }
+
+  function __destruct(){
+    $this->db->close();
+  }
+}
+
+$mail = new PHPMailer\PHPMailer\PHPMailer(true);
+$log = new AccessLog('../../server_action_private/memo.sqlite', 'send_mail_log', LIMIT_CONTINUOUS_POSTING);
 
 // CSRFトークン発行
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -45,35 +115,9 @@ try {
   if(filter_var($ip_addr_client, FILTER_VALIDATE_IP) === false){
     throw new Exception('無効なIPアドレスからのリクエストです');
   }
-
-  $current_time = time();
-
-  $db = new SQLite3($db_file);
-  $table_name = 'send_mail_log';
-  $db->exec("
-    CREATE TABLE IF NOT EXISTS {$table_name}
-    (
-      ip_addr TEXT PRIMARY KEY,
-      date INTEGER
-    )
-  ;");
-  $stmt_get_last_accessed = $db->prepare("
-    SELECT date
-    FROM {$table_name}
-    WHERE
-      ip_addr = :ip_addr_client
-  ");
-  $stmt_get_last_accessed->bindValue(':ip_addr_client', $ip_addr_client);
-  $result = $stmt_get_last_accessed->execute();
-  $row = $result->fetchArray(SQLITE3_ASSOC);
-  $is_row_date_set = is_array($row) && isset($row['date']);
-  if(
-    $is_row_date_set === true
-    && $current_time - $row['date'] < 60 * LIMIT_CONTINUOUS_POSTING
-  ){
+  if($log->get_is_enable_form() === false){
     throw new Exception('同じIPアドレスからの連続投稿は無効化しています. お手数ですが前回の送信から約' . LIMIT_CONTINUOUS_POSTING . '分ほど経ってから送信お願いします。');
   }
-
   // csrfトークン検証
   if(
     !isset($_POST[CSRF_TOKEN_NAME])
@@ -210,24 +254,7 @@ try {
   $response_data['message'] = ['送信を完了しました。', '改めてこちらから返信いたしますので今しばらくお待ちください。'];
 
   // メールを送信したらIPアドレスを記録して連続投稿を無効化する
-  if($is_row_date_set === false){
-    $stmt_update_date = $db->prepare("
-      INSERT INTO {$table_name}
-      (ip_addr, date)
-      VALUES
-      (:ip_addr_client, {$current_time})
-    ");
-  }else{
-    $stmt_update_date = $db->prepare("
-      UPDATE {$table_name}
-      SET date = {$current_time}
-      WHERE
-        ip_addr = :ip_addr_client
-    ");
-  }
-  $stmt_update_date->bindValue(':ip_addr_client', $ip_addr_client);
-  $stmt_update_date->execute();
-  $stmt_update_date->close();
+  $log->update();
 
 } catch (Exception $e) {
   // echo "メール送信に失敗しました。エラー: {$mail->ErrorInfo}";
@@ -247,12 +274,7 @@ try {
     );
   }
   session_destroy();
-
-  // db周りのクリーンアップ
-  $result->finalize();
-  $stmt_get_last_accessed->close();
-  $db->close();
-  exit();
+  exit(0);
 }
 
 ?>
