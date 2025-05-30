@@ -182,6 +182,9 @@ try {
     foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name){
       if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
         $file_name = $_FILES['images']['name'][$key];
+        if($_FILES['images']['size'][$key] > 6 * 1024 * 1024){
+          throw new Exception($file_name . 'のファイルサイズが6MBより大きいです。画像を圧縮してください。');
+        }
         // $file_type = $_FILES['images']['type'][$key];
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         if(!$finfo){
