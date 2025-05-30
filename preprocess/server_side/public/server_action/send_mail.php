@@ -109,14 +109,12 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
 // メール送信
 try {
-
+  // PUT, DELETEなどは弾く
   if($_SERVER['REQUEST_METHOD'] !== 'POST'){
     throw new Exception('データはPOSTで送信してください');
   }
-
   $ip_addr_client = $_SERVER['REMOTE_ADDR'];
   $db_file = '../../server_action_private/memo.sqlite';
-
   if(filter_var($ip_addr_client, FILTER_VALIDATE_IP) === false){
     throw new Exception('無効なIPアドレスからのリクエストです');
   }
@@ -135,42 +133,37 @@ try {
   }
   unset($_SESSION['csrf_token']);
 
+  // 送信メール作成
   $body_subject = $_POST['subject'] ?? '';
   $body_email = $_POST['reply_addr'] ?? '';
   $body_page_url = $_POST['page_url'] ?? '';
   $body_content = $_POST['content'] ?? '';
-
   if(empty(trim($body_email))) {
     throw new Exception('メールアドレスが空です');
   } elseif (!filter_var($body_email, FILTER_VALIDATE_EMAIL)) {
     throw new Exception('メールアドレスが無効です');
   }
 
-  // SMTPの設定
-  $mail->SMTPDebug = SMTP::DEBUG_OFF;
+  $mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_OFF;
   $mail->isSMTP();
-  $mail->Host       = $smtp_server;                 // SMTPサーバー
-  $mail->SMTPAuth   = true;                              // SMTP認証を有効にする
+  $mail->Host       = $smtp_server;
+  $mail->SMTPAuth   = true;
   $mail->Username   = $smtp_username; 
   $mail->Password   = $smtp_password;
-  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;   // TLS暗号化を有効にする
-  $mail->Port       = 587;                               // TLS用のポート番号
-
-  // 文字コード
-  $mail->CharSet    = 'UTF-8';                           // 文字エンコード
-
-  // 送信元・宛先
+  $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+  $mail->Port       = 587;
+  $mail->CharSet    = 'UTF-8';
+  
   $mail->setFrom($smtp_username, $smtp_sendername); // 差出人
   $mail->addAddress($smtp_username, $smtp_sendername); // 宛先
-  $mail->addReplyTo("{$body_email}", ''); // 返信先
-  // $mail->addCC('cc@example.com');                   // CC
-  // $mail->addBCC('bcc@example.com');                  // BCC
-  // 件名・本文
+  $mail->addReplyTo("{$body_email}", '');
+  $mail->isHTML(true);
+
   $accepted_time = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
   $str_accepted_time = $accepted_time->format('Ymd_Hi');
-  $mail->isHTML(true);
   $replaced_body_subject = htmlspecialchars($body_subject);
   $mail->Subject = "{$replaced_body_subject}-初回送信日時:{$str_accepted_time}(日本標準時)";
+
   $replaced_body_content = str_replace("\r\n", '<br>', htmlspecialchars($body_content));
   $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$replaced_body_content}<br><br>";
   $html_body_image = '<p>';
@@ -178,9 +171,9 @@ try {
   if(isset($_FILES['images']) && !is_array($_FILES['images']['tmp_name'])){
     throw new Exception('このPHPスクリプトのinput[type="file"]のフィールドは配列のみを受け付けています。HTMLのname属性に"[]"は付与されていますか？');
   }
-  if (isset($_FILES['images']) && is_array($_FILES['images']['tmp_name'])){
-    foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name){
-      if ($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
+  if(isset($_FILES['images']) && is_array($_FILES['images']['tmp_name'])){
+    foreach($_FILES['images']['tmp_name'] as $key => $tmp_name){
+      if($_FILES['images']['error'][$key] === UPLOAD_ERR_OK) {
         $file_name = $_FILES['images']['name'][$key];
         if($_FILES['images']['size'][$key] > 6 * 1024 * 1024){
           throw new Exception($file_name . 'のファイルサイズが6MBより大きいです。画像を圧縮してください。');
@@ -253,7 +246,7 @@ try {
     $html_body_image .= '</p>';
   }
   $mail->Body = $html_body . $html_body_image;
-  $mail->AltBody = "{$body_content}"; // HTMLに対応していないメーラー用
+  $mail->AltBody = "{$body_content}";
 
   $mail->send();
 
