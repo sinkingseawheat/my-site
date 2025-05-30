@@ -99,7 +99,11 @@ $log = new AccessLog('../../server_action_private/memo.sqlite', 'send_mail_log',
 // CSRFトークン発行
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
   $csrf_token = generateCSRFToken(CSRF_TOKEN_NAME);
-  echo json_encode([CSRF_TOKEN_NAME => $csrf_token]); // hex値なのでJSON_UNESCAPED_UNICODEは不要
+  echo json_encode([
+    CSRF_TOKEN_NAME => $csrf_token,  // hex値なのでJSON_UNESCAPED_UNICODEは不要
+    'is_enable' => $log->get_is_enable_form(),
+    'limit_minutes' => LIMIT_CONTINUOUS_POSTING,
+  ]);
   exit(0);
 }
 
