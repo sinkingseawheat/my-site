@@ -332,6 +332,7 @@ export function Form(){
         }</p>
         <p>システムからのメッセージ：<>{
           [responseMessage].flat().map((str, index, strs)=>{
+            // 配列は<br>で繋ぐ。
             return (
               <Fragment key={index}>
               {str}
