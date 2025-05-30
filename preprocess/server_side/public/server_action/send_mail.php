@@ -205,10 +205,11 @@ try {
         if (!$source_image) {
           throw new Exception("画像リソースの作成に失敗しました。");
         }
+
+        $original_width = imagesx($source_image);
+        $original_height = imagesy($source_image);
         if($original_width > MAX_IMAGE_BOUNDARY_WIDTH){
           // リサイズ処理
-          $original_width = imagesx($source_image);
-          $original_height = imagesy($source_image);
           $aspect_ratio = $original_width / $original_height;
           $new_width = MAX_IMAGE_BOUNDARY_WIDTH;
           $new_height = (int)($new_width / $aspect_ratio);
