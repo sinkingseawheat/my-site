@@ -75,13 +75,11 @@ export function Form(){
     mode:'onChange',
   })
 
-  // フォームの初期値を設定した後
   useEffect(()=>{
-    if(isLoading === false){
-      // scrf_tokenのバリデートを行う
+    if(step === 'input' || isLoading === false){
       trigger('csrf_token')
     }
-  },[ trigger, isLoading ])
+  },[ trigger, step, isLoading ])
 
   // サブミットボタン押下時
   const onSubmit:SubmitHandler<Inputs> = async (data)=>{
