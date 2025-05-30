@@ -15,8 +15,8 @@ function customErrorHandler($errno, $errstr, $errfile, $errline) {
   $errorData = [
     'status' => 'error',
     'code' => $errno,
-    'message' => $errstr,
-    'file' => $errfile,
+    // 'message' => $errstr,
+    // 'file' => $errfile,
     'line' => $errline,
     'type' => getErrorType($errno)
   ];
@@ -29,10 +29,10 @@ function customExceptionHandler(Throwable $exception) {
   $errorData = [
     'status' => 'error',
     'code' => $exception->getCode(),
-    'message' => $exception->getMessage(),
-    'file' => $exception->getFile(),
+    // 'message' => $exception->getMessage(),
+    // 'file' => $exception->getFile(),
     'line' => $exception->getLine(),
-    'trace' => $exception->getTraceAsString(),
+    // 'trace' => $exception->getTraceAsString(),
     'type' => 'Exception'
   ];
 
