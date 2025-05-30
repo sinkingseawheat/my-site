@@ -21,6 +21,7 @@ const LIMIT_CONTINUOUS_POSTING = 15;
 const MAX_IMAGE_BOUNDARY_WIDTH = 600;
 const CSRF_TOKEN_NAME = 'csrf_token';
 
+// ResponseはJSONに限定
 header('Content-Type: application/json');
 
 // IPアドレスとアクセス日時
