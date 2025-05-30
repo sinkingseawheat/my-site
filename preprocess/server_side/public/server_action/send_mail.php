@@ -260,13 +260,20 @@ try {
   $response_data['isOK'] = true;
   $response_data['message'] = ['送信を完了しました。', '改めてこちらから返信いたしますので今しばらくお待ちください。'];
 
+  $is_mail_sent = true;
+
   // メールを送信したらIPアドレスを記録して連続投稿を無効化する
   $log->update();
 
 } catch (Exception $e) {
-  // echo "メール送信に失敗しました。エラー: {$mail->ErrorInfo}";
-  $response_data['isOK'] = false;
-  $response_data['message'] = $e->getMessage();
+  if(isset($is_mail_sent) && $is_mail_sent === true){
+    // メール送信完了後のエラーの場合はここ。このプログラムは走らない想定。
+    error_log('The email was sent successfully, but then an error occurred.' . $e->getMessage());
+    $response_data['isOK'] = true;
+  }else{
+    $response_data['message'] = $e->getMessage();
+    $response_data['isOK'] = false;
+  }
 } finally {
   // レスポンス返却
   echo json_encode($response_data ?? '', JSON_UNESCAPED_UNICODE);
