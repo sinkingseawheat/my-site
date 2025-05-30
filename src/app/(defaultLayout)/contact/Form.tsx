@@ -99,16 +99,10 @@ export function Form(){
       method: 'POST',
       body: formData,
     });
+    const responseCloned = response.clone()
     if(response.ok){
       try{
-        if(/192\.168\.\d+\.\d+$/.test(location.hostname)){
-          console.log(`ローカルのIPアドレス環境のため、responseはJSONパースに失敗した場合にエラーをconsoleに表示`)
-          const clonedResponse = response.clone()
-          console.log(await clonedResponse.text())
-          // Todo:エラーメッセージはサーバーから送信されないようにする
-        }
-        const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'データが存在しないか、予期していないデータを受信しました'}
-        console.log(json)
+        const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'不明なエラー。データが存在しないか、予期していないデータを受信、または画像の処理に失敗しました。'}
         const {isOK, message} = json
         if(isOK === true){
           startTransition(()=>{setStep('complete')})
@@ -124,6 +118,8 @@ export function Form(){
         setResponseMessage(message)
       }catch(e){
         console.error(`can't parse JSON,${e}`)
+        console.log(`response dump data is:\n`)
+        console.log(await responseCloned.text())
         startTransition(()=>{setStep('error')})
         setResponseMessage(`can't parse JSON`)
       }
