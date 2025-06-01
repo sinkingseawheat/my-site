@@ -345,13 +345,16 @@ export function Form(){
             )
           })
         }</></p>
-        <F.Button type='button'
-          onClick={async ()=>{
-            reset(await (resolverDefaultValues(false))() )
-            startTransition(()=>{
-              setStep('input')
-            })
-          }}>入力画面に戻る</F.Button>
+        <L.flex>
+          <F.Button type='button'
+            onClick={async ()=>{
+              reset(await (resolverDefaultValues(false))() )
+              startTransition(()=>{
+                setStep('input')
+              })
+            }}>入力画面に戻る
+          </F.Button>
+        </L.flex>
       </>)
       }
     </form>
