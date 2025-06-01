@@ -4,22 +4,28 @@ import { explorerFilesRecursively } from '@preprocess/explorerFilesRecursively'
 
 export const setServerSideScript = async ({
   $smtp_server,
-  $smtp_username,
-  $smtp_sendername,
+  $smtp_user_address,
+  $mail_sender_name,
   $smtp_password,
+  $mail_from_user_address,
+  $mail_from_info_address,
 }:{
   $smtp_server: string,
-  $smtp_username: string,
-  $smtp_sendername: string,
+  $smtp_user_address: string,
+  $mail_sender_name: string,
   $smtp_password: string,
+  $mail_from_user_address: string,
+  $mail_from_info_address: string,
 })=>{
   const phpSrcSecret = `<?php
 
 // send_mail
 $smtp_server = '${$smtp_server}';
-$smtp_username = '${$smtp_username}';
-$smtp_sendername = '${$smtp_sendername}';
+$smtp_user_address = '${$smtp_user_address}';
+$mail_sender_name = '${$mail_sender_name}';
 $smtp_password = '${$smtp_password}';
+$mail_from_user_address = '${$mail_from_user_address}';
+$mail_from_info_address = '${$mail_from_info_address}';
 
 ?>`
 
