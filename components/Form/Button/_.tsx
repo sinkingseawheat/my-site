@@ -4,7 +4,7 @@ import { StyleValue } from '@components/utility'
 
 type ButtonElm = {
   isDisabled?:boolean,
-  styleValue?:StyleValue<'--color-button-fg'|'--color-button-bg'|'--color-button-bdr'>
+  styleValue?:StyleValue<'--color-button-fg'|'--color-button-bg'|'--color-button-bdr'|'--fz'>
 } & ButtonHTMLAttributes<Element>
 
 export default function Button({

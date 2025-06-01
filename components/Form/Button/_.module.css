@@ -2,6 +2,7 @@
   padding: 2px;
   border: 2px solid transparent;
   display: inline-block;
+  vertical-align: middle;
   border-radius: 12px;
   --color-button-bdr: var(--color-primary);
   --color-button-fg: var(--color-bg);
@@ -17,7 +18,7 @@
   font-weight: bold;
   position: relative;
   overflow: hidden;
-  font-size: 1.25rem;
+  font-size: var(--fz, 1.25rem);
   border: 2px solid rgb(var(--color-button-bdr));
 }
 .button:disabled{
