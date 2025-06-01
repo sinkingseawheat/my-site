@@ -148,21 +148,21 @@ try {
   $mail->isSMTP();
   $mail->Host       = $smtp_server;
   $mail->SMTPAuth   = true;
-  $mail->Username   = $smtp_username; 
+  $mail->Username   = $smtp_user_address; 
   $mail->Password   = $smtp_password;
   $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
   $mail->Port       = 587;
   $mail->CharSet    = 'UTF-8';
   
-  $mail->setFrom($smtp_username, $smtp_sendername); // 差出人
-  $mail->addAddress($smtp_username, $smtp_sendername); // 宛先
-  $mail->addReplyTo("{$body_email}", '');
+  $mail->setFrom($mail_from_user_address, $mail_sender_name); // 差出人
+  $mail->addAddress($mail_from_user_address, $mail_sender_name); // 宛先
+  $mail->addReplyTo($body_email, '');
   $mail->isHTML(true);
 
   $accepted_time = new DateTime('now', new DateTimeZone('Asia/Tokyo'));
-  $str_accepted_time = $accepted_time->format('Ymd_Hi');
+  $str_accepted_time = $accepted_time->format('Y/m/d H:i');
   $replaced_body_subject = htmlspecialchars($body_subject);
-  $mail->Subject = "{$replaced_body_subject}-初回送信日時:{$str_accepted_time}(日本標準時)";
+  $mail->Subject = "{$replaced_body_subject}-初回送信日時_{$str_accepted_time}(日本標準時)";
 
   $replaced_body_content = str_replace("\r\n", '<br>', htmlspecialchars($body_content));
   $html_body = "以下の相談が入りました<br><br>対象URL: {$body_page_url}<br><br>{$replaced_body_content}<br><br>";
@@ -250,13 +250,45 @@ try {
 
   $mail->send();
 
+  $confirm_mail_subject = '【自動送信メール】相談フォームの内容を確認中です。数日以内には返信するようにいたします。';
+
   $response_data['isOK'] = true;
-  $response_data['message'] = ['送信を完了しました。', '改めてこちらから返信いたしますので今しばらくお待ちください。'];
+  $response_data['message'] = ['送信を完了しました。改めてこちらから返信いたしますので今しばらくお待ちください。', "「{$confirm_mail_subject}」という件名のメールが自動送信されます。数分待っても送信されない場合は迷惑メールに隔離されていないか確認お願いします。"];
 
   $is_mail_sent = true;
 
   // メールを送信したらIPアドレスを記録して連続投稿を無効化する
   $log->update();
+
+  // 確認メール
+  $mail_confirm = new PHPMailer\PHPMailer\PHPMailer(true);
+  $mail_confirm->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_OFF;
+  $mail_confirm->isSMTP();
+  $mail_confirm->Host       = $smtp_server;
+  $mail_confirm->SMTPAuth   = true;
+  $mail_confirm->Username   = $smtp_user_address; 
+  $mail_confirm->Password   = $smtp_password;
+  $mail_confirm->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+  $mail_confirm->Port       = 587;
+  $mail_confirm->CharSet    = 'UTF-8';
+  $mail_confirm->setFrom($mail_from_info_address, $mail_sender_name); // 差出人
+  $mail_confirm->addAddress($body_email, ''); // 宛先
+  $mail_confirm->addReplyTo($mail_from_info_address, $mail_sender_name);
+  $mail_confirm->isHTML(true);
+  $mail_confirm->Subject = $confirm_mail_subject;
+  $mail_confirm->Body =
+  'こちらは相談フォームに入力されたメールアドレスへの自動送信メールです。<br>'
+  . '<b>心当たりのない場合はご迷惑をおかけしますが、無視するか、フィルターで除外お願いします。</b><br>'
+  . 'こちらとしては避けてもらいたいですが、フィルターでの除外設定方法が不明な場合で、何度も送られてくる場合は、お手数ですが迷惑メールとして扱っても構いません。<br><br>'
+  . '--------以下は相談フォームに記入いただいた前提での返信となります。--------<br><br>'
+  . 'お問い合わせありがとうございます。相談フォームの内容を確認中です。数日以内には返信するようにいたしますので、今しばらくお待ちください。<br>'
+  . '相談フォームに記入いただいた件名で改めてメールを送信します。<br>'
+  . '書き漏れた条件などの追加情報はそのメールにご返信ください。<b>このメールでは返信しないようにお願いします。</b><br>'
+  . '※ 数日経ってもメールが届かない場合のみ、お手数ですがこのメールに返信をお願いします。<br>'
+  . '※ フォームの悪用防止のため、相談フォームへの入力内容やURLなどはこのメールに記載しておりません。ご了承ください。'
+  ;
+  
+  $mail_confirm->send();
 
 } catch (Exception $e) {
   if(isset($is_mail_sent) && $is_mail_sent === true){
