@@ -60,7 +60,7 @@ export default function LinkElm({
     </Link>)
   }else{
     return (
-      <Link
+      <a
         className={style.link}
         href={href}
         target={isOpenAnotherTab ? '_blank' : undefined}
@@ -76,7 +76,7 @@ export default function LinkElm({
             : <SVGIcon.link styleValue={{'--color-stroke':'var(--color-primary)'}} />
           }
         </span>
-      </Link>
+      </a>
     );
   }
 }
