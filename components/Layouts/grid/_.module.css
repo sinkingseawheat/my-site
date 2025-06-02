@@ -1,10 +1,10 @@
 .wrap{
   display: grid;
   overflow-x: auto;
-  grid-template-columns: repeat(var(--fill-or-fit, auto-fit), minmax(var(--min-width, auto),var(--max-width ,1fr)));
-  column-gap: var(--column-gap, 1rem);
-  row-gap: var(--row-gap, 1rem);
-  margin-top: var(--margin-top, 0);
+  grid-template-columns: repeat(var(--fill-or-fit), minmax(var(--min-width),var(--max-width)));
+  column-gap: var(--column-gap);
+  row-gap: var(--row-gap);
+  margin-top: var(--margin-top);
 }
 .item{
   height: 100%;
