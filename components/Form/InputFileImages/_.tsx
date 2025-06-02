@@ -65,7 +65,7 @@ export default function InputFileImages({
       <input type='hidden' autoComplete='off' {...registerReturn} />
       <div className={style.preview}>
         <L.grid styleValue={{'--min-width':styleValue?.['--preview-min-width'] ?? '20em','--fill-or-fit':'auto-fill'}}>
-          {imageFiles.length === 0 ? <p>画像が選択されていません</p> : imageFiles.map(
+          {imageFiles.length === 0 ? <p>画像は選択されていません</p> : imageFiles.map(
             (file, index)=><InputFileImages__preview key={index} {...{isEditable, file, getValues, setValue, trigger, index, registerReturn}}/>
           )}
         </L.grid>
