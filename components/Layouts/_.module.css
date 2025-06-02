@@ -19,6 +19,9 @@
   }
   &.header{
     box-shadow: 0 5px 6px rgb(var(--color-fg) / 0.7);
+    @media (prefers-color-scheme: light) {
+      box-shadow: 0 5px 6px rgb(var(--color-fg) / 0.2);
+    }
     position: sticky;
     top: 0;
     z-index: 100;
