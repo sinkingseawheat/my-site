@@ -22,6 +22,8 @@
   appearance: none;
   border: 1px solid rgb(var(--color-fg));
   border-radius: 4px;
+  max-width: 100%;
+  width: var(--input-width);
   &:focus{
     outline-width: 2px;
   }

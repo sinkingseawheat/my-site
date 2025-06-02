@@ -5,7 +5,7 @@ import { type StyleValue, type FormInputItemExtended } from '@components/utility
 export default function InputText({
   elms, message, styleValue, type
 }:FormInputItemExtended<false> & {
-  styleValue?: StyleValue<'--label-min-width'>,
+  styleValue?: StyleValue<'--label-min-width'|'--input-width'>,
   type?: 'text'|'email',
 }){
   const {
