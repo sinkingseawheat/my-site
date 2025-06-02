@@ -42,9 +42,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
       "email": false,
       "address": false,
       "telephone": false
-    },
-    "alternates": {
-      "canonical": `/`
     }
   }
   return metaData;
