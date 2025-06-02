@@ -102,7 +102,7 @@ export function Form(){
     const responseCloned = response.clone()
     if(response.ok){
       try{
-        const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'不明なエラー。データが存在しないか、予期していないデータを受信、または画像の処理に失敗しました。'}
+        const json = schemaResponse.safeParse(await response.json()).data ?? {isOK:false, message:'不明なエラー。データが存在しないか、予期していないデータを受信、または添付画像の処理に失敗しました。'}
         const {isOK, message} = json
         if(isOK === true){
           startTransition(()=>{setStep('complete')})
@@ -154,7 +154,10 @@ export function Form(){
         }}>
           {step === 'input' ? 
             (<F.InputText elms={{
-              label:'返信時の件名',
+              label:'メールの件名',
+              baseAttributes:{
+                placeholder:'この件名を含むメールに返信する形で回答します'
+              },
               registerReturn: register('subject',{
                 required: {
                   value: true,
@@ -162,28 +165,29 @@ export function Form(){
                 },
                 onChange: ()=>{window.sessionStorage.setItem('subject', getValues('subject'))},
               })
-            }} message={errors?.subject?.message} styleValue={{'--label-min-width':'8em'}} />)
-            : (<Section type='dl' title='返信時の件名'>
+            }} message={errors?.subject?.message} styleValue={{'--label-min-width':'8em','--input-width':'28em'}} />)
+            : (<Section type='dl' title='メールの件名'>
               {getValues('subject')}
             </Section>)
           }
           
           {step === 'input' ?
             (<F.InputText elms={{
-              label:'返信先のアドレス',
+              label:'連絡用のアドレス',
               baseAttributes:{
                 autoComplete: 'email',
                 inputMode: 'email',
+                placeholder: '連絡用のメールアドレスを記入ください',
               },
               registerReturn: register('reply_addr', {
                 required: {
                   value: true,
-                  message: `返信先のアドレスを入力してください`
+                  message: `連絡用のアドレスを入力してください`
                 },
                 onChange: ()=>{window.sessionStorage.setItem('reply_addr', getValues('reply_addr'))},
               })
-            }} type='email' message={errors?.reply_addr?.message} styleValue={{'--label-min-width':'8em'}} />)
-            : (<Section type='dl' title='送信先のアドレス'>
+            }} type='email' message={errors?.reply_addr?.message} styleValue={{'--label-min-width':'8em','--input-width':'28em'}} />)
+            : (<Section type='dl' title='連絡用のアドレス'>
               {getValues('reply_addr')}
             </Section>)
           }
@@ -192,32 +196,33 @@ export function Form(){
               label: 'ページのURL',
               baseAttributes: {
                 inputMode: 'url',
+                placeholder: '確認してほしいページのURLを1ページ指定してください',
               },
               registerReturn: register('page_url', {
                 required: {
                   value: true,
-                  message: `確認して欲しいページのURLを記入してください`
+                  message: `URLが記入されていません`
                 },
-                validate: (v)=>URL.canParse(v) || `有効なURLを入力してください`,
+                validate: (v)=>URL.canParse(v) || `有効なURLを1つだけ入力してください`,
                 onChange: ()=>{window.sessionStorage.setItem('page_url', getValues('page_url'))},
               }),
-            }} message={errors?.page_url?.message} styleValue={{'--label-min-width':'8em'}} />)
+            }} message={errors?.page_url?.message} styleValue={{'--label-min-width':'8em','--input-width':'28em'}} />)
             : (<Section type='dl' title='ページのURL'>
               {getValues('page_url')}
             </Section>)
           }
           {step === 'input' ?
             (<F.Textarea elms={{
-              label:'確認する内容',
+              label:'相談内容',
               registerReturn: register('content', {
                 required: {
                   value: true,
-                  message: `確認する内容を記入してください`
+                  message: `相談内容を記入してください`
                 },
                 onChange: ()=>{window.sessionStorage.setItem('content', getValues('content'))},
               })
             }} message={errors?.content?.message} />)
-            : (<Section type='dl' title='確認する内容'>
+            : (<Section type='dl' title='相談内容'>
               <>-----<br />{getValues('content').split('\n').map((str, index, strs)=>{
                 return (
                   <Fragment key={index}>
@@ -263,7 +268,7 @@ export function Form(){
           </L.grid>
           {step === 'input' && <List bullet='※'>
             <span>画像はページのリロードや送信失敗で選択が解除されます。その際は改めて選択をお願いします。</span>
-            <span>画像は幅600pxより大きい場合は文字や細い線を使用しないようにお願いします。幅600pxにリサイズされて私の元に送信されます。</span>
+            <span>画像は幅600pxより大きい場合は文字や細い線を使用しないようにお願いします。幅600pxにリサイズされて送信されます。</span>
           </List>}
           <input type="hidden" autoComplete='off' {...register('csrf_token', {
             validate: {
