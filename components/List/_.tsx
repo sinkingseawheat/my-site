@@ -12,11 +12,7 @@ const UnorderedItem = ({
           {
             bullet!=='' && (<span className={style.uBullet} role='presentation'>{bullet}</span>)
           }
-          {
-            typeof elm === 'string' ?
-            <span className={style.uItem_i}>{elm}</span>
-            : elm
-          }
+          <div className={style.uItem_i}>{elm}</div>
         </li>
       )
     })

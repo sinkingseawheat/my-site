@@ -2,12 +2,13 @@
 .uItem {
   padding: 0;
   list-style-type: none;
-  display: grid;
-  grid-template-columns: minmax(1em, auto) 1fr;
+  display: flex;
+  justify-content: flex-start;
   column-gap: .5em;
 }
 .uBullet{
-  display: flex;
-  justify-content: flex-end;
+  flex: 0 0 auto;
 }
-.uItem_i{}
+.uItem_i{
+  flex: 1 1 auto;
+}
