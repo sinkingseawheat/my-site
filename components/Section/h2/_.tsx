@@ -18,7 +18,7 @@ export function H2({
         }
       </h2>
       <div className={style.cnt}>
-        <L.grid styleValue={{'--margin-top':'2em','--row-gap':'.8em','--min-width':'100%'}}>
+        <L.grid styleValue={{'--margin-top':'2em','--row-gap':'2em','--min-width':'100%'}}>
           {children}
         </L.grid>
       </div>
