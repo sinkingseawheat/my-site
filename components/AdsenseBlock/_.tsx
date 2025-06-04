@@ -15,8 +15,7 @@ export default function AdsenseBlock({
 }){
   const pathname = usePathname()
   const isDisplay = !(
-    pathname === '/accessibility/'
-    || pathname === '/privacypolicy/'
+    /^\/(accessibility|privacypolicy|contact)\//.test(pathname)
   )
 
   const [isLoadedAdsbyGoogle, setIsLoadedAdsbyGoogle] = useState<boolean>(false)
@@ -34,46 +33,50 @@ export default function AdsenseBlock({
     }
   },[pathname, isLoadedAdsbyGoogle, isDisplay])
 
-  if(!publisherId){
+  if(!publisherId || isDisplay === false){
     return <></>
   }
 
-  return (<div className={style.wrap}>
-    {process.env.NODE_ENV === 'production' && <Script
-      id={`adsense-script-${id}`}
-      async
-      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`}
-      crossOrigin="anonymous"
-      strategy="lazyOnload"
-      onLoad={()=>{
-        setIsLoadedAdsbyGoogle(true)
-      }}
-    />}
-    {isDisplay && <dl className={style.dl}>
-      <dt className={style.dt}>広告</dt>
-      <dd className={style.dd}>
-        {
-          process.env.NODE_ENV === 'production' ?
-          (<>
-          <div key={`${pathname}-${isLoadedAdsbyGoogle}`}>
-            <ins className="adsbygoogle"
-              style={{display:'block'}}
-              data-ad-client={`${publisherId}`}
-              data-ad-slot={`${slot}`}
-              data-ad-format="auto"
-              data-full-width-responsive="true"></ins>
-          </div>
-          </>)
-          : <div style={{
-              width:'100%',
-              height:'5rem',
-              display:'flex',
-              justifyContent:'center',
-              alignItems:'center',
-              backgroundColor:'rgb(var(--color-fg) / 0.3)'
-            }}>広告エリア</div>
+  return (
+    <div className={style.wrap}>
+      <dl className={style.dl}>
+        <dt className={style.dt}>広告</dt>
+        <dd className={style.dd}>
+          {
+            process.env.NODE_ENV === 'production' ?
+              <>
+                <Script
+                  key={`${pathname}-${isLoadedAdsbyGoogle}`}
+                  id={`adsense-script-${id}`}
+                  async
+                  src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`}
+                  crossOrigin="anonymous"
+                  strategy="lazyOnload"
+                  onLoad={()=>{
+                    setIsLoadedAdsbyGoogle(true)
+                  }}
+                />
+                <div key={`${pathname}-${isLoadedAdsbyGoogle}`}>
+                  <ins className="adsbygoogle"
+                    style={{display:'block'}}
+                    data-ad-client={`${publisherId}`}
+                    data-ad-slot={`${slot}`}
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                </div>
+              </>
+              : <div style={{
+                width:'100%',
+                height:'5rem',
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'center',
+                backgroundColor:'rgb(var(--color-fg) / 0.3)'
+              }}>広告エリア
+            </div>
           }
-      </dd>
-    </dl>}
-    </div>)
+        </dd>
+      </dl>
+    </div>
+  )
 }
