@@ -70,21 +70,6 @@ export default function ShareButton(){
                 <img className={style.icon} src={`/c/vendor/logo/hatenabookmark_symbolmark.png`} alt='はてなブックマーク'/>
               </a>
             </li>
-            <li className={style.item}>
-              <a
-                className={style.link}
-                href={currentHref === null ? `javascript:void(0);` : `http://getpocket.com/edit?url=${currentHref}&title=${pageTitle}`}
-                target='_blank'
-              >
-                <img
-                  className={style.icon}
-                  width='448'
-                  height='512'
-                  src='/c/vendor/logo/pocket.svg'
-                  alt='pocket'
-                />
-              </a>
-            </li>
           </ul>
     </Section>
   );
