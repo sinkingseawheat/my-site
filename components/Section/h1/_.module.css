@@ -6,7 +6,7 @@
 .hdng_i {}
 .cnt {}
 .hdng[data-sr-only="false"] + .cnt {
-  margin-top: 1em;
+  margin-top: 2em;
 }
 .wrap:has(.hdng[data-sr-only="false"]),
 .hdng[data-sr-only="true"] + .cnt {

@@ -1,4 +1,5 @@
 import style from './_.module.css'
+import { L } from '@components/all'
 
 export function H1({
   children,
@@ -19,7 +20,9 @@ export function H1({
         }
       </h1>
       {children !== undefined && <div className={style.cnt}>
-        {children}
+        <L.grid styleValue={{'--row-gap':'1em','--min-width':'100%'}}>
+          {children}
+        </L.grid>
       </div>}
     </div>
   )
