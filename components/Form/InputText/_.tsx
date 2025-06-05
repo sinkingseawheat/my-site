@@ -6,7 +6,7 @@ export default function InputText({
   elms, message, styleValue, type
 }:FormInputItemExtended<false> & {
   styleValue?: StyleValue<'--label-min-width'|'--input-width'>,
-  type?: 'text'|'email',
+  type?: 'text'|'email'|'url'|'tel'
 }){
   const {
     label,
