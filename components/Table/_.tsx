@@ -19,12 +19,14 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
   styleValueArray,
   caption,
   theadElement,
+  mergedViewOption,
   children,
 }: {
   styleValue?: StyleValue<'--max-height'>,
   styleValueArray?: StyleValue<'--min-column-width',string[]>
   caption: React.ReactNode,
   theadElement: TRows,
+  mergedViewOption?: 'rowspan'|'colspan',
   children: Readonly<Readonly<TRows>[]>,
 }) {
   // 最初の行と列に項番を追加
@@ -91,14 +93,40 @@ export default function Table<TRows extends Readonly<React.ReactNode>[]>({
           </tr>
         </thead>
         <tbody className={style.body}>
-          {data.toSpliced(0,2).map((row, rowIndex) => {
+          {data.toSpliced(0,2).map((_row)=>_row.toSpliced(0,1)).map((row, rowIndex) => {
+            const matrix = data.toSpliced(0,2).map((row)=>row.toSpliced(0,1))
             return (
               <tr className={style.tbodyTr} key={`tr-${data[rowIndex+2][0]}`}>
-                {row.toSpliced(0,1).map((cell, cellIndex) => {
+                {row.map((cell, cellIndex, allRowData) => {
+                  // string型などのプリミティブ型なら、同じデータが並んだときはセルをマージする
+                  if(
+                    (mergedViewOption === 'colspan' && cellIndex >= 1 && cell === allRowData[cellIndex-1])
+                    || (mergedViewOption === 'rowspan' && rowIndex >= 1 && cell === matrix[rowIndex-1][cellIndex])
+                  ){
+                    // 左または上のセルと同じデータならスキップ
+                    return null
+                  }
+                  const allColumnData = matrix.map((_row)=>_row[cellIndex])
+                  let rowspan = 1
+                  if(mergedViewOption==='rowspan'){
+                    while(allColumnData[rowIndex+rowspan] !== undefined && cell === allColumnData[rowIndex+rowspan]){
+                      rowspan++
+                    }
+                  }
+                  // 右のセルと同じならcolspanを追加
+                  let colspan = 1
+                  if(mergedViewOption === 'colspan'){
+                    while(allRowData[cellIndex+colspan] !== undefined && cell === allRowData[cellIndex+colspan]){
+                      colspan++
+                    }
+                  }
                   return (
                     <td
                       className={style.td}
-                      key={`cell-${data[rowIndex+2][0]}-${data[0][cellIndex+1]}`}>
+                      key={`cell-${data[rowIndex+2][0]}-${data[0][cellIndex+1]}`}
+                      colSpan={colspan!==1 ? colspan : undefined}
+                      rowSpan={rowspan!==1 ? rowspan : undefined}
+                    >
                         {cell}
                     </td>
                   )

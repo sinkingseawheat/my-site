@@ -75,6 +75,7 @@ export function ResultTable() {
       styleValueArray={{'--min-column-width':['6em','6em']}}
       caption='メディア種別'
       theadElement={['プロパティ','真偽値']}
+      mergedViewOption='rowspan'
     >
       {filledData1}
     </Table>
@@ -83,6 +84,7 @@ export function ResultTable() {
       styleValueArray={{'--min-column-width':['8em','8em','8em','8em']}}
       caption='メディア特性'
       theadElement={['プロパティ','値','真偽値','メディアクエリ']}
+      mergedViewOption='rowspan'
     >
       {filledData2}
     </Table>
