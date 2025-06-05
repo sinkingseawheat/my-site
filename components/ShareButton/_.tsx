@@ -33,7 +33,7 @@ export default function ShareButton(){
           onClick={async ()=>{
             if(currentHref){
               await navigator.clipboard.writeText(currentHref + (pageTitle ? '\n' + pageTitle : ''))
-              setPopupMessage(<>{currentHref ?? ''}<br />{pageTitle ?? ''}</>)
+              setPopupMessage(<>{currentHref ?? ''}<br />{pageTitle ?? ''}<br />をコピーしました</>)
             }else{
               setPopupMessage('ページURLの取得に失敗しました')
             }
