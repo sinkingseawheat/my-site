@@ -11,7 +11,15 @@
 }
 .linkIcon{
   padding: 0 .5em;
-  display: inline;
+  transition: left var(--animation-duration);
+  display: inline-block;
+  position: relative;
+  left: 0;
+}
+@media (hover:hover) {
+  a.link:hover .linkIcon{
+    left: 0.5em;
+  }
 }
 .linkIcon > :is(svg,img){
   display: inline;
