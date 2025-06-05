@@ -1,10 +1,11 @@
 'use client'
-import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton, AdsenseBlock } from '@components/all';
+import { L, SkipNav, Header, Footer, BottomPopup, SVGIcon, ShareButton, AdsenseBlock, } from '@components/all';
 import { PopupContext, RefFixedAtTopContext } from '@components/context';
 import { useState, useRef, type ReactNode, useEffect, Suspense } from 'react';
 import Script from 'next/script';
 import { userSpecificData } from '@/../my-site.config';
 import { usePathname } from 'next/navigation';
+import { Banner__contact } from './Banner__contact/_';
 
 const { googleAnalyticsId } = userSpecificData
 
@@ -48,10 +49,11 @@ export default function LayoutDefault({
               {children}
             </main>
             <aside>
-              <L.grid styleValue={{'--margin-top': '4rem'}}>
+              <L.grid styleValue={{'--margin-top': '4rem','--row-gap':'2rem'}}>
                 <Suspense>
                   <ShareButton/>
                 </Suspense>
+                {/^\/(?!contact)/.test(usePathname()) && <Banner__contact/>}
               </L.grid>
               <AdsenseBlock id='bottomPage' />
             </aside>
