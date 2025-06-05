@@ -5,9 +5,11 @@ import Link from 'next/link'
 import { Suspense, useState, useEffect, useRef, useCallback } from 'react'
 
 export default function Header({
-  refHeader
+  refHeader,
+  elmsAppendedToNav,
 }:{
-  refHeader:React.RefObject<HTMLElement|null>
+  refHeader:React.RefObject<HTMLElement|null>,
+  elmsAppendedToNav?:React.ReactNode,
 }){
 
   const [isHidden, setIsHidden] = useState(false)
@@ -68,6 +70,7 @@ export default function Header({
             <nav aria-label='ページ一覧'>
               <PageList />
             </nav>
+            {elmsAppendedToNav}
           </L.modal>
         </Suspense>
       </div>

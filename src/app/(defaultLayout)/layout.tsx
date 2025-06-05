@@ -39,7 +39,13 @@ export default function LayoutDefault({
         <PopupContext.Provider value={[popupMessage, setPopupMessage]}>
           <L.vb className='header'>
             <SkipNav idToMove="main-content"/>
-            <Header refHeader={refHeader}/>
+            <Header
+              refHeader={refHeader}
+              elmsAppendedToNav={
+                /^\/(?!contact)/.test(usePathname())
+                && <L.grid styleValue={{'--margin-top':'4em'}}><Banner__contact/></L.grid>
+              }
+            />
           </L.vb>
           <L.vb className='content'>
             <noscript>
