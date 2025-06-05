@@ -176,7 +176,6 @@ export function Form(){
               label:'連絡用のアドレス',
               baseAttributes:{
                 autoComplete: 'email',
-                inputMode: 'email',
                 placeholder: '連絡用のメールアドレスを記入ください',
               },
               registerReturn: register('reply_addr', {
@@ -195,7 +194,6 @@ export function Form(){
             (<F.InputText elms={{
               label: 'ページのURL',
               baseAttributes: {
-                inputMode: 'url',
                 placeholder: '確認してほしいページのURLを1ページ指定してください',
               },
               registerReturn: register('page_url', {
@@ -206,7 +204,7 @@ export function Form(){
                 validate: (v)=>URL.canParse(v) || `有効なURLを1つだけ入力してください`,
                 onChange: ()=>{window.sessionStorage.setItem('page_url', getValues('page_url'))},
               }),
-            }} message={errors?.page_url?.message} styleValue={{'--label-min-width':'8em','--input-width':'28em'}} />)
+            }} type='url' message={errors?.page_url?.message} styleValue={{'--label-min-width':'8em','--input-width':'28em'}} />)
             : (<Section type='dl' title='ページのURL'>
               {getValues('page_url')}
             </Section>)
