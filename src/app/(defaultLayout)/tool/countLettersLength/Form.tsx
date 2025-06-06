@@ -45,7 +45,7 @@ export function Form(){
           lettersLength++
         }
       }
-      const lineLength = trimmedWriting.split('\n').length
+      const lineLength = trimmedWriting.split('\n').filter((line)=>!/^\s*$/.test(line)).length
       setOutput({
         lettersLength,
         lineLength
